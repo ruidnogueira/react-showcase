@@ -1,0 +1,29 @@
+{
+  "extends": ["config:base"],
+  "schedule": ["before 3am on Monday"],
+  "npm": {
+    "stabilityDays": 3
+  },
+  "packageRules": [
+    {
+      "groupName": "Eslint",
+      "matchPackagePatterns": ["eslint"]
+    },
+    {
+      "groupName": "Stylelint",
+      "matchPackagePatterns": ["stylelint"]
+    },
+    {
+      "groupName": "TestingLibrary",
+      "matchPackagePrefixes": ["@testing-library/"]
+    },
+    {
+      "groupName": "Workbox",
+      "matchPackagePatterns": ["workbox"]
+    },
+    {
+      "groupName": "I18next",
+      "matchPackagePatterns": ["i18next"]
+    }
+  ]
+}
