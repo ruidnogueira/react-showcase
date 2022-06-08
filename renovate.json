@@ -30,5 +30,6 @@
       "groupName": "I18next",
       "matchPackagePatterns": ["i18next"]
     }
-  ]
+  ],
+  "platformAutomerge": true
 }
