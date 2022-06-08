@@ -23,6 +23,7 @@ export default defineConfig({
       all: true,
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['**/*.test.*', 'src/test', 'src/main.tsx', 'src/vite-env.d.ts'],
+      reporter: ['lcov', 'text-summary'],
     },
   },
 });
