@@ -7,8 +7,7 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "pin", "digest"],
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     },
     {
       "groupName": "Eslint",
