@@ -2,7 +2,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import styles from './app.module.scss';
 
-function App() {
+export function App() {
   const [count, setCount] = useState(0);
 
   return (
@@ -10,6 +10,7 @@ function App() {
       <header className={styles.header}>
         <img src={logo} className={styles.logo} alt="logo" />
         <p>Hello Vite + React!</p>
+
         <p>
           <button
             type="button"
@@ -45,5 +46,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
