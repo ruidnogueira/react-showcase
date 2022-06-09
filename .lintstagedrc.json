@@ -1,5 +1,6 @@
 {
   "src/**/*": "ls-lint",
+  "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix --max-warnings=0",
   "src/**/*.{css,scss}": "stylelint --fix",
   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
 }

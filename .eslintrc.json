@@ -1,0 +1,97 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    },
+    "jest": {
+      "version": 28
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:storybook/recommended",
+    "prettier" // should be last to override the other configs
+  ],
+  "plugins": ["react", "react-hooks", "jsx-a11y", "@typescript-eslint", "unused-imports"],
+  "rules": {
+    "no-console": "warn",
+    "import/no-duplicates": "off",
+    "import/no-named-as-default": "off",
+    "import/no-unresolved": "off",
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "react/button-has-type": "error",
+    "jsx-a11y/html-has-lang": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "unused-imports/no-unused-imports": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.[jt]s?(x)"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ],
+      "plugins": [],
+      "rules": {
+        "jest/consistent-test-it": ["error", { "fn": "test" }],
+        "testing-library/no-manual-cleanup": "error",
+        "@typescript-eslint/no-non-null-assertion": "off"
+      },
+      "env": {
+        "jest/globals": true
+      }
+    },
+    {
+      "files": ["e2e/**/*"],
+      "extends": ["plugin:playwright/playwright-test"],
+      "rules": {
+        "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/no-misused-promises": "off"
+      }
+    }
+  ]
+}
