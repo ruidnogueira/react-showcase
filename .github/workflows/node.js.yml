@@ -46,3 +46,10 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: ./coverage/lcov.info
+
+      - name: Upload coverage to Code Climate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 010fba3bc426085e0cb7c0fa8dee7494a167e5d6f110e60025ca0c47f833f64f
+        with:
+          coverageLocations: ${{github.workspace}}/coverage/lcov.info:lcov
