@@ -15,6 +15,7 @@ dist-ssr
 coverage
 build
 storybook-static
+dependency-stats.html
 
 # Editor directories and files
 .vscode/*
