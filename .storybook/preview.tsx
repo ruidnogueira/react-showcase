@@ -1,4 +1,8 @@
-import { Parameters } from '@storybook/addons';
+import { Parameters, DecoratorFunction } from '@storybook/addons';
+import { DecoratorFn } from '@storybook/react';
+import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
+
+initializeMsw({ onUnhandledRequest: 'bypass' });
 
 export const parameters: Parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -31,3 +35,10 @@ export const globalTypes = {
     },
   },
 };
+
+const reactDecorators: DecoratorFn[] = [];
+
+export const decorators: Array<DecoratorFunction | DecoratorFn> = [
+  mswDecorator,
+  ...reactDecorators,
+];
