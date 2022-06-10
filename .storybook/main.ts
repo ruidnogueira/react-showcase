@@ -1,4 +1,6 @@
 import type { StorybookViteConfig } from '@storybook/builder-vite';
+import { mergeConfig } from 'vite';
+import { vitePlugins } from '../vite-plugins';
 
 const config: StorybookViteConfig = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -15,7 +17,9 @@ const config: StorybookViteConfig = {
     storyStoreV7: true,
   },
   async viteFinal(config) {
-    return config;
+    return mergeConfig(config, {
+      plugins: [...vitePlugins],
+    });
   },
 };
 

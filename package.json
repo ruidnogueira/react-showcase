@@ -66,6 +66,8 @@
     "husky": "8.0.1",
     "jsdom": "^19.0.0",
     "lint-staged": "13.0.0",
+    "msw": "^0.42.1",
+    "msw-storybook-addon": "^1.6.3",
     "prettier": "^2.6.2",
     "sass": "1.52.2",
     "stylelint": "^14.8.5",
@@ -76,6 +78,10 @@
     "stylelint-scss": "^4.2.0",
     "typescript": "4.7.3",
     "vite": "2.9.10",
+    "vite-tsconfig-paths": "^3.5.0",
     "vitest": "^0.14.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

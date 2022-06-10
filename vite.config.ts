@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { vitePlugins } from './vite-plugins';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,7 +9,7 @@ export default defineConfig({
     outDir: './build',
   },
 
-  plugins: [react()],
+  plugins: [react(), ...vitePlugins],
 
   // https://github.com/vitest-dev/vitest
   test: {
@@ -30,6 +31,7 @@ export default defineConfig({
         '**/*.test.*',
         '**/*.stories.*',
         'src/test',
+        'src/mocks',
         'src/stories',
         'src/main.tsx',
         'src/vite-env.d.ts',
