@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { vitePlugins } from './vite-plugins';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
     outDir: './build',
   },
 
-  plugins: [react(), ...vitePlugins],
+  plugins: [react(), visualizer({ filename: 'dependency-stats.html' }), ...vitePlugins],
 
   // https://github.com/vitest-dev/vitest
   test: {
