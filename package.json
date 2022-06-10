@@ -9,7 +9,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "serve": "vite preview",
     "test": "vitest",
     "prepare": "husky install",
     "lint": "npm run lint:lslint && npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
