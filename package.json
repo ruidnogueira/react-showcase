@@ -2,7 +2,7 @@
   "name": "react-showcase",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://github.com/ruidnogueira/react-showcase",
+  "homepage": "https://ruidnogueira.github.io/react-showcase/",
   "engines": {
     "node": ">=16"
   },
@@ -19,12 +19,14 @@
     "lint:prettier": "prettier --check src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "chromatic": "chromatic --exit-zero-on-changes --skip 'renovate/**'"
+    "chromatic": "chromatic --exit-zero-on-changes --skip 'renovate/**'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "rollup-plugin-visualizer": "^5.6.0"
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.18.2",
@@ -64,12 +66,14 @@
     "eslint-plugin-storybook": "0.5.12",
     "eslint-plugin-testing-library": "5.5.1",
     "eslint-plugin-unused-imports": "2.0.0",
+    "gh-pages": "^4.0.0",
     "husky": "8.0.1",
     "jsdom": "19.0.0",
     "lint-staged": "13.0.0",
     "msw": "0.42.1",
     "msw-storybook-addon": "1.6.3",
     "prettier": "2.6.2",
+    "rollup-plugin-visualizer": "^5.6.0",
     "sass": "1.52.2",
     "stylelint": "14.8.5",
     "stylelint-config-css-modules": "4.1.0",
