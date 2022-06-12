@@ -28,6 +28,7 @@
   "dependencies": {
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-router-dom": "^6.3.0",
     "url-join": "5.0.0",
     "workbox-core": "6.5.3",
     "workbox-expiration": "6.5.3",
