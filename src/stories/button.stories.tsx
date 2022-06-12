@@ -1,5 +1,4 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { App } from 'src/app';
 import { Button } from './button';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -38,5 +37,3 @@ Small.args = {
   size: 'small',
   label: 'Button',
 };
-
-const X = <App />;

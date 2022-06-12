@@ -1,6 +1,7 @@
 import type { StorybookViteConfig } from '@storybook/builder-vite';
 import { mergeConfig } from 'vite';
 import { vitePlugins } from '../vite-plugins';
+import { VitePWA } from 'vite-plugin-pwa';
 
 const config: StorybookViteConfig = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -18,7 +19,7 @@ const config: StorybookViteConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      plugins: [...vitePlugins],
+      plugins: [VitePWA({ injectRegister: null }), ...vitePlugins],
     });
   },
 };
