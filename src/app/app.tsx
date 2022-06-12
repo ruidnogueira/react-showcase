@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logo from '../logo.svg';
+import { ReactComponent as Logo } from 'src/assets/logo.svg';
 import styles from './app.module.scss';
 
 export function App() {
@@ -8,7 +8,8 @@ export function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <img src={logo} className={styles.logo} alt="logo" />
+        <Logo className={styles.logo} />
+
         <p>Hello Vite + React!</p>
 
         <p>
