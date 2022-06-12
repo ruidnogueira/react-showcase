@@ -6,6 +6,11 @@ beforeAll(() => {
 });
 
 afterEach(() => {
+  vi.clearAllMocks();
+
+  localStorage.clear();
+  sessionStorage.clear();
+
   server.resetHandlers();
 });
 
