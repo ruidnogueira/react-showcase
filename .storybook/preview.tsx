@@ -1,6 +1,9 @@
 import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
+import { Suspense } from 'react';
+import { ConfigProvider } from '../src/app/contexts/config/config-context';
+import { I18nProvider } from '../src/app/contexts/i18n/i18n-context';
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -36,7 +39,17 @@ export const globalTypes = {
   },
 };
 
-const reactDecorators: DecoratorFn[] = [];
+const reactDecorators: DecoratorFn[] = [
+  (Story) => (
+    <ConfigProvider>
+      <I18nProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Story />
+        </Suspense>
+      </I18nProvider>
+    </ConfigProvider>
+  ),
+];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [
   mswDecorator,
