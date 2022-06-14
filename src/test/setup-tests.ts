@@ -1,4 +1,6 @@
 import '@testing-library/jest-dom';
+import './mocks/i18n';
+
 import { server } from 'src/mocks/server/server';
 
 beforeAll(() => {
