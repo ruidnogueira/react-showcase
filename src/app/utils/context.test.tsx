@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from 'src/test/helpers/render';
 import { createContext } from './context';
 
 const [TestProvider, useTest] = createContext<string>({
