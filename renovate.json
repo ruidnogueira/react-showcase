@@ -28,6 +28,11 @@
     {
       "groupName": "I18next",
       "matchPackagePatterns": ["i18next"]
+    },
+    {
+      "groupName": "Core storybook",
+      "matchPackagePatterns": ["^@storybook"],
+      "automerge": false
     }
   ],
   "platformAutomerge": true
