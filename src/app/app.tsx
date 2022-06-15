@@ -12,7 +12,7 @@ export function App() {
       <header className={styles.header}>
         <Logo className={styles.logo} />
 
-        <p>{t('hello')}</p>
+        <p>{t('common.hello')}</p>
 
         <p>
           <button

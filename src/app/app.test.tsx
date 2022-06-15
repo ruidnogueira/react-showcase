@@ -5,7 +5,7 @@ import { App } from './app';
 
 test('renders app', () => {
   renderWithProviders(<App />);
-  expect(screen.getByText('hello')).toBeInTheDocument();
+  expect(screen.getByText('common.hello')).toBeInTheDocument();
 });
 
 test('increments count', async () => {
