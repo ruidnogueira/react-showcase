@@ -1,14 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from 'src/test/helpers/render';
 import { App } from './app';
 
 test('renders app', () => {
-  render(<App />);
-  expect(screen.getByText('Hello Vite + React!')).toBeInTheDocument();
+  renderWithProviders(<App />);
+  expect(screen.getByText('common.hello')).toBeInTheDocument();
 });
 
 test('increments count', async () => {
-  render(<App />);
+  renderWithProviders(<App />);
 
   expect(screen.getByRole('button', { name: 'count is: 0' })).toBeInTheDocument();
 

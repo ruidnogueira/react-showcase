@@ -1,8 +1,7 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from 'src/test/helpers/render';
+import { ServiceWorkerProvider, useServiceWorker } from './service-worker-context';
 
 vi.mock('virtual:pwa-register/react', () => ({ useRegisterSW: vi.fn().mockReturnValue({}) }));
-
-import { ServiceWorkerProvider, useServiceWorker } from './service-worker-context';
 
 test('renders when provider exists', () => {
   expect(() =>

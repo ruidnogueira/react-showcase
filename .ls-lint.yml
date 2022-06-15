@@ -14,3 +14,4 @@ ls:
     .module.scss: kebab-case
 
 ignore:
+  - src/locales

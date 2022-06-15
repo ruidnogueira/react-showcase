@@ -63,6 +63,18 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@testing-library/react",
+            "importNames": ["render", "renderHook"],
+            "message": "use our test helpers."
+          }
+        ]
+      }
+    ],
     "@typescript-eslint/restrict-template-expressions": "off",
     "unused-imports/no-unused-imports": "warn"
   },
