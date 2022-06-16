@@ -1,0 +1,45 @@
+@use 'sass:list';
+@use 'sass:meta';
+
+// ==== Color ====
+
+// Slightly lighten a color
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+// Slightly darken a color
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+// ==== Util ====
+
+// Joins items of a list by a separator
+@function join-list($list, $glue: ', ') {
+  @if length($list) == 1 {
+    @return $list;
+  }
+
+  $string: '';
+  @each $item in $list {
+    @if $string != '' {
+      $string: $string + $glue;
+    }
+
+    $string: $string + $item;
+  }
+
+  @return $string;
+}
+
+// Appends prefix/suffix to values of a list
+@function append-list($list, $prefix: '', $suffix: '') {
+  $new-list: ();
+
+  @each $value in $list {
+    $new-list: list.append($new-list, $prefix + $value + $suffix);
+  }
+
+  @return $new-list;
+}

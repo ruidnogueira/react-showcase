@@ -1,0 +1,17 @@
+@use '../utils';
+
+@mixin set-theme-colors($parent, $parent-key: '') {
+  @if $parent-key == '' or type-of($parent) == 'map' {
+    @each $child-key, $child in $parent {
+      @include set-theme-colors($child, #{$parent-key}-#{$child-key});
+    }
+  } @else {
+    --color#{$parent-key}: #{$parent};
+  }
+}
+
+@each $theme-name, $theme in utils.$themes {
+  @include utils.theme($theme-name) {
+    @include set-theme-colors($theme);
+  }
+}

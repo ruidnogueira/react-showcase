@@ -1,0 +1,9 @@
+@use 'sass:map';
+@use 'colors' as *;
+
+$theme: (
+  'text': map.get($colors, 'alabaster'),
+  'text-light': map.get($colors, 'alabaster'),
+  'text-dark': map.get($colors, 'mine-shaft'),
+  'background': map.get($colors, 'mine-shaft'),
+);
