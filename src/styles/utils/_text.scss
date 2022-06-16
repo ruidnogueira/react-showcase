@@ -1,0 +1,62 @@
+@use 'variables';
+
+/* stylelint-disable-next-line value-keyword-case */
+$font-family-text: Roboto, sans-serif;
+
+/* stylelint-disable-next-line value-keyword-case */
+$font-family-heading: Raleway, sans-serif;
+
+@mixin heading {
+  font-family: $font-family-heading;
+  font-weight: bold;
+  line-height: variables.$line-height-heading;
+  margin-bottom: variables.$spacing-3;
+}
+
+@mixin text {
+  font-family: $font-family-text;
+  font-weight: normal;
+  line-height: variables.$line-height-text;
+}
+
+@mixin regular-text {
+  @include text;
+
+  font-size: variables.$font-size-5;
+}
+
+@mixin h1 {
+  @include heading;
+
+  font-size: variables.$font-size-9;
+}
+
+@mixin h2 {
+  @include heading;
+
+  font-size: variables.$font-size-8;
+}
+
+@mixin h3 {
+  @include heading;
+
+  font-size: variables.$font-size-7;
+}
+
+@mixin h4 {
+  @include heading;
+
+  font-size: variables.$font-size-5;
+}
+
+@mixin h5 {
+  @include heading;
+
+  font-size: variables.$font-size-3;
+}
+
+@mixin h6 {
+  @include heading;
+
+  font-size: variables.$font-size-1;
+}
