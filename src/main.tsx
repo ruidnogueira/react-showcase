@@ -1,13 +1,13 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './app/app';
-import './index.scss';
 import urlJoin from 'url-join';
 import { ServiceWorkerProvider } from './app/components/service-worker/service-worker-context';
 import { BrowserRouter } from 'react-router-dom';
 import { adjustPathSlashes } from './app/utils/path';
 import { I18nProvider } from './app/contexts/i18n/i18n-context';
 import { ConfigProvider } from './app/contexts/config/config-context';
+import './styles/styles.scss';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { worker } = await import('src/mocks/server/browser');
