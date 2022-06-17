@@ -8,6 +8,8 @@ import { adjustPathSlashes } from './app/utils/path';
 import { I18nProvider } from './app/contexts/i18n/i18n-context';
 import { ConfigProvider } from './app/contexts/config/config-context';
 import './styles/styles.scss';
+import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from './app/contexts/theme/theme-context';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { worker } = await import('src/mocks/server/browser');
@@ -29,13 +31,17 @@ createRoot(document.getElementById('root') as Element).render(
   <StrictMode>
     <ServiceWorkerProvider>
       <BrowserRouter basename={baseName}>
-        <ConfigProvider>
-          <I18nProvider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <App />
-            </Suspense>
-          </I18nProvider>
-        </ConfigProvider>
+        <HelmetProvider>
+          <ConfigProvider>
+            <I18nProvider>
+              <ThemeProvider>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <App />
+                </Suspense>
+              </ThemeProvider>
+            </I18nProvider>
+          </ConfigProvider>
+        </HelmetProvider>
       </BrowserRouter>
     </ServiceWorkerProvider>
   </StrictMode>

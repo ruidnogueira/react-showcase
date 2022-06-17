@@ -9,6 +9,8 @@ import {
 } from '@testing-library/react';
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from 'src/app/contexts/config/config-context';
+import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from 'src/app/contexts/theme/theme-context';
 
 interface RenderWithProvidersOptions {
   wrapper?: JSXElementConstructor<{ children: ReactElement }>;
@@ -73,7 +75,11 @@ export function renderHookWithProviders<Props, Result>(
 function TestProviders({ children, routerProps }: TestProviderProps) {
   return (
     <MemoryRouter {...routerProps}>
-      <ConfigProvider>{children}</ConfigProvider>
+      <HelmetProvider>
+        <ConfigProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ConfigProvider>
+      </HelmetProvider>
     </MemoryRouter>
   );
 }

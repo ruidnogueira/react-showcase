@@ -1,8 +1,23 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Logo } from 'src/assets/logo.svg';
 
 export function App() {
+  const { i18n } = useTranslation();
+
+  return (
+    <>
+      <Helmet>
+        <html lang={i18n.languages[0]} />
+      </Helmet>
+
+      <AppPage />
+    </>
+  );
+}
+
+const AppPage = memo(function AppPage() {
   const [count, setCount] = useState(0);
   const { t } = useTranslation();
 
@@ -21,4 +36,4 @@ export function App() {
       </header>
     </div>
   );
-}
+});
