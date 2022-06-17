@@ -1,11 +1,17 @@
 @use 'sass:map';
 @use '../utils';
 
+html {
+  height: 100%;
+}
+
 body {
   @include utils.regular-text;
 
   background-color: var(--color-background);
   color: var(--color-text);
+  height: auto;
+  min-height: 100%;
 }
 
 h1 {
