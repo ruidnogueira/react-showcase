@@ -44,6 +44,36 @@ $-colors: functions.map-collect(
   )
 );
 
+/* stylelint-disable-next-line value-keyword-case */
+$font-family-heading: Raleway, sans-serif;
+/* stylelint-disable-next-line value-keyword-case */
+$font-family-text: Roboto, sans-serif;
+
 $theme: (
   'colors': $-colors,
+  'font-family-heading': $font-family-heading,
+  'font-family-text': $font-family-text,
+  'font-size-1': functions.px-to-rem(10px),
+  'font-size-2': functions.px-to-rem(12px),
+  'font-size-3': functions.px-to-rem(13px),
+  'font-size-4': functions.px-to-rem(14px),
+  'font-size-5': functions.px-to-rem(16px),
+  'font-size-6': functions.px-to-rem(18px),
+  'font-size-7': functions.px-to-rem(20px),
+  'font-size-8': functions.px-to-rem(24px),
+  'font-size-9': functions.px-to-rem(28px),
+  'font-size-10': functions.px-to-rem(32px),
+  'font-size-11': functions.px-to-rem(42px),
+  'line-height-heading': 1.25,
+  'line-height-text': 1.5,
+  'spacing-1': functions.px-to-rem(2px),
+  'spacing-2': functions.px-to-rem(4px),
+  'spacing-3': functions.px-to-rem(8px),
+  'spacing-4': functions.px-to-rem(12px),
+  'spacing-5': functions.px-to-rem(16px),
+  'spacing-6': functions.px-to-rem(24px),
+  'spacing-7': functions.px-to-rem(28px),
+  'spacing-8': functions.px-to-rem(32px),
+  'spacing-9': functions.px-to-rem(44px),
+  'spacing-10': functions.px-to-rem(48px),
 );
