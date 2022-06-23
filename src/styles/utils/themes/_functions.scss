@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '../functions';
+
+// Creates a new map with all the derived colors
+//  $color-hues: (
+//    'primary-100': #eee,
+//    'primary-200': #fff
+//  )
+@function derive-color-hues($color-name, $color, $lightness, $base-lightness-level) {
+  $color-hues: ();
+
+  @each $level, $percentage in $lightness {
+    $name: $color-name + '-' + $level;
+
+    @if $level < $base-lightness-level {
+      $color-hues: map.set($color-hues, $name, functions.tint($color, $percentage));
+    } @else if $level > $base-lightness-level {
+      $color-hues: map.set($color-hues, $name, functions.shade($color, $percentage));
+    } @else {
+      $color-hues: map.set($color-hues, $name, $color);
+    }
+  }
+
+  @return $color-hues;
+}

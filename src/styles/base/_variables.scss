@@ -6,7 +6,7 @@
       @include set-theme-colors($child, #{$parent-key}-#{$child-key});
     }
   } @else {
-    --color#{$parent-key}: #{$parent};
+    --theme#{$parent-key}: #{$parent};
   }
 }
 

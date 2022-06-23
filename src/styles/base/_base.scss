@@ -8,8 +8,8 @@ html {
 body {
   @include utils.regular-text;
 
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--theme-colors-background);
+  color: var(--theme-colors-text);
   height: auto;
   min-height: 100%;
 }

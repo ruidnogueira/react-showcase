@@ -1,7 +1,5 @@
 import { EffectCallback, useEffect, useRef } from 'react';
 
-// TODO TEST
-
 /**
  * Ensures that code is only ran once on mount.
  *

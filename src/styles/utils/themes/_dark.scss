@@ -1,9 +1,49 @@
 @use 'sass:map';
-@use 'colors' as *;
+@use '../functions';
+@use 'functions' as color-functions;
+
+$-pallete: (
+  'alabaster': hsl(0deg, 0%, 98%),
+  'jagger': hsl(273deg, 20%, 24%),
+  'mine-shaft': hsl(0deg, 0%, 13%),
+  'sizzling-red': hsl(353deg, 100%, 61%),
+);
+
+$-base-colors: (
+  'light': map.get($-pallete, 'alabaster'),
+  'dark': map.get($-pallete, 'mine-shaft'),
+  'primary': map.get($-pallete, 'sizzling-red'),
+  'secondary': map.get($-pallete, 'jagger'),
+);
+
+$-lightness: (
+  100: 80%,
+  200: 60%,
+  300: 40%,
+  400: 20%,
+  500: 0,
+  600: 20%,
+  700: 40%,
+  800: 60%,
+  900: 80%,
+);
+
+@function -derive-color-hues($color-name, $color) {
+  @return color-functions.derive-color-hues($color-name, $color, $-lightness, 500);
+}
+
+$-colors: functions.map-collect(
+  $-base-colors,
+  -derive-color-hues('primary', map.get($-base-colors, 'primary')),
+  -derive-color-hues('secondary', map.get($-base-colors, 'secondary')),
+  (
+    'background': map.get($-base-colors, 'dark'),
+    'text': map.get($-base-colors, 'light'),
+    'text-light': map.get($-base-colors, 'light'),
+    'text-dark': map.get($-base-colors, 'dark'),
+  )
+);
 
 $theme: (
-  'text': map.get($colors, 'alabaster'),
-  'text-light': map.get($colors, 'alabaster'),
-  'text-dark': map.get($colors, 'mine-shaft'),
-  'background': map.get($colors, 'mine-shaft'),
+  'colors': $-colors,
 );
