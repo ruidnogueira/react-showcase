@@ -1,3 +1,29 @@
 <script>
   window.global = window;
 </script>
+
+<style>
+  body,
+  #root {
+    padding: 0 !important;
+  }
+
+  .storybook-theme_wrapper {
+    background: var(--theme-color-background);
+    color: var(--theme-color-text);
+    min-height: 100vh;
+    padding: 1rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .storybook-theme_wrapper--fullscreen {
+    padding: 0;
+  }
+
+  .storybook-theme_wrapper--centered {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+</style>

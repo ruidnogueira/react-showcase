@@ -1,0 +1,19 @@
+@use 'functions';
+
+@mixin parent-content($selectors) {
+  @if & {
+    #{functions.join-list(functions.append-list($selectors, $suffix: ' &'))} {
+      @content;
+    }
+  } @else {
+    #{functions.join-list($selectors)} {
+      @content;
+    }
+  }
+}
+
+@mixin theme($theme-name) {
+  @include parent-content('[data-theme="' + $theme-name + '"]') {
+    @content;
+  }
+}

@@ -1,0 +1,54 @@
+@mixin heading {
+  font-family: var(--theme-font-family-heading);
+  font-weight: bold;
+  line-height: var(--theme-line-height-heading);
+  margin-bottom: var(--theme-spacing-3);
+}
+
+@mixin text {
+  font-family: var(--theme-font-family-text);
+  font-weight: normal;
+  line-height: var(--theme-line-height-text);
+}
+
+@mixin regular-text {
+  @include text;
+
+  font-size: var(--theme-font-size-5);
+}
+
+@mixin h1 {
+  @include heading;
+
+  font-size: var(--theme-font-size-9);
+}
+
+@mixin h2 {
+  @include heading;
+
+  font-size: var(--theme-font-size-8);
+}
+
+@mixin h3 {
+  @include heading;
+
+  font-size: var(--theme-font-size-7);
+}
+
+@mixin h4 {
+  @include heading;
+
+  font-size: var(--theme-font-size-5);
+}
+
+@mixin h5 {
+  @include heading;
+
+  font-size: var(--theme-font-size-3);
+}
+
+@mixin h6 {
+  @include heading;
+
+  font-size: var(--theme-font-size-1);
+}

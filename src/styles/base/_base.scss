@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '../utils';
+
+html {
+  height: 100%;
+}
+
+body {
+  @include utils.regular-text;
+
+  background-color: var(--theme-color-background);
+  color: var(--theme-color-text);
+  height: auto;
+  min-height: 100%;
+}
+
+h1 {
+  @include utils.h1;
+}
+
+h2 {
+  @include utils.h2;
+}
+
+h3 {
+  @include utils.h3;
+}
+
+h4 {
+  @include utils.h4;
+}
+
+h5 {
+  @include utils.h5;
+}
+
+h6 {
+  @include utils.h6;
+}

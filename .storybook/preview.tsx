@@ -1,9 +1,14 @@
+import '../src/styles/styles.scss';
 import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
+import classNames from 'classnames';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
-import { Suspense } from 'react';
+import { ReactNode, Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
+import isChromatic from 'chromatic';
 import { ConfigProvider } from '../src/app/contexts/config/config-context';
 import { I18nProvider } from '../src/app/contexts/i18n/i18n-context';
+import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -35,23 +40,68 @@ export const globalTypes = {
     toolbar: {
       icon: 'circlehollow',
       items: ['light', 'dark'],
+      showName: true,
+      dynamicTitle: true,
     },
   },
 };
 
 const reactDecorators: DecoratorFn[] = [
   (Story) => (
-    <ConfigProvider>
-      <I18nProvider>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Story />
-        </Suspense>
-      </I18nProvider>
-    </ConfigProvider>
+    <HelmetProvider>
+      <ConfigProvider>
+        <I18nProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Story />
+          </Suspense>
+        </I18nProvider>
+      </ConfigProvider>
+    </HelmetProvider>
   ),
+
+  (Story, { globals, parameters }) =>
+    isChromatic() ? (
+      <>
+        <ThemeWrapper theme="light" parameters={parameters}>
+          <Story />
+        </ThemeWrapper>
+
+        <ThemeWrapper theme="dark" parameters={parameters}>
+          <Story />
+        </ThemeWrapper>
+      </>
+    ) : (
+      <ThemeWrapper theme={globals.theme} parameters={parameters}>
+        <Story />
+      </ThemeWrapper>
+    ),
 ];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [
   mswDecorator,
   ...reactDecorators,
 ];
+
+function ThemeWrapper({
+  children,
+  theme,
+  parameters,
+}: {
+  children: ReactNode;
+  theme: Theme;
+  parameters: Parameters;
+}) {
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+      <div
+        data-theme={theme}
+        data-testid={`storybook-theme-${theme}`}
+        className={classNames('storybook-theme_wrapper', {
+          [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
+        })}
+      >
+        {children}
+      </div>
+    </ThemeContext.Provider>
+  );
+}

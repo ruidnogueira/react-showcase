@@ -1,0 +1,82 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+
+// ==== Color ====
+
+// Slightly lighten a color
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+// Slightly darken a color
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+// Calculates brightness of a color
+// From W3C document: https://www.w3.org/TR/AERT/
+@function brightness($color) {
+  $red: color.red($color);
+  $green: color.green($color);
+  $blue: color.blue($color);
+
+  @return math.round(math.div(($red * 299) + ($green * 587) + ($blue * 114), 1000));
+}
+
+// Calculates if text needs to be light or dark based on the it's background color
+@function text-contrast($background, $light, $dark) {
+  $background-brightness: brightness($background);
+  $light-brightness: brightness($light);
+
+  @if math.abs($background-brightness) < math.div($light-brightness, 2) {
+    @return $light;
+  } @else {
+    @return $dark;
+  }
+}
+
+// ==== Util ====
+
+@function px-to-rem($pxValue) {
+  @return math.div($pxValue, 16px) * 1rem;
+}
+
+// Joins items of a list by a separator
+@function join-list($list, $glue: ', ') {
+  @if length($list) == 1 {
+    @return $list;
+  }
+
+  $string: '';
+  @each $item in $list {
+    @if $string != '' {
+      $string: $string + $glue;
+    }
+
+    $string: $string + $item;
+  }
+
+  @return $string;
+}
+
+// Appends prefix/suffix to values of a list
+@function append-list($list, $prefix: '', $suffix: '') {
+  $new-list: ();
+
+  @each $value in $list {
+    $new-list: list.append($new-list, $prefix + $value + $suffix);
+  }
+
+  @return $new-list;
+}
+
+@function map-collect($maps...) {
+  $collection: ();
+
+  @each $map in $maps {
+    $collection: map.merge($collection, $map);
+  }
+  @return $collection;
+}

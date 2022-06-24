@@ -71,6 +71,15 @@
             "name": "@testing-library/react",
             "importNames": ["render", "renderHook"],
             "message": "use our test helpers."
+          },
+          {
+            "name": "react",
+            "importNames": ["createContext"],
+            "message": "use our utils."
+          },
+          {
+            "name": "react-dom/test-utils",
+            "message": "use testing library instead."
           }
         ]
       }
