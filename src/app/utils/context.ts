@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { createContext as createReactContext, useContext as useReactContext } from 'react';
 
 export interface CreateContextOptions {
