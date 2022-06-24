@@ -50,7 +50,7 @@ $font-family-heading: Raleway, sans-serif;
 $font-family-text: Roboto, sans-serif;
 
 $theme: (
-  'colors': $-colors,
+  'color': $-colors,
   'font-family-heading': $font-family-heading,
   'font-family-text': $font-family-text,
   'font-size-1': functions.px-to-rem(10px),
