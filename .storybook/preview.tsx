@@ -95,6 +95,7 @@ function ThemeWrapper({
     <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
       <div
         data-theme={theme}
+        data-testid={`storybook-theme-${theme}`}
         className={classNames('storybook-theme_wrapper', {
           [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
         })}

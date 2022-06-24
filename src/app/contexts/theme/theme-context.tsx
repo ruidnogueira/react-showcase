@@ -4,7 +4,8 @@ import { createContext } from 'src/app/utils/context';
 import { getFromLocalStorage, saveToLocalStorage } from 'src/app/utils/storage';
 import { useConfig } from '../config/config-context';
 
-export type Theme = 'light' | 'dark';
+export const Themes = ['light', 'dark'] as const;
+export type Theme = typeof Themes[number];
 
 const [ThemeContextProvider, useTheme, ThemeContext] = createContext<{
   theme: Theme;

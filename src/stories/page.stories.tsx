@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
+import { playStoryWithThemes } from './helpers/story';
 import { Page } from './page';
 
 export default {
@@ -17,10 +18,10 @@ export const LoggedOut: ComponentStoryObj<typeof Page> = {
 
 export const LoggedIn: ComponentStoryObj<typeof Page> = {
   ...LoggedOut,
-  play: async ({ canvasElement }) => {
+  play: playStoryWithThemes(async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const loginButton = canvas.getByRole('button', { name: /Log in/i });
     // eslint-disable-next-line @typescript-eslint/await-thenable
     await userEvent.click(loginButton);
-  },
+  }),
 };
