@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { createContext as createReactContext, useContext as useReactContext } from 'react';
 
-export interface CreateContextOptions {
+export interface CreateContextOptions<ContextType> {
   /**
    * The name of the context
    */
@@ -11,6 +11,11 @@ export interface CreateContextOptions {
    * The name of the consumer hook
    */
   hookName: string;
+
+  /**
+   * The default value of the context
+   */
+  defaultValue?: ContextType;
 }
 
 /**
@@ -19,12 +24,13 @@ export interface CreateContextOptions {
 export function createContext<ContextType>({
   contextName,
   hookName,
-}: CreateContextOptions): [
+  defaultValue,
+}: CreateContextOptions<ContextType>): [
   provider: React.Provider<ContextType | undefined>,
   hook: () => ContextType,
   context: React.Context<ContextType | undefined>
 ] {
-  const Context = createReactContext<ContextType | undefined>(undefined);
+  const Context = createReactContext<ContextType | undefined>(defaultValue);
   Context.displayName = contextName;
 
   const useContext = () => {
