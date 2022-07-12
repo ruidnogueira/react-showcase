@@ -1,16 +1,17 @@
-import i18n from 'i18next';
+import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { i18nConfig } from 'src/app/contexts/config/i18n-config';
+import { getI18nDateFormatter } from 'src/app/contexts/i18n/i18n-format';
+import resources from 'virtual:i18n';
+
+const namespace = 'translation';
 
 // eslint-disable-next-line import/no-named-as-default-member
-void i18n.use(initReactI18next).init({
-  lng: 'en',
-  fallbackLng: 'en',
-
-  // have a common namespace used around the full app
-  ns: ['translationsNS'],
-  defaultNS: 'translationsNS',
-
+await i18next.use(initReactI18next).init({
+  lng: 'en-GB',
   debug: false,
+  ns: [namespace],
+  defaultNS: namespace,
 
   interpolation: {
     escapeValue: false, // not needed for react!!
@@ -19,6 +20,10 @@ void i18n.use(initReactI18next).init({
   react: {
     useSuspense: false,
   },
-
-  resources: { en: { translationsNS: {} } },
 });
+
+resources.forEach((resource, language) => {
+  i18next.addResourceBundle(language, namespace, resource);
+});
+
+i18next.services.formatter?.add('date', getI18nDateFormatter(i18nConfig));

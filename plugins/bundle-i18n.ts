@@ -37,6 +37,9 @@ export function serveI18n({
   let fileSourcePath: string;
   let shouldReload: picomatch.Matcher;
 
+  const virtualModuleId = 'virtual:i18n';
+  const resolvedVirtualModuleId = '\0' + virtualModuleId;
+
   return {
     name: 'vite-plugin-merge-i18n',
     apply: 'serve',
@@ -50,6 +53,16 @@ export function serveI18n({
       fileSourcePath = normalizePath(path.resolve(config.root, source));
       const fileSourceFilesPath = normalizePath(path.resolve(config.root, source, '**/*.json'));
       shouldReload = picomatch(fileSourceFilesPath);
+    },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId;
+      }
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export default new Map(${JSON.stringify(Array.from(bundledLocales))})`;
+      }
     },
     configureServer(server) {
       bundledLocales = bundleLocales({ root: config.root, source });
