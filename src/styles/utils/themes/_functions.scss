@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../functions';
+@use '../color';
 
 // Creates a new map with all the derived colors
 //  $color-hues: (
@@ -13,9 +13,9 @@
     $name: $color-name + '-' + $level;
 
     @if $level < $base-lightness-level {
-      $color-hues: map.set($color-hues, $name, functions.tint($color, $percentage));
+      $color-hues: map.set($color-hues, $name, color.tint($color, $percentage));
     } @else if $level > $base-lightness-level {
-      $color-hues: map.set($color-hues, $name, functions.shade($color, $percentage));
+      $color-hues: map.set($color-hues, $name, color.shade($color, $percentage));
     } @else {
       $color-hues: map.set($color-hues, $name, $color);
     }

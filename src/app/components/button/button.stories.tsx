@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ColorVariants, ControlSizes } from 'src/app/models/styles';
+import { ControlSizes } from 'src/app/models/styles';
 import { StorybookVariants } from 'src/stories/helpers/story';
-import { Button } from './button';
+import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
   title: 'Atoms/Button',
@@ -19,41 +19,52 @@ export default {
   },
 } as ComponentMeta<typeof Button>;
 
-const colorVariants = [undefined, ...ColorVariants];
-
-export const Default: ComponentStoryObj<typeof Button> = {
+export const Filled: ComponentStoryObj<typeof Button> = {
   render: (args) => (
     <StorybookVariants>
-      {colorVariants.map((color) => (
-        <Button {...args} key={color ?? 'undefined'} color={color} />
+      {ButtonColorVariants.map((color) => (
+        <Button {...args} key={color} color={color} />
       ))}
     </StorybookVariants>
   ),
 };
 
-export const Transparent: ComponentStoryObj<typeof Button> = {
-  ...Default,
+export const Ghost: ComponentStoryObj<typeof Button> = {
+  ...Filled,
   args: {
-    variant: 'transparent',
+    variant: 'ghost',
+  },
+};
+
+export const Quiet: ComponentStoryObj<typeof Button> = {
+  ...Filled,
+  args: {
+    variant: 'quiet',
   },
 };
 
 export const Link: ComponentStoryObj<typeof Button> = {
-  ...Default,
+  ...Filled,
   args: {
     variant: 'link',
   },
 };
 
 export const Small: ComponentStoryObj<typeof Button> = {
-  ...Default,
+  ...Filled,
   args: {
     size: 'small',
   },
 };
 
 export const Disabled: ComponentStoryObj<typeof Button> = {
-  ...Default,
+  render: (args) => (
+    <StorybookVariants>
+      {ButtonStyleVariants.map((variant) => (
+        <Button {...args} key={variant} variant={variant} />
+      ))}
+    </StorybookVariants>
+  ),
   args: {
     disabled: true,
   },

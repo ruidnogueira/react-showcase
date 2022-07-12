@@ -1,10 +1,13 @@
 import classNames from 'classnames';
 import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef, ReactElement } from 'react';
-import { ColorVariant, ControlSize } from 'src/app/models/styles';
+import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
 
-export const ButtonStyleVariants = ['transparent', 'link'] as const;
+export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;
+export type ButtonColorVariant = typeof ButtonColorVariants[number];
+
+export const ButtonStyleVariants = ['filled', 'ghost', 'quiet', 'link'] as const;
 export type ButtonStyleVariant = typeof ButtonStyleVariants[number];
 
 type ElementType = { [K in keyof JSX.IntrinsicElements]: K }[keyof JSX.IntrinsicElements];
@@ -18,7 +21,7 @@ export interface BaseButtonProps extends OriginalButtonProps {
   /**
    * The color variant of the button
    */
-  color?: ColorVariant;
+  color?: ButtonColorVariant;
 
   /**
    * The style variant of the button
@@ -50,8 +53,17 @@ interface SlottedButtonProps extends BaseButtonProps {
 export type ButtonProps = StrictUnion<UnslottedButtonProps | SlottedButtonProps>;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { children, asChild, className, variant, color, size, type, disabled, ...buttonProps } =
-    props;
+  const {
+    children,
+    asChild,
+    className,
+    variant = 'filled',
+    color = 'secondary',
+    size = 'medium',
+    type,
+    disabled,
+    ...buttonProps
+  } = props;
 
   const Component = asChild ? Slot : 'button';
 
@@ -69,11 +81,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       type={type}
       className={classNames(
         'button',
-        {
-          [`button--${variant}`]: variant,
-          [`button--${color}`]: color,
-          [`button--${size}`]: size,
-        },
+        `button--${variant}`,
+        `button--${color}`,
+        `button--${size}`,
         className
       )}
       disabled={nativeDisabled}
