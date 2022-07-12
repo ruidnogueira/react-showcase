@@ -4,8 +4,6 @@
 $-color-variants: ('primary', 'secondary', 'negative');
 $-button-border-width: 2px;
 
-/* TODO: use color-contrast ? */
-
 .button {
   @include utils.theme('light') {
     $colors: map.get(utils.$themes, 'light', 'color');
@@ -159,21 +157,4 @@ $-button-border-width: 2px;
   }
 }
 
-/* TODO: spinner */
-// .button__spinner {
-//   stroke: utils.get-color('button-text');
-
-//   .button--transparent & {
-//     stroke: utils.get-color('text');
-//   }
-
-//   @each $variant in utils.$color-variants {
-//     .button--#{$variant} & {
-//       stroke: utils.get-color($variant, 'text');
-//     }
-//   }
-// }
-
 /* TODO: AXE FOR TEST */
-
-/* TODO: AXE FOR STORYBOOK */

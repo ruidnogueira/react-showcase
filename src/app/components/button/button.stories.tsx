@@ -70,13 +70,6 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
   },
 };
 
-// export const Loading: ComponentStoryObj<typeof Button> = {
-//   ...Default,
-//   args: {
-//     isLoading: true,
-//   },
-// };
-
 export const AsChild: ComponentStoryObj<typeof Button> = {
   render: () => (
     <StorybookVariants>

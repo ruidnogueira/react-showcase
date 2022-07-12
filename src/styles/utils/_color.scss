@@ -13,11 +13,9 @@
   @return mix(#000, $color, $percentage);
 }
 
-/// Returns the luminance of `$color` as a float (between 0 and 1)
+/// Returns the luminance of a color as a float (between 0 and 1)
 /// 1 is pure white, 0 is pure black
-/// @param {Color} $color - Color
-/// @return {Number}
-/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef Reference
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
 @function luminance($color) {
   $colors: (
     'red': color.red($color),
@@ -46,15 +44,8 @@
   @return $red + $green + $blue;
 }
 
-// @function contrast-ratio($fg, $bg)
-// Helper: Calculate "readability" as defined by WCAG 2.1
-// Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
-// Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
-// To be used in other functions or mixins — creates non-standard CSS output:
-// Usage:
-// .sample { color-contrast: contrast-ratio(#c00, #fff); }
-// Output:
-// .sample { color-contrast: 5.89; }
+/// Calculates "readability" of a color as a float (between 1 and 21)
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
 @function contrast-ratio($fg, $bg) {
   $luminance1: luminance($fg) + 0.05;
   $luminance2: luminance($bg) + 0.05;
@@ -69,35 +60,15 @@
   @return $ratio;
 }
 
-// @function light-or-dark($color)
-// Helper: Use contrast against white or black to determine if a color is "light" or "dark"
-// Adapted from: https://medium.com/dev-channel/using-sass-to-automatically-pick-text-colors-4ba7645d2796
-// To be used in other functions or mixins — creates non-standard CSS output:
-// Usage:
-// .sample { light-or-dark: light-or-dark(#c00); }
-// Output:
-// .sample { light-or-dark: "light"; }
-@function light-or-dark($color) {
+/// Uses contrast against white or black to determine if a color is "light" or "dark"
+/// returns either $light or $dark, whichever has higher contrast
+@function light-or-dark($color, $light, $dark) {
   $light-contrast: contrast-ratio($color, #fff);
   $dark-contrast: contrast-ratio($color, #000);
 
   @if $light-contrast > $dark-contrast {
-    // Contrast against white is higher than against black, so, this is a dark color
-    @return 'dark';
-  } @else {
-    @return 'light';
-  }
-}
-
-// Takes a color values and compares it to a list of other colors, selecting the one with the highest contrast.
-// Part of the CSS Color Module Level 5
-// See https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-contrast()
-@function color-contrast($color, $light, $dark) {
-  @if light-or-dark($color) == 'dark' {
     @return $light;
   } @else {
     @return $dark;
   }
 }
-
-/* TODO: comments */
