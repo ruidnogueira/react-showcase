@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/models/styles';
-import { StorybookVariants } from 'src/stories/helpers/story';
+import { StorybookVariants } from 'src/stories/variants';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
