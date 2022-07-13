@@ -11,6 +11,7 @@ import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from 'src/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'src/app/contexts/theme/theme-context';
+import { HideStorybookVariantsProvider } from 'src/stories/variants';
 
 interface RenderWithProvidersOptions {
   wrapper?: JSXElementConstructor<{ children: ReactElement }>;
@@ -72,6 +73,15 @@ export function renderHookWithProviders<Props, Result>(
   return renderHook(callback, { initialProps, wrapper: AllProviders });
 }
 
+/**
+ * Provide missing providers that are global in storybook.
+ */
+export function renderStory(ui: ReactElement, options: { hideVariants?: boolean } = {}) {
+  return render(ui, {
+    wrapper: ({ children }) => <StoryTestProviders {...options}>{children}</StoryTestProviders>,
+  });
+}
+
 function TestProviders({ children, routerProps }: TestProviderProps) {
   return (
     <MemoryRouter {...routerProps}>
@@ -81,5 +91,25 @@ function TestProviders({ children, routerProps }: TestProviderProps) {
         </ConfigProvider>
       </HelmetProvider>
     </MemoryRouter>
+  );
+}
+
+function StoryTestProviders({
+  children,
+  hideVariants = true,
+}: {
+  children: ReactNode;
+  hideVariants?: boolean;
+}) {
+  return (
+    <HelmetProvider>
+      <ConfigProvider>
+        <ThemeProvider>
+          <HideStorybookVariantsProvider value={hideVariants}>
+            {children}
+          </HideStorybookVariantsProvider>
+        </ThemeProvider>
+      </ConfigProvider>
+    </HelmetProvider>
   );
 }
