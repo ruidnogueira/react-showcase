@@ -75,7 +75,7 @@
     "autoprefixer": "10.4.7",
     "babel-loader": "8.2.5",
     "c8": "7.11.3",
-    "chromatic": "6.6.3",
+    "chromatic": "6.7.0",
     "cross-env": "7.0.3",
     "dotenv": "16.0.1",
     "esbuild-register": "3.3.3",
