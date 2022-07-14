@@ -46,7 +46,7 @@ $-button-border-width: 2px;
     @include utils.focus-ring;
   }
 
-  &:disabled {
+  &.button--disabled {
     @include utils.disabled;
   }
 
@@ -70,7 +70,7 @@ $-button-border-width: 2px;
           background-color: var(--theme-color-#{$variant}-active);
         }
 
-        &:disabled {
+        &.button--disabled {
           background-color: var(--theme-color-gray-100);
           color: var(--theme-color-gray-900);
         }
@@ -97,7 +97,7 @@ $-button-border-width: 2px;
           color: var(--button-color-text);
         }
 
-        &:disabled {
+        &.button--disabled {
           background-color: var(--theme-color-gray-100);
           border-color: var(--theme-color-#{$variant});
           color: var(--theme-color-gray-900);
@@ -121,7 +121,7 @@ $-button-border-width: 2px;
           background-color: var(--button-color-quiet-background-active);
         }
 
-        &:disabled {
+        &.button--disabled {
           background-color: inherit;
           color: var(--theme-color-gray-900);
         }
@@ -137,7 +137,7 @@ $-button-border-width: 2px;
       text-underline-offset: 3px;
     }
 
-    &:disabled {
+    &.button--disabled {
       text-decoration: none;
     }
 
@@ -149,7 +149,7 @@ $-button-border-width: 2px;
           color: var(--theme-color-#{$variant}-active);
         }
 
-        &:disabled {
+        &.button--disabled {
           color: var(--theme-color-gray-900);
         }
       }

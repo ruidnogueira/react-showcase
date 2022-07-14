@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* TODO: remove this once there is a anchor element */
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/models/styles';
 import { StorybookVariants } from 'src/stories/variants';
@@ -71,19 +73,26 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
 };
 
 export const AsChild: ComponentStoryObj<typeof Button> = {
-  render: () => (
+  render: ({ type, ...args }) => (
     <StorybookVariants>
-      <Button asChild="div">
+      <Button {...args} asChild="div">
         <div>div</div>
       </Button>
 
-      <Button asChild="span">
+      <Button {...args} asChild="span">
         <span>span</span>
       </Button>
 
-      <Button asChild="a">
-        <a href="#0">anchor</a>
+      <Button {...args} asChild="a">
+        <a href={args.disabled ? undefined : '#0'}>anchor</a>
       </Button>
     </StorybookVariants>
   ),
+};
+
+export const DisabledAsChild: ComponentStoryObj<typeof Button> = {
+  ...AsChild,
+  args: {
+    disabled: true,
+  },
 };

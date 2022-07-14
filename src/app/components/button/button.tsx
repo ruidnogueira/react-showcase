@@ -1,5 +1,11 @@
 import classNames from 'classnames';
-import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef, ReactElement } from 'react';
+import {
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
+  forwardRef,
+  MouseEvent,
+  ReactElement,
+} from 'react';
 import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
@@ -62,6 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     size = 'medium',
     type,
     disabled,
+    onClick,
     ...buttonProps
   } = props;
 
@@ -71,6 +78,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   const ariaDisabled = asChild && disabled ? disabled : undefined;
   const role = asChild ? 'button' : undefined;
   const tabIndex = asChild && !disabled ? 0 : undefined;
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      event.preventDefault();
+    } else {
+      onClick?.(event);
+    }
+  };
 
   return (
     // eslint-disable-next-line react/forbid-elements
@@ -84,12 +99,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         `button--${variant}`,
         `button--${color}`,
         `button--${size}`,
+        { 'button--disabled': disabled },
         className
       )}
       disabled={nativeDisabled}
       role={role}
       tabIndex={tabIndex}
       aria-disabled={ariaDisabled}
+      onClick={handleClick}
     >
       {children}
     </Component>
