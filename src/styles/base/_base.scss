@@ -1,6 +1,10 @@
 @use 'sass:map';
 @use '../utils';
 
+:focus {
+  outline: none;
+}
+
 html {
   height: 100%;
 }

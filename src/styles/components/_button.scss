@@ -1,0 +1,158 @@
+@use '../utils';
+@use 'sass:map';
+
+$-color-variants: ('primary', 'secondary', 'negative');
+$-button-border-width: 2px;
+
+.button {
+  @include utils.theme('light') {
+    $colors: map.get(utils.$themes, 'light', 'color');
+
+    --button-color-text: #{map.get($colors, 'text-light')};
+    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.2)};
+    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.4)};
+  }
+
+  @include utils.theme('dark') {
+    $colors: map.get(utils.$themes, 'dark', 'color');
+
+    --button-color-text: #{map.get($colors, 'text-dark')};
+    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.1)};
+    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.2)};
+  }
+
+  @include utils.control;
+  @include utils.unselectable;
+
+  background-color: inherit;
+  border-radius: utils.$control-height;
+  border-width: 2px;
+  cursor: pointer;
+  font-weight: bold;
+  justify-content: center;
+  transition: background-color 0.12s ease-out, color 0.12s ease-out;
+
+  &::after {
+    // add offset to focus ring
+    border-radius: utils.$control-height;
+    content: '';
+    display: block;
+    inset: 0;
+    margin: calc((var(--theme-focus-ring-gap) + $-button-border-width) * -1);
+    position: absolute;
+  }
+
+  &:focus-visible::after {
+    @include utils.focus-ring;
+  }
+
+  &.button--disabled {
+    @include utils.disabled;
+  }
+
+  &--small {
+    @include utils.control--small;
+  }
+
+  &--filled {
+    color: var(--button-color-text);
+
+    @each $variant in $-color-variants {
+      &.button--#{$variant} {
+        background-color: var(--theme-color-#{$variant});
+
+        &:hover,
+        &:focus {
+          background-color: var(--theme-color-#{$variant}-hover);
+        }
+
+        &:active {
+          background-color: var(--theme-color-#{$variant}-active);
+        }
+
+        &.button--disabled {
+          background-color: var(--theme-color-gray-100);
+          color: var(--theme-color-gray-900);
+        }
+      }
+    }
+  }
+
+  &--ghost {
+    @each $variant in $-color-variants {
+      &.button--#{$variant} {
+        border-color: var(--theme-color-#{$variant});
+        color: var(--theme-color-#{$variant});
+
+        &:hover,
+        &:focus {
+          background-color: var(--theme-color-#{$variant});
+          border-color: transparent;
+          color: var(--button-color-text);
+        }
+
+        &:active {
+          background-color: var(--theme-color-#{$variant}-active);
+          border-color: transparent;
+          color: var(--button-color-text);
+        }
+
+        &.button--disabled {
+          background-color: var(--theme-color-gray-100);
+          border-color: var(--theme-color-#{$variant});
+          color: var(--theme-color-gray-900);
+        }
+      }
+    }
+  }
+
+  &--quiet {
+    @each $variant in $-color-variants {
+      &.button--#{$variant} {
+        color: var(--theme-color-#{$variant});
+
+        &:hover,
+        &:focus {
+          background-color: var(--button-color-quiet-background-hover);
+          color: var(--theme-color-#{$variant}-hover);
+        }
+
+        &:active {
+          background-color: var(--button-color-quiet-background-active);
+        }
+
+        &.button--disabled {
+          background-color: inherit;
+          color: var(--theme-color-gray-900);
+        }
+      }
+    }
+  }
+
+  &--link {
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    &.button--disabled {
+      text-decoration: none;
+    }
+
+    @each $variant in $-color-variants {
+      &.button--#{$variant} {
+        color: var(--theme-color-#{$variant});
+
+        &:active {
+          color: var(--theme-color-#{$variant}-active);
+        }
+
+        &.button--disabled {
+          color: var(--theme-color-gray-900);
+        }
+      }
+    }
+  }
+}

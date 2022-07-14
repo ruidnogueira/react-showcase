@@ -9,8 +9,13 @@
   "rules": {
     "alpha-value-notation": "number",
     "color-function-notation": null,
+    "custom-property-empty-line-before": [
+      "always",
+      { "except": ["first-nested", "after-comment", "after-custom-property"] }
+    ],
     "at-rule-no-unknown": null,
     "custom-property-pattern": null,
+    "number-max-precision": null,
     "selector-class-pattern": null,
     "scss/at-mixin-pattern": null,
     "scss/dollar-variable-empty-line-before": null,

@@ -1,46 +1,66 @@
+@use 'sass:color';
 @use 'sass:map';
 @use '../functions';
 @use 'functions' as color-functions;
 
-$-pallete: (
-  'alabaster': hsl(0deg, 0%, 98%),
-  'jagger': hsl(273deg, 20%, 24%),
-  'mine-shaft': hsl(0deg, 0%, 13%),
-  'sizzling-red': hsl(353deg, 100%, 61%),
-);
-
-$-base-colors: (
-  'light': map.get($-pallete, 'alabaster'),
-  'dark': map.get($-pallete, 'mine-shaft'),
-  'primary': map.get($-pallete, 'sizzling-red'),
-  'secondary': map.get($-pallete, 'jagger'),
-);
-
 $-lightness: (
-  100: 80%,
-  200: 60%,
-  300: 40%,
+  100: 50%,
+  200: 40%,
+  300: 30%,
   400: 20%,
-  500: 0,
-  600: 20%,
-  700: 40%,
-  800: 60%,
-  900: 80%,
+  500: 10%,
+  600: 0,
+  700: 10%,
+  800: 20%,
+  900: 30%,
+  1000: 40%,
+  1100: 50%,
 );
 
-@function -derive-color-hues($color-name, $color) {
-  @return color-functions.derive-color-hues($color-name, $color, $-lightness, 500);
+@function -derive-colors($color-name, $color) {
+  @return color-functions.derive-color-hues($color-name, $color, $-lightness, 600);
 }
 
-$-colors: functions.map-collect(
+$-pallete: (
+  'bento-box': #ca363c,
+  'blue-ruin': #016fe1,
+  'dr-white': #fafafa,
+  'lead': #212121,
+  'welded-iron': #6f6f6f,
+);
+
+$-main-colors: (
+  'light': map.get($-pallete, 'dr-white'),
+  'dark': map.get($-pallete, 'lead'),
+  'primary': map.get($-pallete, 'blue-ruin'),
+  'secondary': map.get($-pallete, 'welded-iron'),
+  'negative': map.get($-pallete, 'bento-box'),
+);
+
+$-base-colors: functions.map-collect(
+  $-main-colors,
+  -derive-colors('primary', map.get($-main-colors, 'primary')),
+  -derive-colors('secondary', map.get($-main-colors, 'secondary')),
+  -derive-colors('negative', map.get($-main-colors, 'negative')),
+  -derive-colors('blue', map.get($-pallete, 'blue-ruin')),
+  -derive-colors('red', map.get($-pallete, 'bento-box')),
+  -derive-colors('gray', map.get($-pallete, 'welded-iron'))
+);
+
+$-colors: map.merge(
   $-base-colors,
-  -derive-color-hues('primary', map.get($-base-colors, 'primary')),
-  -derive-color-hues('secondary', map.get($-base-colors, 'secondary')),
   (
     'background': map.get($-base-colors, 'light'),
     'text': map.get($-base-colors, 'dark'),
     'text-light': map.get($-base-colors, 'light'),
     'text-dark': map.get($-base-colors, 'dark'),
+    'focus-ring': map.get($-base-colors, 'primary-500'),
+    'primary-hover': map.get($-base-colors, 'primary-700'),
+    'primary-active': map.get($-base-colors, 'primary-800'),
+    'secondary-hover': map.get($-base-colors, 'secondary-700'),
+    'secondary-active': map.get($-base-colors, 'secondary-800'),
+    'negative-hover': map.get($-base-colors, 'negative-700'),
+    'negative-active': map.get($-base-colors, 'negative-800'),
   )
 );
 
@@ -51,6 +71,8 @@ $font-family-text: Roboto, sans-serif;
 
 $theme: (
   'color': $-colors,
+  'focus-ring-gap': 2px,
+  'focus-ring-size': 2px,
   'font-family-heading': $font-family-heading,
   'font-family-text': $font-family-text,
   'font-size-1': functions.px-to-rem(10px),

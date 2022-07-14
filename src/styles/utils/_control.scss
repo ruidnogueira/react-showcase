@@ -1,0 +1,32 @@
+$control-border-width: 1px;
+$control-border-radius: 4px;
+
+$control-font-size: var(--theme-font-size-5);
+$control-font-size-small: var(--theme-font-size-2);
+$control-height: 2.5em;
+$control-line-height: 1.5;
+
+$control-padding-vertical: 0;
+$control-padding-horizontal: calc(0.75em - #{$control-border-width});
+
+@mixin control {
+  align-items: center;
+  border: $control-border-width solid transparent;
+  border-radius: $control-border-radius;
+  box-shadow: none;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: $control-font-size;
+  font-weight: normal;
+  height: $control-height;
+  justify-content: flex-start;
+  line-height: $control-line-height;
+  outline: none;
+  padding: $control-padding-vertical $control-padding-horizontal;
+  position: relative;
+  vertical-align: middle;
+}
+
+@mixin control--small {
+  font-size: $control-font-size-small;
+}

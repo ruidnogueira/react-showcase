@@ -1,0 +1,74 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+
+/// Slightly lighten a color
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+/// Slightly darken a color
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+/// Returns the luminance of a color as a float (between 0 and 1)
+/// 1 is pure white, 0 is pure black
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+@function luminance($color) {
+  $colors: (
+    'red': color.red($color),
+    'green': color.green($color),
+    'blue': color.blue($color),
+  );
+
+  @each $name, $value in $colors {
+    $adjusted: 0;
+    $value: math.div($value, 255);
+
+    @if $value < 0.03928 {
+      $value: math.div($value, 12.92);
+    } @else {
+      $value: math.div($value + 0.055, 1.055);
+      $value: math.pow($value, 2.4);
+    }
+
+    $colors: map.set($colors, $name, $value);
+  }
+
+  $red: map.get($colors, 'red') * 0.2126;
+  $green: map.get($colors, 'green') * 0.7152;
+  $blue: map.get($colors, 'blue') * 0.0722;
+
+  @return $red + $green + $blue;
+}
+
+/// Calculates "readability" of a color as a float (between 1 and 21)
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+@function contrast-ratio($fg, $bg) {
+  $luminance1: luminance($fg) + 0.05;
+  $luminance2: luminance($bg) + 0.05;
+
+  $ratio: math.div($luminance1, $luminance2);
+  @if $luminance2 > $luminance1 {
+    $ratio: math.div(1, $ratio);
+  }
+
+  // Round to a hundreth because 6.96 should not pass a ratio of 7.0
+  $ratio: math.div(math.round($ratio * 100), 100);
+  @return $ratio;
+}
+
+/// Uses contrast against white or black to determine if a color is "light" or "dark"
+/// returns either $light or $dark, whichever has higher contrast
+@function light-or-dark($color, $light, $dark) {
+  $light-contrast: contrast-ratio($color, #fff);
+  $dark-contrast: contrast-ratio($color, #000);
+
+  @if $light-contrast > $dark-contrast {
+    @return $light;
+  } @else {
+    @return $dark;
+  }
+}

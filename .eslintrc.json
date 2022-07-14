@@ -53,7 +53,18 @@
     "import/no-unresolved": "off",
     "react/display-name": "off",
     "react/prop-types": "off",
-    "react/button-has-type": "error",
+    "react/button-has-type": [
+      "error",
+      {
+        "button": true,
+        "submit": true,
+        "reset": false
+      }
+    ],
+    "react/forbid-elements": [
+      "error",
+      { "forbid": [{ "element": "button", "message": "use <Button> instead" }] }
+    ],
     "jsx-a11y/html-has-lang": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
