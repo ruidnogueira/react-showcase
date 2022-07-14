@@ -1,4 +1,4 @@
-import { JSXElementConstructor, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import {
   // eslint-disable-next-line @typescript-eslint/no-restricted-imports
   render as tlRender,
@@ -13,14 +13,19 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'src/app/contexts/theme/theme-context';
 import { HideStorybookVariantsProvider } from 'src/stories/variants';
 
-interface RenderWithProvidersOptions {
-  wrapper?: JSXElementConstructor<{ children: ReactElement }>;
+interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
 }
 
 interface RenderHookWithProvidersOptions<Props> extends RenderHookOptions<Props> {
   routerProps?: MemoryRouterProps;
 }
+
+interface RenderStoryOptions extends RenderOptions {
+  hideVariants?: boolean;
+}
+
+type RenderStoryWithProvidersOptions = RenderStoryOptions;
 
 interface TestProviderProps {
   children: ReactNode;
@@ -38,13 +43,15 @@ export function render(ui: ReactElement, options?: RenderOptions) {
  * Provides global providers required for smart components (i18n, routing, etc)
  */
 export function renderWithProviders(ui: ReactElement, options: RenderWithProvidersOptions = {}) {
-  const { wrapper: Wrapper, ...props } = options;
+  const { wrapper: Wrapper, routerProps, ...props } = options;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders>{Wrapper ? <Wrapper {...props}>{children}</Wrapper> : children}</TestProviders>
+    <TestProviders routerProps={routerProps}>
+      {Wrapper ? <Wrapper>{children}</Wrapper> : children}
+    </TestProviders>
   );
 
-  return render(ui, { wrapper: AllProviders });
+  return render(ui, { ...props, wrapper: AllProviders });
 }
 
 /**
@@ -64,22 +71,48 @@ export function renderHookWithProviders<Props, Result>(
   callback: (props: Props) => Result,
   options: RenderHookWithProvidersOptions<Props> = {}
 ) {
-  const { wrapper: Wrapper, initialProps, ...props } = options;
+  const { wrapper: Wrapper, routerProps, ...props } = options;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders>{Wrapper ? <Wrapper {...props}>{children}</Wrapper> : children}</TestProviders>
+    <TestProviders routerProps={routerProps}>
+      {Wrapper ? <Wrapper>{children}</Wrapper> : children}
+    </TestProviders>
   );
 
-  return renderHook(callback, { initialProps, wrapper: AllProviders });
+  return renderHook(callback, { ...props, wrapper: AllProviders });
 }
 
 /**
- * Provide missing providers that are global in storybook.
+ * Renders a story
  */
-export function renderStory(ui: ReactElement, options: { hideVariants?: boolean } = {}) {
-  return render(ui, {
-    wrapper: ({ children }) => <StoryTestProviders {...options}>{children}</StoryTestProviders>,
-  });
+export function renderStory(ui: ReactElement, options: RenderStoryOptions = {}) {
+  const { wrapper: Wrapper, hideVariants = true, ...props } = options;
+
+  const AllProviders = ({ children }: { children: ReactElement }) => (
+    <HideStorybookVariantsProvider value={hideVariants}>
+      {Wrapper ? <Wrapper>{children}</Wrapper> : children}
+    </HideStorybookVariantsProvider>
+  );
+
+  return render(ui, { ...props, wrapper: AllProviders });
+}
+
+/**
+ * Provides missing providers that are global in storybook.
+ */
+export function renderStoryWithProviders(
+  ui: ReactElement,
+  options: RenderStoryWithProvidersOptions = {}
+) {
+  const { wrapper: Wrapper, ...props } = options;
+
+  const AllProviders = ({ children }: { children: ReactElement }) => (
+    <StoryTestProviders>
+      {Wrapper ? <Wrapper {...props}>{children}</Wrapper> : children}
+    </StoryTestProviders>
+  );
+
+  return renderStory(ui, { ...props, wrapper: AllProviders });
 }
 
 function TestProviders({ children, routerProps }: TestProviderProps) {
@@ -94,21 +127,11 @@ function TestProviders({ children, routerProps }: TestProviderProps) {
   );
 }
 
-function StoryTestProviders({
-  children,
-  hideVariants = true,
-}: {
-  children: ReactNode;
-  hideVariants?: boolean;
-}) {
+function StoryTestProviders({ children }: { children: ReactNode }) {
   return (
     <HelmetProvider>
       <ConfigProvider>
-        <ThemeProvider>
-          <HideStorybookVariantsProvider value={hideVariants}>
-            {children}
-          </HideStorybookVariantsProvider>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </ConfigProvider>
     </HelmetProvider>
   );
