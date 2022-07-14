@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Logo } from 'src/assets/logo.svg';
+import { Button } from './components/button/button';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -29,9 +30,9 @@ const AppPage = memo(function AppPage() {
         <p>{t('common.hello')}</p>
 
         <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
+          <Button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
-          </button>
+          </Button>
         </p>
       </header>
     </div>
