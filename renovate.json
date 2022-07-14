@@ -39,6 +39,11 @@
       "matchPackagePatterns": ["^@storybook"],
       "matchUpdateTypes": ["major", "minor"],
       "automerge": false
+    },
+    {
+      "description": "don't automerge because it also needs to update the service worker",
+      "matchPackageNames": ["msw"],
+      "automerge": false
     }
   ],
   "platformAutomerge": true
