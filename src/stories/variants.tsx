@@ -4,7 +4,7 @@ import { createContext } from 'src/app/utils/context';
 const [HideStorybookVariantsProvider, useHideStorybookVariants] = createContext<boolean>({
   contextName: 'HideStorybookVariantsContext',
   hookName: 'useHideStorybookVariants',
-  defaultValue: true,
+  defaultValue: false,
 });
 
 export { HideStorybookVariantsProvider };
