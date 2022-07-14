@@ -11,27 +11,33 @@
     },
     {
       "groupName": "Eslint",
-      "matchPackagePatterns": ["eslint"]
+      "matchPackagePatterns": ["eslint"],
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "Stylelint",
-      "matchPackagePatterns": ["stylelint"]
+      "matchPackagePatterns": ["stylelint"],
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "TestingLibrary",
-      "matchPackagePrefixes": ["@testing-library/"]
+      "matchPackagePrefixes": ["@testing-library/"],
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "Workbox",
-      "matchPackagePatterns": ["workbox"]
+      "matchPackagePatterns": ["workbox"],
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "I18next",
-      "matchPackagePatterns": ["i18next"]
+      "matchPackagePatterns": ["i18next"],
+      "matchUpdateTypes": ["major"]
     },
     {
       "groupName": "Core storybook",
       "matchPackagePatterns": ["^@storybook"],
+      "matchUpdateTypes": ["major", "minor"],
       "automerge": false
     }
   ],
