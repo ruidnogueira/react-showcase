@@ -1,7 +1,7 @@
 import '../src/styles/styles.scss';
 import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
 import { ReactNode, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
@@ -96,7 +96,7 @@ function ThemeWrapper({
       <div
         data-theme={theme}
         data-testid={`storybook-theme-${theme}`}
-        className={classNames('storybook-theme_wrapper', {
+        className={clsx('storybook-theme_wrapper', {
           [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
         })}
       >

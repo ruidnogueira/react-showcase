@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
@@ -9,6 +8,7 @@ import {
 import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
+import clsx from 'clsx';
 
 export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;
 export type ButtonColorVariant = typeof ButtonColorVariants[number];
@@ -94,7 +94,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       ref={ref}
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={classNames(
+      className={clsx(
         'button',
         `button--${variant}`,
         `button--${color}`,
