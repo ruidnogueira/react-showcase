@@ -1,1 +1,1 @@
-{"common":{"hello":"Olá Mundo!"}}
+{"common":{"hello":"Olá Mundo!","states":{"loading":"A carregar"}}}
