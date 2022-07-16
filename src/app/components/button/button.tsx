@@ -1,6 +1,5 @@
 import {
   ButtonHTMLAttributes,
-  cloneElement,
   DetailedHTMLProps,
   forwardRef,
   MouseEvent,
@@ -11,15 +10,12 @@ import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
 import clsx from 'clsx';
-import { Loading } from '../loading/loading';
 
 export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;
 export type ButtonColorVariant = typeof ButtonColorVariants[number];
 
 export const ButtonStyleVariants = ['filled', 'ghost', 'quiet', 'link'] as const;
 export type ButtonStyleVariant = typeof ButtonStyleVariants[number];
-
-type ElementType = { [K in keyof JSX.IntrinsicElements]: K }[keyof JSX.IntrinsicElements];
 
 type OriginalButtonProps = Omit<
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
@@ -41,14 +37,6 @@ interface BaseButtonProps extends OriginalButtonProps {
    * The size of the button
    */
   size?: ControlSize;
-
-  /**
-   * Whether the loading spinner is visible.
-   *
-   * **Note:** if `asChild` is set the loading spinner will not show up.
-   * It needs to be added manually.
-   */
-  isLoading?: boolean;
 }
 
 interface UnslottedButtonProps extends BaseButtonProps {
@@ -79,21 +67,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     size = 'medium',
     type,
     disabled = false,
-    isLoading = false,
     onClick,
     ...buttonProps
   } = props;
 
   const Component = asChild ? Slot : 'button';
 
-  const isDisabled = disabled || isLoading;
-  const nativeDisabled = asChild ? undefined : isDisabled;
-  const ariaDisabled = asChild && isDisabled ? isDisabled : undefined;
+  const nativeDisabled = asChild ? undefined : disabled;
+  const ariaDisabled = asChild && disabled ? disabled : undefined;
   const role = asChild ? 'button' : undefined;
-  const tabIndex = asChild && !isDisabled ? 0 : undefined;
+  const tabIndex = asChild && !disabled ? 0 : undefined;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (isDisabled) {
+    if (disabled) {
       event.preventDefault();
     } else {
       onClick?.(event);
@@ -116,25 +102,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         `button--${variant}`,
         `button--${color}`,
         `button--${size}`,
-        { 'button--disabled': isDisabled },
+        { 'button--disabled': disabled },
         className
       )}
       disabled={nativeDisabled}
       role={role}
       tabIndex={tabIndex}
       aria-disabled={ariaDisabled}
-      aria-busy={isLoading}
       onClick={handleClick}
     >
-      {asChild ? (
-        cloneElement(
-          children,
-          undefined,
-          <Loading isLoading={isLoading}>{children.props.children}</Loading>
-        )
-      ) : (
-        <Loading isLoading={isLoading}>{children}</Loading>
-      )}
+      {children}
     </Component>
   );
 });
