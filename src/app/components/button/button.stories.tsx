@@ -3,6 +3,7 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/models/styles';
 import { StorybookVariants } from 'src/stories/variants';
+import { Loading } from '../loading/loading';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
@@ -18,7 +19,6 @@ export default {
     type: 'button',
     children: 'Button',
     disabled: false,
-    isLoading: false,
   },
 } as ComponentMeta<typeof Button>;
 
@@ -73,16 +73,18 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
   },
 };
 
-export const Loading: ComponentStoryObj<typeof Button> = {
-  render: (args) => (
+export const WithLoading: ComponentStoryObj<typeof Button> = {
+  render: ({ children, ...args }) => (
     <StorybookVariants>
       {ButtonStyleVariants.map((variant) => (
-        <Button {...args} key={variant} variant={variant} />
+        <Button {...(args as any)} key={variant} variant={variant}>
+          <Loading isLoading={true}>{children}</Loading>
+        </Button>
       ))}
     </StorybookVariants>
   ),
   args: {
-    isLoading: true,
+    disabled: true,
   },
 };
 
@@ -98,7 +100,7 @@ export const AsChild: ComponentStoryObj<typeof Button> = {
       </Button>
 
       <Button {...args} asChild>
-        <a href={args.disabled || args.isLoading ? undefined : '#0'}>anchor</a>
+        <a href={args.disabled ? undefined : '#0'}>anchor</a>
       </Button>
     </StorybookVariants>
   ),
@@ -108,12 +110,5 @@ export const AsChildDisabled: ComponentStoryObj<typeof Button> = {
   ...AsChild,
   args: {
     disabled: true,
-  },
-};
-
-export const AsChildLoading: ComponentStoryObj<typeof Button> = {
-  ...AsChild,
-  args: {
-    isLoading: true,
   },
 };
