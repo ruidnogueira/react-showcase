@@ -24,7 +24,7 @@
 
 @mixin disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 @mixin focus-ring($color: var(--theme-color-focus-ring), $width: var(--theme-focus-ring-size)) {

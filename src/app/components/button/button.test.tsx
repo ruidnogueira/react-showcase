@@ -2,14 +2,15 @@ import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { renderStory } from 'src/test/helpers/render';
+import { render, renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
+import { Button } from './button';
 import * as stories from './button.stories';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);
 
-const { Filled, Disabled, DisabledAsChild, AsChild } = composedStories;
+const { Filled, Disabled, Loading, AsChild, AsChildDisabled, AsChildLoading } = composedStories;
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
   const { container } = renderStory(<Story />, { hideVariants: false });
@@ -17,13 +18,23 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
 });
 
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
-  const { baseElement } = renderStory(<Story />, { hideVariants: false });
-  expect(await axe(baseElement)).toHaveNoViolations();
+  const { container } = renderStory(<Story />, { hideVariants: false });
+  expect(await axe(container)).toHaveNoViolations();
 });
 
 test('is disabled', async () => {
   const onClickMock = vi.fn();
   renderStory(<Disabled onClick={onClickMock} />);
+
+  await userEvent.click(screen.getByRole('button'));
+
+  expect(screen.getByRole('button')).toBeDisabled();
+  expect(onClickMock).not.toHaveBeenCalled();
+});
+
+test('is disabled if loading', async () => {
+  const onClickMock = vi.fn();
+  renderStory(<Loading onClick={onClickMock} />);
 
   await userEvent.click(screen.getByRole('button'));
 
@@ -43,7 +54,17 @@ test('is not disabled', async () => {
 
 test('asChild is disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(<DisabledAsChild onClick={onClickMock} />);
+  renderStory(<AsChildDisabled onClick={onClickMock} />);
+
+  await userEvent.click(screen.getByRole('button'));
+
+  expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
+  expect(onClickMock).not.toHaveBeenCalled();
+});
+
+test('asChild is disabled if loading', async () => {
+  const onClickMock = vi.fn();
+  renderStory(<AsChildLoading onClick={onClickMock} />);
 
   await userEvent.click(screen.getByRole('button'));
 
@@ -59,4 +80,14 @@ test('asChild is not disabled', async () => {
 
   expect(screen.getByRole('button')).not.toHaveAttribute('aria-disabled', 'true');
   expect(onClickMock).toHaveBeenCalledTimes(1);
+});
+
+test('does not render asChild button if child element is invalid', () => {
+  render(
+    <Button asChild>
+      <div />
+    </Button>
+  );
+
+  expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });

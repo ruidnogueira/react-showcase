@@ -18,6 +18,7 @@ export default {
     type: 'button',
     children: 'Button',
     disabled: false,
+    isLoading: false,
   },
 } as ComponentMeta<typeof Button>;
 
@@ -72,27 +73,47 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
   },
 };
 
+export const Loading: ComponentStoryObj<typeof Button> = {
+  render: (args) => (
+    <StorybookVariants>
+      {ButtonStyleVariants.map((variant) => (
+        <Button {...args} key={variant} variant={variant} />
+      ))}
+    </StorybookVariants>
+  ),
+  args: {
+    isLoading: true,
+  },
+};
+
 export const AsChild: ComponentStoryObj<typeof Button> = {
   render: ({ type, ...args }) => (
     <StorybookVariants>
-      <Button {...args} asChild="div">
+      <Button {...args} asChild>
         <div>div</div>
       </Button>
 
-      <Button {...args} asChild="span">
+      <Button {...args} asChild>
         <span>span</span>
       </Button>
 
-      <Button {...args} asChild="a">
-        <a href={args.disabled ? undefined : '#0'}>anchor</a>
+      <Button {...args} asChild>
+        <a href={args.disabled || args.isLoading ? undefined : '#0'}>anchor</a>
       </Button>
     </StorybookVariants>
   ),
 };
 
-export const DisabledAsChild: ComponentStoryObj<typeof Button> = {
+export const AsChildDisabled: ComponentStoryObj<typeof Button> = {
   ...AsChild,
   args: {
     disabled: true,
+  },
+};
+
+export const AsChildLoading: ComponentStoryObj<typeof Button> = {
+  ...AsChild,
+  args: {
+    isLoading: true,
   },
 };

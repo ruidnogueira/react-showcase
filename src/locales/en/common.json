@@ -1,3 +1,7 @@
 {
-  "hello": "Hello World!"
+  "hello": "Hello World!",
+
+  "states": {
+    "loading": "Loading"
+  }
 }

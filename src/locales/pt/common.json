@@ -1,3 +1,7 @@
 {
-  "hello": "Olá Mundo!"
+  "hello": "Olá Mundo!",
+
+  "states": {
+    "loading": "A carregar"
+  }
 }
