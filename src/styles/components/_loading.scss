@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '../utils';
+
+.loading {
+  align-items: center;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+
+  &--keep-content {
+    position: absolute;
+  }
+}
+
+.loading__spinner {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  max-height: utils.px-to-rem(60px);
+  max-width: utils.px-to-rem(60px);
+  padding: var(--theme-spacing-2);
+  stroke: currentcolor;
+  width: 100%;
+}
+
+.loading-content-wrapper {
+  visibility: hidden;
+}

@@ -1,14 +1,17 @@
 import {
   ButtonHTMLAttributes,
+  cloneElement,
   DetailedHTMLProps,
   forwardRef,
   MouseEvent,
   ReactElement,
+  ReactNode,
 } from 'react';
 import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
 import clsx from 'clsx';
+import { Loading } from '../loading/loading';
 
 export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;
 export type ButtonColorVariant = typeof ButtonColorVariants[number];
@@ -23,7 +26,7 @@ type OriginalButtonProps = Omit<
   'type' | 'color'
 >;
 
-export interface BaseButtonProps extends OriginalButtonProps {
+interface BaseButtonProps extends OriginalButtonProps {
   /**
    * The color variant of the button
    */
@@ -38,6 +41,14 @@ export interface BaseButtonProps extends OriginalButtonProps {
    * The size of the button
    */
   size?: ControlSize;
+
+  /**
+   * Whether the loading spinner is visible.
+   *
+   * **Note:** if `asChild` is set the loading spinner will not show up.
+   * It needs to be added manually.
+   */
+  isLoading?: boolean;
 }
 
 interface UnslottedButtonProps extends BaseButtonProps {
@@ -48,12 +59,12 @@ interface UnslottedButtonProps extends BaseButtonProps {
 }
 
 interface SlottedButtonProps extends BaseButtonProps {
-  children: ReactElement;
+  children: ReactElement<{ children: ReactNode }>;
 
   /**
    * Passes props to child element instead of using default `button` element.
    */
-  asChild: Exclude<ElementType, 'button'>;
+  asChild: boolean;
 }
 
 export type ButtonProps = StrictUnion<UnslottedButtonProps | SlottedButtonProps>;
@@ -67,25 +78,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     color = 'secondary',
     size = 'medium',
     type,
-    disabled,
+    disabled = false,
+    isLoading = false,
     onClick,
     ...buttonProps
   } = props;
 
   const Component = asChild ? Slot : 'button';
 
-  const nativeDisabled = asChild ? undefined : disabled;
-  const ariaDisabled = asChild && disabled ? disabled : undefined;
+  const isDisabled = disabled || isLoading;
+  const nativeDisabled = asChild ? undefined : isDisabled;
+  const ariaDisabled = asChild && isDisabled ? isDisabled : undefined;
   const role = asChild ? 'button' : undefined;
-  const tabIndex = asChild && !disabled ? 0 : undefined;
+  const tabIndex = asChild && !isDisabled ? 0 : undefined;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (disabled) {
+    if (isDisabled) {
       event.preventDefault();
     } else {
       onClick?.(event);
     }
   };
+
+  if (asChild && !children.props.children) {
+    return null;
+  }
 
   return (
     // eslint-disable-next-line react/forbid-elements
@@ -99,16 +116,25 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         `button--${variant}`,
         `button--${color}`,
         `button--${size}`,
-        { 'button--disabled': disabled },
+        { 'button--disabled': isDisabled },
         className
       )}
       disabled={nativeDisabled}
       role={role}
       tabIndex={tabIndex}
       aria-disabled={ariaDisabled}
+      aria-busy={isLoading}
       onClick={handleClick}
     >
-      {children}
+      {asChild ? (
+        cloneElement(
+          children,
+          undefined,
+          <Loading isLoading={isLoading}>{children.props.children}</Loading>
+        )
+      ) : (
+        <Loading isLoading={isLoading}>{children}</Loading>
+      )}
     </Component>
   );
 });
