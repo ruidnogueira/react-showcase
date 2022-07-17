@@ -1,13 +1,10 @@
 import { ReactComponent as SpinnerSvg } from 'src/assets/spinner.svg';
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 
-export type LoadingSpinnerProps = Omit<
-  DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>,
-  'children'
->;
+export type LoadingSpinnerProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'>;
 
 export function LoadingSpinner(props: LoadingSpinnerProps) {
   const { className, ...spinnerProps } = props;
