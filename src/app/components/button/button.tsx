@@ -1,11 +1,4 @@
-import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  forwardRef,
-  MouseEvent,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { ButtonHTMLAttributes, forwardRef, MouseEvent, ReactElement, ReactNode } from 'react';
 import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
@@ -17,10 +10,7 @@ export type ButtonColorVariant = typeof ButtonColorVariants[number];
 export const ButtonStyleVariants = ['filled', 'ghost', 'quiet', 'link'] as const;
 export type ButtonStyleVariant = typeof ButtonStyleVariants[number];
 
-type OriginalButtonProps = Omit<
-  DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-  'type' | 'color'
->;
+type OriginalButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'color'>;
 
 interface BaseButtonProps extends OriginalButtonProps {
   /**

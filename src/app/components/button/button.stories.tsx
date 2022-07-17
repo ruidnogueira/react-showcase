@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* TODO: remove this once there is a anchor element */
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/models/styles';
 import { StorybookVariants } from 'src/stories/variants';
@@ -9,10 +7,17 @@ import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 export default {
   title: 'Atoms/Button',
   argTypes: {
-    color: { control: { disable: true } },
+    color: {
+      control: { type: 'select' },
+      options: [undefined, ...ButtonColorVariants],
+    },
     size: {
       control: { type: 'select' },
       options: [undefined, ...ControlSizes],
+    },
+    variant: {
+      control: { type: 'select' },
+      options: [undefined, ...ButtonStyleVariants],
     },
   },
   args: {
@@ -77,7 +82,7 @@ export const WithLoading: ComponentStoryObj<typeof Button> = {
   render: ({ children, ...args }) => (
     <StorybookVariants>
       {ButtonStyleVariants.map((variant) => (
-        <Button {...(args as any)} key={variant} variant={variant}>
+        <Button {...args} key={variant} variant={variant}>
           <Loading isLoading={true}>{children}</Loading>
         </Button>
       ))}
@@ -100,7 +105,7 @@ export const AsChild: ComponentStoryObj<typeof Button> = {
       </Button>
 
       <Button {...args} asChild>
-        <a href={args.disabled ? undefined : '#0'}>anchor</a>
+        {args.disabled ? <span>anchor</span> : <a href="#0">anchor</a>}
       </Button>
     </StorybookVariants>
   ),
