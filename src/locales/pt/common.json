@@ -1,6 +1,10 @@
 {
   "hello": "Olá Mundo!",
 
+  "actions": {
+    "reload": "Reload"
+  },
+
   "states": {
     "loading": "A carregar"
   }

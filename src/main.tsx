@@ -10,6 +10,8 @@ import { ConfigProvider } from './app/contexts/config/config-context';
 import './styles/styles.scss';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './app/contexts/theme/theme-context';
+import { ErrorBoundary } from 'react-error-boundary';
+import { UnexpectedErrorMessage } from './app/components/error/unexpected/unexpected-error-message';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { worker } = await import('src/mocks/server/browser');
@@ -35,9 +37,11 @@ createRoot(document.getElementById('root') as Element).render(
           <ConfigProvider>
             <I18nProvider>
               <ThemeProvider>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <App />
-                </Suspense>
+                <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <App />
+                  </Suspense>
+                </ErrorBoundary>
               </ThemeProvider>
             </I18nProvider>
           </ConfigProvider>

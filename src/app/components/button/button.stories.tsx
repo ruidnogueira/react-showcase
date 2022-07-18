@@ -6,6 +6,7 @@ import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
   title: 'Atoms/Button',
+  component: Button,
   argTypes: {
     color: {
       control: { type: 'select' },
@@ -19,6 +20,7 @@ export default {
       control: { type: 'select' },
       options: [undefined, ...ButtonStyleVariants],
     },
+    asChild: { control: { disable: true } },
   },
   args: {
     type: 'button',

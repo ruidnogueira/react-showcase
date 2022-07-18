@@ -1,0 +1,7 @@
+{
+  "unexpected": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. To continue, reload or navigate to another page.",
+    "reload": "$t(common.actions.reload)"
+  }
+}
