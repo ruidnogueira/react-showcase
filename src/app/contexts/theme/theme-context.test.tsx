@@ -51,7 +51,7 @@ test('sets provided initial theme', () => {
 });
 
 test('sets dark theme if user prefers dark color scheme', () => {
-  vi.spyOn(window, 'matchMedia').mockImplementationOnce((query) => ({
+  vi.mocked(window.matchMedia).mockImplementationOnce((query) => ({
     matches: query.includes('prefers-color-scheme: dark'),
     media: query,
     onchange: null,
