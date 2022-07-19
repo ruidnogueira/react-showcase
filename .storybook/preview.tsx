@@ -42,7 +42,10 @@ export const globalTypes = {
       icon: 'circlehollow',
       showName: true,
       dynamicTitle: true,
-      items: ['Light', 'Dark'],
+      items: [
+        { value: 'light', title: 'Light' },
+        { value: 'dark', title: 'Dark' },
+      ],
     },
   },
   language: {
@@ -71,6 +74,7 @@ const reactDecorators: DecoratorFn[] = [
   ),
 
   (Story, { globals }) => {
+    console.log(globals);
     const { i18n } = useTranslation(undefined, { useSuspense: true });
     const language = globals.language;
 
