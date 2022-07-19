@@ -44,6 +44,11 @@
       "description": "don't automerge because it also needs to update the service worker",
       "matchPackageNames": ["msw"],
       "automerge": false
+    },
+    {
+      "groupName": "Vite",
+      "matchPackageNames": ["vite", "@vitejs/plugin-react"],
+      "matchUpdateTypes": ["major"]
     }
   ],
   "platformAutomerge": true
