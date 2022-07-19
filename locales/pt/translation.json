@@ -1,1 +1,1 @@
-{"common":{"hello":"Olá Mundo!","states":{"loading":"A carregar"}}}
+{"common":{"hello":"Olá Mundo!","actions":{"reload":"Reload"},"states":{"loading":"A carregar"}},"errors":{"unexpected":{"title":"Algo correu mal","description":"Ocorreu um erro inesperado. Para continuar, recarregue or navegue para outra página.","reload":"$t(common.actions.reload)"}}}

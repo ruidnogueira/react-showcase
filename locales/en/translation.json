@@ -1,1 +1,1 @@
-{"common":{"hello":"Hello World!","states":{"loading":"Loading"}}}
+{"common":{"hello":"Hello World!","actions":{"reload":"Reload"},"states":{"loading":"Loading"}},"errors":{"unexpected":{"title":"Something went wrong","description":"An unexpected error occurred. To continue, reload or navigate to another page.","reload":"$t(common.actions.reload)"}}}
