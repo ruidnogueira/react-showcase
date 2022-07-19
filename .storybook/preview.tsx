@@ -1,14 +1,15 @@
-import '../src/styles/styles.scss';
 import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
 import clsx from 'clsx';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
 import { ConfigProvider } from '../src/app/contexts/config/config-context';
-import { I18nProvider } from '../src/app/contexts/i18n/i18n-context';
 import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
+import { useTranslation } from 'react-i18next';
+import 'src/styles/styles.scss';
+import 'src/mocks/i18n';
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -39,9 +40,23 @@ export const globalTypes = {
     defaultValue: 'light',
     toolbar: {
       icon: 'circlehollow',
-      items: ['light', 'dark'],
       showName: true,
       dynamicTitle: true,
+      items: ['Light', 'Dark'],
+    },
+  },
+  language: {
+    name: 'Language',
+    description: 'Internationalization language',
+    defaultValue: 'en-GB',
+    toolbar: {
+      icon: 'globe',
+      dynamicTitle: true,
+      items: [
+        { value: 'en-GB', right: '🇬🇧', title: 'English (GB)' },
+        { value: 'en-US', right: '🇺🇸', title: 'English (US)' },
+        { value: 'pt-PT', right: '🇵🇹', title: 'Português (PT)' },
+      ],
     },
   },
 };
@@ -50,14 +65,23 @@ const reactDecorators: DecoratorFn[] = [
   (Story) => (
     <HelmetProvider>
       <ConfigProvider>
-        <I18nProvider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Story />
-          </Suspense>
-        </I18nProvider>
+        <Story />
       </ConfigProvider>
     </HelmetProvider>
   ),
+
+  (Story, { globals }) => {
+    const { i18n } = useTranslation(undefined, { useSuspense: true });
+    const language = globals.language;
+
+    useEffect(() => {
+      if (i18n.languages[0] !== language) {
+        i18n.changeLanguage(language);
+      }
+    }, [i18n.languages[0], language]);
+
+    return <Story />;
+  },
 
   (Story, { globals, parameters }) =>
     isChromatic() ? (
@@ -92,7 +116,7 @@ function ThemeWrapper({
   parameters: Parameters;
 }) {
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme: () => {} }}>
       <div
         data-theme={theme}
         data-testid={`storybook-theme-${theme}`}

@@ -18,6 +18,7 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals"]
   },
-  "include": ["src", "e2e", "plugins", "playwright.config.ts"],
+  "include": ["src", "e2e", "plugins", "playwright.config.ts", ".storybook/*"],
+  "exclude": [".storybook/main.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
