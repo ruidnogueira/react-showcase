@@ -1,15 +1,16 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { Loading } from './loading';
+import { Loading as LoadingComponent } from './loading';
 
 export default {
   title: 'Atoms/Loading',
+  component: LoadingComponent,
   argTypes: {},
   args: {
     isLoading: true,
   },
-} as ComponentMeta<typeof Loading>;
+} as ComponentMeta<typeof LoadingComponent>;
 
-export const Default: ComponentStoryObj<typeof Loading> = {
+export const Loading: ComponentStoryObj<typeof LoadingComponent> = {
   render: (args) => (
     <div
       style={{
@@ -20,7 +21,7 @@ export const Default: ComponentStoryObj<typeof Loading> = {
         justifyContent: 'center',
       }}
     >
-      <Loading {...args}>example text</Loading>
+      <LoadingComponent {...args}>example text</LoadingComponent>
     </div>
   ),
   args: {

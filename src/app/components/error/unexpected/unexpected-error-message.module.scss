@@ -1,0 +1,14 @@
+@use 'src/styles/utils';
+
+.error {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.icon {
+  color: var(--theme-color-negative);
+  font-size: utils.px-to-rem(150px);
+}

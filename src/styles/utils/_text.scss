@@ -20,7 +20,7 @@
 @mixin h1 {
   @include heading;
 
-  font-size: var(--theme-font-size-9);
+  font-size: var(--theme-font-size-10);
 }
 
 @mixin h2 {
