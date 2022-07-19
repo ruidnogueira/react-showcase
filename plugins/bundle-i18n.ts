@@ -70,9 +70,10 @@ export function serveI18n({
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         if (req.originalUrl && isLocale(req.originalUrl)) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const requestedLanguage = req.originalUrl
             .substring(webSourcePath.length + 1)
-            .split('/')[0];
+            .split('/')[0]!;
 
           const locale = bundledLocales.get(requestedLanguage);
 
@@ -84,7 +85,8 @@ export function serveI18n({
     },
     handleHotUpdate({ file, server }) {
       if (shouldReload(normalizePath(file))) {
-        const changedLanguage = file.substring(fileSourcePath.length + 1).split('/')[0];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const changedLanguage = file.substring(fileSourcePath.length + 1).split('/')[0]!;
 
         const bundledLocale = bundleLocales({ root: config.root, source, changedLanguage }).get(
           changedLanguage
