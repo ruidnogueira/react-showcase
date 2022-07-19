@@ -1,4 +1,5 @@
-import { normalizePath, Plugin, PluginOption, ResolvedConfig } from 'vite';
+import type { Plugin, PluginOption, ResolvedConfig } from 'vite';
+import { normalizePath } from 'vite';
 import fs from 'fs';
 import path from 'path';
 import picomatch from 'picomatch';
