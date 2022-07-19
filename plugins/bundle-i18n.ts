@@ -4,6 +4,8 @@ import path from 'path';
 import picomatch from 'picomatch';
 
 const bundledFileName = 'translation.json';
+const virtualModuleId = 'virtual:i18n';
+const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
 /**
  * Bundles i18n translations files into a single file.
@@ -37,9 +39,6 @@ export function serveI18n({
   let fileSourcePath: string;
   let shouldReload: picomatch.Matcher;
 
-  const virtualModuleId = 'virtual:i18n';
-  const resolvedVirtualModuleId = '\0' + virtualModuleId;
-
   return {
     name: 'vite-plugin-merge-i18n',
     apply: 'serve',
@@ -54,6 +53,9 @@ export function serveI18n({
       const fileSourceFilesPath = normalizePath(path.resolve(config.root, source, '**/*.json'));
       shouldReload = picomatch(fileSourceFilesPath);
     },
+    buildStart() {
+      bundledLocales = bundleLocales({ root: config.root, source });
+    },
     resolveId(id) {
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId;
@@ -65,8 +67,6 @@ export function serveI18n({
       }
     },
     configureServer(server) {
-      bundledLocales = bundleLocales({ root: config.root, source });
-
       server.middlewares.use((req, res, next) => {
         if (req.originalUrl && isLocale(req.originalUrl)) {
           const requestedLanguage = req.originalUrl
@@ -110,6 +110,7 @@ export function buildI18n({
   destinationDir: string;
 }): Plugin {
   let config: ResolvedConfig;
+  let bundledLocales: Map<string, Record<string, unknown>>;
 
   return {
     name: 'vite-plugin-merge-i18n',
@@ -117,9 +118,21 @@ export function buildI18n({
     configResolved(resolvedConfig) {
       config = resolvedConfig;
     },
+    buildStart() {
+      bundledLocales = bundleLocales({ root: config.root, source });
+    },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId;
+      }
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export default new Map(${JSON.stringify(Array.from(bundledLocales))})`;
+      }
+    },
     closeBundle() {
       const destination = path.resolve(config.root, config.build.outDir, destinationDir);
-      const bundledLocales = bundleLocales({ root: config.root, source });
       saveLocales({ root: config.root, destination, bundledLocales });
     },
   };

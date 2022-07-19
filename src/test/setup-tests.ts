@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import './mocks/i18n';
+import '../mocks/i18n';
 import './mocks/match-media';
 import { toHaveNoViolations } from 'jest-axe';
 import { server } from 'src/mocks/server/server';
