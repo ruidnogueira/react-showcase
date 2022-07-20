@@ -4,17 +4,17 @@
 @use 'functions' as color-functions;
 
 $-lightness: (
-  100: 50%,
-  200: 40%,
-  300: 30%,
-  400: 20%,
-  500: 10%,
+  100: 75%,
+  200: 60%,
+  300: 45%,
+  400: 30%,
+  500: 15%,
   600: 0,
-  700: 10%,
-  800: 20%,
-  900: 30%,
-  1000: 40%,
-  1100: 50%,
+  700: 15%,
+  800: 30%,
+  900: 45%,
+  1000: 60%,
+  1100: 75%,
 );
 
 @function -derive-colors($color-name, $color) {
@@ -32,6 +32,7 @@ $-pallete: (
 $-main-colors: (
   'light': map.get($-pallete, 'dr-white'),
   'dark': map.get($-pallete, 'lead'),
+  'accent': map.get($-pallete, 'bleuchatel-blue'),
   'primary': map.get($-pallete, 'bleuchatel-blue'),
   'secondary': map.get($-pallete, 'wild-dove'),
   'negative': map.get($-pallete, 'khmer-curry'),
@@ -39,6 +40,7 @@ $-main-colors: (
 
 $-base-colors: functions.map-collect(
   $-main-colors,
+  -derive-colors('accent', map.get($-main-colors, 'accent')),
   -derive-colors('primary', map.get($-main-colors, 'primary')),
   -derive-colors('secondary', map.get($-main-colors, 'secondary')),
   -derive-colors('negative', map.get($-main-colors, 'negative')),
@@ -54,7 +56,7 @@ $-colors: map.merge(
     'text': map.get($-base-colors, 'light'),
     'text-light': map.get($-base-colors, 'light'),
     'text-dark': map.get($-base-colors, 'dark'),
-    'focus-ring': map.get($-base-colors, 'primary-500'),
+    'focus-ring': map.get($-base-colors, 'accent-500'),
     'primary-hover': map.get($-base-colors, 'primary-500'),
     'primary-active': map.get($-base-colors, 'primary-400'),
     'secondary-hover': map.get($-base-colors, 'secondary-500'),

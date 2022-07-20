@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import '../mocks/i18n';
 import './mocks/match-media';
+import './mocks/get-computed-style';
 import { toHaveNoViolations } from 'jest-axe';
 import { server } from 'src/mocks/server/server';
 
