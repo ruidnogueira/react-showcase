@@ -2,7 +2,7 @@ import { ReactComponent as SpinnerSvg } from 'src/assets/spinner.svg';
 import { HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 export type LoadingSpinnerProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'>;
 
@@ -17,7 +17,7 @@ export function LoadingSpinner(props: LoadingSpinnerProps) {
       aria-live="polite"
       aria-busy={true}
     >
-      <VisuallyHidden.Root>{t('common.states.loading')}</VisuallyHidden.Root>
+      <VisuallyHidden>{t('common.states.loading')}</VisuallyHidden>
       <SpinnerSvg className="loading__spinner" aria-hidden={true} />
     </span>
   );
