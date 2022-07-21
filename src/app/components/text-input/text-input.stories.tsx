@@ -3,7 +3,7 @@ import { ControlSizes } from 'src/app/models/styles';
 import { TextInput } from './text-input';
 
 export default {
-  title: 'Atoms/TextField',
+  title: 'Atoms/TextInput',
   component: TextInput,
   argTypes: {
     size: {
