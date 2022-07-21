@@ -66,6 +66,7 @@
       { "forbid": [{ "element": "button", "message": "use <Button> instead" }] }
     ],
     "jsx-a11y/html-has-lang": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",

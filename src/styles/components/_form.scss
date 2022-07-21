@@ -1,0 +1,9 @@
+@use '../utils';
+
+.label {
+  @include utils.regular-text;
+
+  &--small {
+    font-size: var(--theme-font-size-2);
+  }
+}

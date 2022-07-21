@@ -1,0 +1,54 @@
+@use 'sass:map';
+@use '../utils';
+
+.input {
+  @include utils.theme('light') {
+    --input-color-border: var(--theme-color-gray-400);
+    --input-color-border-hover: var(--theme-color-gray-600);
+  }
+
+  @include utils.theme('dark') {
+    --input-color-border: var(--theme-color-gray-600);
+    --input-color-border-hover: var(--theme-color-gray-400);
+  }
+
+  @include utils.control;
+
+  background-color: var(--theme-color-background);
+  border-color: var(--input-color-border);
+  color: var(--theme-color-text);
+
+  &:hover {
+    border-color: var(--input-color-border-hover);
+  }
+
+  &:focus {
+    @include utils.focus-ring;
+
+    border-color: transparent;
+  }
+
+  &:disabled {
+    @include utils.disabled;
+
+    border-color: var(--input-color-border);
+  }
+
+  &--small {
+    @include utils.control--small;
+  }
+
+  &--invalid {
+    border-color: var(--theme-color-negative);
+
+    &:hover {
+      border-color: var(--theme-color-negative);
+    }
+
+    &:focus {
+      @include utils.focus-ring($color: var(--theme-color-negative));
+
+      border-color: transparent;
+    }
+  }
+}
