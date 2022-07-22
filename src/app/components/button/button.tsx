@@ -14,19 +14,26 @@ type OriginalButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' 
 
 interface BaseButtonProps extends OriginalButtonProps {
   /**
-   * The color variant of the button
+   * The color variant of the button.
    */
   color?: ButtonColorVariant;
 
   /**
-   * The style variant of the button
+   * The style variant of the button.
    */
   variant?: ButtonStyleVariant;
 
   /**
-   * The size of the button
+   * The size of the button.
    */
   size?: ControlSize;
+
+  /**
+   * Whether it is a custom styles button.
+   *
+   * Excludes button color and variant
+   */
+  isCustom?: boolean;
 }
 
 interface UnslottedButtonProps extends BaseButtonProps {
@@ -57,6 +64,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     size = 'medium',
     type,
     disabled = false,
+    isCustom = false,
     onClick,
     ...buttonProps
   } = props;
@@ -81,7 +89,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   }
 
   return (
-    // eslint-disable-next-line react/forbid-elements
     <Component
       {...buttonProps}
       ref={ref}
@@ -89,10 +96,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       type={type}
       className={clsx(
         'button',
-        `button--${variant}`,
-        `button--${color}`,
         `button--${size}`,
-        { 'button--disabled': disabled },
+        {
+          [`button--${variant}`]: !isCustom,
+          [`button--${color}`]: !isCustom,
+          'button--disabled': disabled,
+        },
         className
       )}
       disabled={nativeDisabled}
