@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef, MouseEvent, ReactElement, ReactNode } from 'react';
+import { ButtonHTMLAttributes, forwardRef, MouseEvent } from 'react';
 import { ControlSize } from 'src/app/models/styles';
 import { Slot } from '@radix-ui/react-slot';
 import { StrictUnion } from 'src/app/types/union';
@@ -44,8 +44,6 @@ interface UnslottedButtonProps extends BaseButtonProps {
 }
 
 interface SlottedButtonProps extends BaseButtonProps {
-  children: ReactElement<{ children: ReactNode }>;
-
   /**
    * Passes props to child element instead of using default `button` element.
    */
@@ -83,10 +81,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       onClick?.(event);
     }
   };
-
-  if (asChild && !children.props.children) {
-    return null;
-  }
 
   return (
     <Component

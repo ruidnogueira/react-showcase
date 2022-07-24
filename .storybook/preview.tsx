@@ -8,7 +8,6 @@ import isChromatic from 'chromatic';
 import { ConfigProvider } from '../src/app/contexts/config/config-context';
 import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
 import { useTranslation } from 'react-i18next';
-import { useGlobals } from '@storybook/client-api';
 import 'src/styles/styles.scss';
 import 'src/mocks/i18n';
 

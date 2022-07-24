@@ -1,5 +1,6 @@
 @use '../utils';
 @use 'sass:map';
+@use 'sass:math';
 
 $-color-variants: ('primary', 'secondary', 'negative');
 $-button-border-width: 2px;
@@ -9,8 +10,8 @@ $-button-border-width: 2px;
     $colors: map.get(utils.$themes, 'light', 'color');
 
     --button-color-filled-text: #{map.get($colors, 'text-light')};
-    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.2)};
-    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.4)};
+    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.3)};
+    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.5)};
   }
 
   @include utils.theme('dark') {
@@ -27,6 +28,7 @@ $-button-border-width: 2px;
   background-color: inherit;
   border-radius: utils.$control-height;
   border-width: 2px;
+  color: inherit;
   cursor: pointer;
   font-weight: bold;
   justify-content: center;
@@ -156,4 +158,13 @@ $-button-border-width: 2px;
       }
     }
   }
+}
+
+.icon-button {
+  padding: 0;
+  width: utils.$control-height;
+}
+
+.icon-button__icon {
+  font-size: utils.$control-height * 0.8;
 }
