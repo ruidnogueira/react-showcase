@@ -10,15 +10,17 @@ import {
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from 'src/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from 'src/app/contexts/theme/theme-context';
+import { Theme, ThemeProvider } from 'src/app/contexts/theme/theme-context';
 import { HideStorybookVariantsProvider } from 'src/stories/variants';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
+  defaultTheme?: Theme;
 }
 
 interface RenderHookWithProvidersOptions<Props> extends RenderHookOptions<Props> {
   routerProps?: MemoryRouterProps;
+  defaultTheme?: Theme;
 }
 
 interface RenderStoryOptions extends RenderOptions {
@@ -30,6 +32,7 @@ type RenderStoryWithProvidersOptions = RenderStoryOptions;
 interface TestProviderProps {
   children: ReactNode;
   routerProps?: MemoryRouterProps;
+  defaultTheme?: Theme;
 }
 
 /**
@@ -43,10 +46,10 @@ export function render(ui: ReactElement, options?: RenderOptions) {
  * Provides global providers required for smart components (i18n, routing, etc)
  */
 export function renderWithProviders(ui: ReactElement, options: RenderWithProvidersOptions = {}) {
-  const { wrapper: Wrapper, routerProps, ...props } = options;
+  const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders routerProps={routerProps}>
+    <TestProviders routerProps={routerProps} defaultTheme={defaultTheme}>
       {Wrapper ? <Wrapper>{children}</Wrapper> : children}
     </TestProviders>
   );
@@ -71,10 +74,10 @@ export function renderHookWithProviders<Props, Result>(
   callback: (props: Props) => Result,
   options: RenderHookWithProvidersOptions<Props> = {}
 ) {
-  const { wrapper: Wrapper, routerProps, ...props } = options;
+  const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders routerProps={routerProps}>
+    <TestProviders routerProps={routerProps} defaultTheme={defaultTheme}>
       {Wrapper ? <Wrapper>{children}</Wrapper> : children}
     </TestProviders>
   );
@@ -115,12 +118,12 @@ export function renderStoryWithProviders(
   return renderStory(ui, { ...props, wrapper: AllProviders });
 }
 
-function TestProviders({ children, routerProps }: TestProviderProps) {
+function TestProviders({ children, routerProps, defaultTheme }: TestProviderProps) {
   return (
     <MemoryRouter {...routerProps}>
       <HelmetProvider>
         <ConfigProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>
         </ConfigProvider>
       </HelmetProvider>
     </MemoryRouter>

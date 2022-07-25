@@ -7,11 +7,11 @@ import { ConfigProvider } from '../config/config-context';
 import { Theme, ThemeProvider, useTheme } from './theme-context';
 
 function setup({
-  initialTheme,
+  defaultTheme,
   themeStorageKey = 'theme',
   withProvider = true,
 }: {
-  initialTheme?: Theme;
+  defaultTheme?: Theme;
   themeStorageKey?: string;
   withProvider?: boolean;
 } = {}) {
@@ -20,7 +20,7 @@ function setup({
       <ConfigProvider config={{ storageKeys: { theme: themeStorageKey } }}>
         <HelmetProvider>
           {withProvider ? (
-            <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
+            <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>
           ) : (
             children
           )}
@@ -45,7 +45,7 @@ test('sets light theme by default', () => {
 });
 
 test('sets provided initial theme', () => {
-  const { result } = setup({ initialTheme: 'dark' });
+  const { result } = setup({ defaultTheme: 'dark' });
 
   expect(result.current.theme).toBe('dark');
 });
@@ -79,9 +79,9 @@ test.each(['light', 'dark'] as const)('sets %s theme if it is in storage', (them
 
 test('toggles current theme', () => {
   const themeStorageKey = 'theme-storage';
-  const { result } = setup({ initialTheme: 'light', themeStorageKey });
+  const { result } = setup({ defaultTheme: 'light', themeStorageKey });
 
-  const initialTheme = result.current.theme;
+  const defaultTheme = result.current.theme;
 
   act(() => {
     result.current.toggleTheme();
@@ -93,7 +93,7 @@ test('toggles current theme', () => {
     result.current.toggleTheme();
   });
 
-  expect(initialTheme).toBe('light');
+  expect(defaultTheme).toBe('light');
   expect(toggleTheme).toBe('dark');
   expect(result.current.theme).toBe('light');
   expect(getFromLocalStorage(themeStorageKey)).toBe('light');

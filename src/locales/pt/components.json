@@ -1,0 +1,7 @@
+{
+  "loadingSpinner": "$t(common.states.loading)",
+  "themeButton": {
+    "light": "Mudar para tema escuro",
+    "dark": "Mudar para tema claro"
+  }
+}
