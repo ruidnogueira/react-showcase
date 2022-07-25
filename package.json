@@ -107,7 +107,7 @@
     "playwright": "1.23.3",
     "prettier": "2.7.1",
     "rollup-plugin-visualizer": "5.7.1",
-    "sass": "1.53.0",
+    "sass": "1.54.0",
     "stylelint": "14.9.1",
     "stylelint-config-css-modules": "4.1.0",
     "stylelint-config-prettier": "9.0.3",
