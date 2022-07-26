@@ -1,0 +1,80 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import clsx from 'clsx';
+import { ReactElement, ReactNode } from 'react';
+import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
+
+export interface TooltipProps extends Pick<TooltipPrimitive.TooltipContentProps, 'align' | 'side'> {
+  children: ReactElement;
+  className?: string;
+
+  /**
+   * The content of the tooltip.
+   */
+  content: ReactNode;
+
+  /**
+   * Whether the tooltip is open or not when the tooltip first renders.
+   *
+   * Use it when you do not need to control the open state.
+   */
+  defaultIsOpen?: boolean;
+
+  /**
+   * Whether the tooltip is open or not.
+   *
+   * Must be used in conjunction with `onOpenChange`.
+   */
+  isOpen?: boolean;
+
+  /**
+   * Event handler for when to open state of the tooltip changes.
+   */
+  onOpenChange?: (open: boolean) => void;
+
+  /**
+   * Determines how much time it takes for the tooltip to open.
+   */
+  delayDuration?: number;
+}
+
+export function Tooltip(props: TooltipProps) {
+  const {
+    children,
+    content,
+    defaultIsOpen,
+    isOpen,
+    onOpenChange,
+    delayDuration,
+    className,
+    ...contentProps
+  } = props;
+
+  const portalContainer = usePortalContainer();
+
+  return (
+    <TooltipPrimitive.Root
+      defaultOpen={defaultIsOpen}
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      delayDuration={delayDuration}
+    >
+      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+
+      <TooltipPrimitive.Portal container={portalContainer}>
+        <TooltipPrimitive.Content
+          {...contentProps}
+          className={clsx('tooltip', className)}
+          sideOffset={5}
+        >
+          {content}
+
+          <TooltipPrimitive.Arrow className="tooltip__arrow" />
+        </TooltipPrimitive.Content>
+      </TooltipPrimitive.Portal>
+    </TooltipPrimitive.Root>
+  );
+}
+
+export const TooltipProvider = TooltipPrimitive.Provider;
+
+/* TODO: BAN RADIX TOOLTIP IMPORTS */
