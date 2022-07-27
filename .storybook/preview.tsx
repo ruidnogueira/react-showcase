@@ -90,8 +90,8 @@ const reactDecorators: DecoratorFn[] = [
     return <Story />;
   },
 
-  (Story, { globals, parameters }) =>
-    isChromatic() ? (
+  (Story, { globals, parameters }) => {
+    return isChromatic() ? (
       <>
         <ThemeWrapper theme="light" parameters={parameters}>
           <Story />
@@ -105,7 +105,8 @@ const reactDecorators: DecoratorFn[] = [
       <ThemeWrapper theme={globals.theme} parameters={parameters}>
         <Story />
       </ThemeWrapper>
-    ),
+    );
+  },
 ];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [
@@ -113,20 +114,22 @@ export const decorators: Array<DecoratorFunction | DecoratorFn> = [
   ...reactDecorators,
 ];
 
-function ThemeWrapper({
-  children,
-  theme,
-  parameters,
-}: {
-  children: ReactNode;
-  theme: Theme;
-  parameters: Parameters;
-}) {
+function ThemeWrapper(props: { children: ReactNode; parameters: Parameters; theme: Theme }) {
+  const { children, parameters, theme: globalTheme } = props;
+  const [theme, setTheme] = useState(globalTheme);
   const [wrapper, setWrapper] = useState<HTMLElement | null>(null);
+
+  const toggleTheme = () => setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+
+  useEffect(() => {
+    if (theme !== globalTheme) {
+      setTheme(globalTheme);
+    }
+  }, [globalTheme]);
 
   return (
     <PortalContainerProvider value={wrapper}>
-      <ThemeContext.Provider value={{ theme, toggleTheme: () => {} }}>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <div
           ref={setWrapper}
           data-theme={theme}

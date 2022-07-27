@@ -5,6 +5,6 @@ import { bundleI18n } from './plugins/bundle-i18n';
 
 export const vitePlugins: PluginOption[] = [
   tsconfigPaths(),
-  svgr(),
+  svgr({ svgrOptions: { ref: true } }),
   bundleI18n({ source: 'src/locales', destinationDir: 'locales' }),
 ];

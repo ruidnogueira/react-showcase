@@ -1,0 +1,12 @@
+.themeButton {
+  color: var(--theme-color-text);
+
+  &:hover,
+  &:focus {
+    background-color: var(--button-color-quiet-background-hover);
+  }
+
+  &:active {
+    background-color: var(--button-color-quiet-background-active);
+  }
+}

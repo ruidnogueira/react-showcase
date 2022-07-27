@@ -80,6 +80,15 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
   },
 };
 
+export const Custom: ComponentStoryObj<typeof Button> = {
+  render: (args) => (
+    <Button {...args} style={{ background: 'salmon', color: 'black', borderRadius: '0' }} />
+  ),
+  args: {
+    isCustom: true,
+  },
+};
+
 export const WithLoading: ComponentStoryObj<typeof Button> = {
   render: ({ children, ...args }) => (
     <StorybookVariants>

@@ -1,5 +1,6 @@
 @use '../utils';
 @use 'sass:map';
+@use 'sass:math';
 
 $-color-variants: ('primary', 'secondary', 'negative');
 $-button-border-width: 2px;
@@ -8,15 +9,15 @@ $-button-border-width: 2px;
   @include utils.theme('light') {
     $colors: map.get(utils.$themes, 'light', 'color');
 
-    --button-color-text: #{map.get($colors, 'text-light')};
-    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.2)};
-    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.4)};
+    --button-color-filled-text: #{map.get($colors, 'text-light')};
+    --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.3)};
+    --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.5)};
   }
 
   @include utils.theme('dark') {
     $colors: map.get(utils.$themes, 'dark', 'color');
 
-    --button-color-text: #{map.get($colors, 'text-dark')};
+    --button-color-filled-text: #{map.get($colors, 'text-dark')};
     --button-color-quiet-background-hover: #{rgba(map.get($colors, 'gray-100'), 0.1)};
     --button-color-quiet-background-active: #{rgba(map.get($colors, 'gray-100'), 0.2)};
   }
@@ -27,6 +28,7 @@ $-button-border-width: 2px;
   background-color: inherit;
   border-radius: utils.$control-height;
   border-width: 2px;
+  color: inherit;
   cursor: pointer;
   font-weight: bold;
   justify-content: center;
@@ -56,7 +58,7 @@ $-button-border-width: 2px;
   }
 
   &--filled {
-    color: var(--button-color-text);
+    color: var(--button-color-filled-text);
 
     @each $variant in $-color-variants {
       &.button--#{$variant} {
@@ -72,8 +74,7 @@ $-button-border-width: 2px;
         }
 
         &.button--disabled {
-          background-color: var(--theme-color-gray-100);
-          color: var(--theme-color-gray-1000);
+          background-color: var(--theme-color-gray-600);
         }
       }
     }
@@ -89,19 +90,19 @@ $-button-border-width: 2px;
         &:focus {
           background-color: var(--theme-color-#{$variant});
           border-color: transparent;
-          color: var(--button-color-text);
+          color: var(--button-color-filled-text);
         }
 
         &:active {
           background-color: var(--theme-color-#{$variant}-active);
           border-color: transparent;
-          color: var(--button-color-text);
+          color: var(--button-color-filled-text);
         }
 
         &.button--disabled {
           background-color: inherit;
-          border-color: var(--theme-color-gray-100);
-          color: var(--theme-color-gray-1000);
+          border-color: var(--theme-color-gray-600);
+          color: var(--theme-color-gray-600);
         }
       }
     }
@@ -124,7 +125,7 @@ $-button-border-width: 2px;
 
         &.button--disabled {
           background-color: inherit;
-          color: var(--theme-color-gray-1000);
+          color: var(--theme-color-gray-600);
         }
       }
     }
@@ -151,9 +152,18 @@ $-button-border-width: 2px;
         }
 
         &.button--disabled {
-          color: var(--theme-color-gray-1000);
+          color: var(--theme-color-gray-600);
         }
       }
     }
   }
+}
+
+.icon-button {
+  padding: 0;
+  width: utils.$control-height;
+}
+
+.icon-button__icon {
+  font-size: utils.$control-height * 0.8;
 }

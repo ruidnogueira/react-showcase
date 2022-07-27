@@ -8,22 +8,13 @@ export default {
   args: {
     isLoading: true,
   },
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof LoadingComponent>;
 
 export const Loading: ComponentStoryObj<typeof LoadingComponent> = {
-  render: (args) => (
-    <div
-      style={{
-        position: 'relative',
-        height: '200px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingComponent {...args}>example text</LoadingComponent>
-    </div>
-  ),
+  render: (args) => <LoadingComponent {...args}>example text</LoadingComponent>,
   args: {
     isLoading: true,
   },

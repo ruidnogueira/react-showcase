@@ -19,12 +19,12 @@ export { useTheme, ThemeContext };
 
 export function ThemeProvider({
   children,
-  initialTheme,
+  defaultTheme,
 }: {
   children: ReactNode;
-  initialTheme?: Theme;
+  defaultTheme?: Theme;
 }) {
-  const { theme, themeState } = useThemeManager(initialTheme);
+  const { theme, themeState } = useThemeManager(defaultTheme);
 
   return (
     <>
@@ -37,12 +37,12 @@ export function ThemeProvider({
   );
 }
 
-function useThemeManager(initialTheme?: Theme) {
+function useThemeManager(defaultTheme?: Theme) {
   const { storageKeys } = useConfig();
 
   const [theme, setTheme] = useState<Theme>(() => {
-    if (initialTheme) {
-      return initialTheme;
+    if (defaultTheme) {
+      return defaultTheme;
     }
 
     const savedTheme = getFromLocalStorage<Theme>(storageKeys.theme);
