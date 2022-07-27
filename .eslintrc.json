@@ -92,6 +92,10 @@
           {
             "name": "react-dom/test-utils",
             "message": "use testing library instead."
+          },
+          {
+            "name": "@radix-ui/react-tooltip",
+            "message": "use our tooltip."
           }
         ]
       }

@@ -12,6 +12,7 @@ import { ConfigProvider } from 'src/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
 import { Theme, ThemeProvider } from 'src/app/contexts/theme/theme-context';
 import { HideStorybookVariantsProvider } from 'src/stories/variants';
+import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
@@ -123,7 +124,9 @@ function TestProviders({ children, routerProps, defaultTheme }: TestProviderProp
     <MemoryRouter {...routerProps}>
       <HelmetProvider>
         <ConfigProvider>
-          <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>
+          <ThemeProvider defaultTheme={defaultTheme}>
+            <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+          </ThemeProvider>
         </ConfigProvider>
       </HelmetProvider>
     </MemoryRouter>
@@ -134,7 +137,9 @@ function StoryTestProviders({ children }: { children: ReactNode }) {
   return (
     <HelmetProvider>
       <ConfigProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+        </ThemeProvider>
       </ConfigProvider>
     </HelmetProvider>
   );

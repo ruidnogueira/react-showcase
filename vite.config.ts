@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => {
     // https://github.com/vitest-dev/vitest
     test: {
       globals: true,
+      css: false,
       include: ['src/**/*.test.*'],
       environment: 'jsdom',
       setupFiles: 'src/test/setup-tests.ts',
