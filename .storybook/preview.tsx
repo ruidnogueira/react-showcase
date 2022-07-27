@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
 import 'src/styles/styles.scss';
 import 'src/mocks/i18n';
+import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -69,7 +70,9 @@ const reactDecorators: DecoratorFn[] = [
   (Story) => (
     <HelmetProvider>
       <ConfigProvider>
-        <Story />
+        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
+          <Story />
+        </TooltipProvider>
       </ConfigProvider>
     </HelmetProvider>
   ),

@@ -1,11 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import clsx from 'clsx';
-import { ReactElement, ReactNode } from 'react';
+import { CSSProperties, ReactElement, ReactNode } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
 
 export interface TooltipProps extends Pick<TooltipPrimitive.TooltipContentProps, 'align' | 'side'> {
   children: ReactElement;
   className?: string;
+  style?: CSSProperties;
 
   /**
    * The content of the tooltip.
@@ -76,5 +78,3 @@ export function Tooltip(props: TooltipProps) {
 }
 
 export const TooltipProvider = TooltipPrimitive.Provider;
-
-/* TODO: BAN RADIX TOOLTIP IMPORTS */
