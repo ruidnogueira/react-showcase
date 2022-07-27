@@ -4,6 +4,7 @@
   "npm": {
     "stabilityDays": 3
   },
+  "internalChecksFilter": "strict",
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "pin", "digest"],
