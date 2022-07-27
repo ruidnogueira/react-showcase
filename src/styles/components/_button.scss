@@ -2,8 +2,6 @@
 @use 'sass:map';
 @use 'sass:math';
 
-/* TODO: button disabled dark is broken */
-
 $-color-variants: ('primary', 'secondary', 'negative');
 $-button-border-width: 2px;
 

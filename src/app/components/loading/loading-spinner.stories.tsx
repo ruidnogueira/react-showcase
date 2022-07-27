@@ -6,12 +6,11 @@ export default {
   component: LoadingSpinnerComponent,
   argTypes: {},
   args: {},
+  parameters: {
+    layout: 'centered',
+  },
 } as ComponentMeta<typeof LoadingSpinnerComponent>;
 
 export const LoadingSpinner: ComponentStoryObj<typeof LoadingSpinnerComponent> = {
-  render: (args) => (
-    <div style={{ position: 'relative', height: '200px' }}>
-      <LoadingSpinnerComponent {...args} />
-    </div>
-  ),
+  render: (args) => <LoadingSpinnerComponent {...args} />,
 };

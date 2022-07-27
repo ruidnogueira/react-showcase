@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
 
-export interface TooltipProps extends Pick<TooltipPrimitive.TooltipContentProps, 'align' | 'side'> {
+export interface TooltipProps {
   children: ReactElement;
   className?: string;
   style?: CSSProperties;
@@ -37,6 +37,16 @@ export interface TooltipProps extends Pick<TooltipPrimitive.TooltipContentProps,
    * Determines how much time it takes for the tooltip to open.
    */
   delayDuration?: number;
+
+  /**
+   * Affects the position of the tooltip.
+   */
+  side?: TooltipPrimitive.TooltipContentProps['side'];
+
+  /**
+   * Affects the position of the tooltip arrow.
+   */
+  align?: TooltipPrimitive.TooltipContentProps['align'];
 }
 
 export function Tooltip(props: TooltipProps) {
