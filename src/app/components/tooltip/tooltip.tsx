@@ -77,6 +77,7 @@ export function Tooltip(props: TooltipProps) {
           {...contentProps}
           className={clsx('tooltip', className)}
           sideOffset={5}
+          collisionPadding={8}
         >
           {content}
 
