@@ -2,14 +2,16 @@ import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
 import clsx from 'clsx';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
 import { ConfigProvider } from '../src/app/contexts/config/config-context';
 import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
 import { useTranslation } from 'react-i18next';
+import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
 import 'src/styles/styles.scss';
 import 'src/mocks/i18n';
+import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -68,7 +70,9 @@ const reactDecorators: DecoratorFn[] = [
   (Story) => (
     <HelmetProvider>
       <ConfigProvider>
-        <Story />
+        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
+          <Story />
+        </TooltipProvider>
       </ConfigProvider>
     </HelmetProvider>
   ),
@@ -118,17 +122,22 @@ function ThemeWrapper({
   theme: Theme;
   parameters: Parameters;
 }) {
+  const [wrapper, setWrapper] = useState<HTMLElement | null>(null);
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme: () => {} }}>
-      <div
-        data-theme={theme}
-        data-testid={`storybook-theme-${theme}`}
-        className={clsx('storybook-theme_wrapper', {
-          [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
-        })}
-      >
-        {children}
-      </div>
-    </ThemeContext.Provider>
+    <PortalContainerProvider value={wrapper}>
+      <ThemeContext.Provider value={{ theme, toggleTheme: () => {} }}>
+        <div
+          ref={setWrapper}
+          data-theme={theme}
+          data-testid={`storybook-theme-${theme}`}
+          className={clsx('storybook-theme_wrapper', {
+            [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
+          })}
+        >
+          {children}
+        </div>
+      </ThemeContext.Provider>
+    </PortalContainerProvider>
   );
 }

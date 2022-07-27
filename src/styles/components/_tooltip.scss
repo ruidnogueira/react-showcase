@@ -1,0 +1,96 @@
+@use 'sass:map';
+@use '../utils';
+
+$-animation-duration: 400ms;
+$-animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+$-animation-slide-distance: 4px;
+
+@keyframes tooltip-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY($-animation-slide-distance);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-$-animation-slide-distance);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX($-animation-slide-distance);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(-$-animation-slide-distance);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+$-tooltip-padding-vertical: calc(
+  (#{utils.$control-height} - #{utils.$control-font-size} * #{utils.$control-line-height}) / 2
+);
+
+.tooltip {
+  --tooltip-color-background: var(--theme-color-text);
+  --tooltip-color-text: var(--theme-color-background);
+
+  @include utils.control;
+
+  background-color: var(--tooltip-color-background);
+  border: none;
+  color: var(--tooltip-color-text);
+  height: auto;
+  padding: $-tooltip-padding-vertical utils.$control-padding-horizontal;
+  user-select: none;
+
+  @media (prefers-reduced-motion: no-preference) {
+    &[data-state='delayed-open'] {
+      &[data-side='top'] {
+        animation: tooltip-slide-down $-animation-duration $-animation-timing;
+      }
+
+      &[data-side='bottom'] {
+        animation: tooltip-slide-up $-animation-duration $-animation-timing;
+      }
+
+      &[data-side='left'] {
+        animation: tooltip-slide-right $-animation-duration $-animation-timing;
+      }
+
+      &[data-side='right'] {
+        animation: tooltip-slide-left $-animation-duration $-animation-timing;
+      }
+    }
+  }
+}
+
+.tooltip__arrow {
+  fill: var(--tooltip-color-background);
+}
