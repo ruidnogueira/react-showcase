@@ -2,9 +2,8 @@ import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { render, renderStory } from 'src/test/helpers/render';
+import { renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
-import { Button } from './button';
 import * as stories from './button.stories';
 
 const composedStories = composeStories(stories);
@@ -60,14 +59,4 @@ test('asChild is not disabled', async () => {
 
   expect(screen.getByRole('button')).not.toHaveAttribute('aria-disabled', 'true');
   expect(onClickMock).toHaveBeenCalledTimes(1);
-});
-
-test('does not render asChild button if child element is invalid', () => {
-  render(
-    <Button asChild>
-      <div />
-    </Button>
-  );
-
-  expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });
