@@ -2,6 +2,8 @@
 @use 'sass:map';
 @use 'sass:math';
 
+/* TODO: button disabled dark is broken */
+
 $-color-variants: ('primary', 'secondary', 'negative');
 $-button-border-width: 2px;
 
@@ -74,8 +76,7 @@ $-button-border-width: 2px;
         }
 
         &.button--disabled {
-          background-color: var(--theme-color-gray-100);
-          color: var(--theme-color-gray-1000);
+          background-color: var(--theme-color-gray-600);
         }
       }
     }
@@ -102,8 +103,8 @@ $-button-border-width: 2px;
 
         &.button--disabled {
           background-color: inherit;
-          border-color: var(--theme-color-gray-100);
-          color: var(--theme-color-gray-1000);
+          border-color: var(--theme-color-gray-600);
+          color: var(--theme-color-gray-600);
         }
       }
     }
@@ -126,7 +127,7 @@ $-button-border-width: 2px;
 
         &.button--disabled {
           background-color: inherit;
-          color: var(--theme-color-gray-1000);
+          color: var(--theme-color-gray-600);
         }
       }
     }
@@ -153,7 +154,7 @@ $-button-border-width: 2px;
         }
 
         &.button--disabled {
-          color: var(--theme-color-gray-1000);
+          color: var(--theme-color-gray-600);
         }
       }
     }
