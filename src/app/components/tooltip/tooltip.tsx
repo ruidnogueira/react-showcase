@@ -15,7 +15,7 @@ export interface TooltipProps {
   content: ReactNode;
 
   /**
-   * Whether the tooltip is open or not when the tooltip first renders.
+   * Whether the tooltip is open or not when it first renders.
    *
    * Use it when you do not need to control the open state.
    */
@@ -24,14 +24,14 @@ export interface TooltipProps {
   /**
    * Whether the tooltip is open or not.
    *
-   * Must be used in conjunction with `onOpenChange`.
+   * Use it conjunction with `onIsOpenChange`.
    */
   isOpen?: boolean;
 
   /**
-   * Event handler for when to open state of the tooltip changes.
+   * Event handler for when the open state of the tooltip changes.
    */
-  onOpenChange?: (open: boolean) => void;
+  onIsOpenChange?: (isOpen: boolean) => void;
 
   /**
    * Determines how much time it takes for the tooltip to open.
@@ -55,7 +55,7 @@ export function Tooltip(props: TooltipProps) {
     content,
     defaultIsOpen,
     isOpen,
-    onOpenChange,
+    onIsOpenChange,
     delayDuration,
     className,
     ...contentProps
@@ -67,7 +67,7 @@ export function Tooltip(props: TooltipProps) {
     <TooltipPrimitive.Root
       defaultOpen={defaultIsOpen}
       open={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={onIsOpenChange}
       delayDuration={delayDuration}
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
