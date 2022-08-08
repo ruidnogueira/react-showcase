@@ -23,6 +23,13 @@ export const Default: ComponentStoryObj<typeof TextInput> = {
   render: (args) => <TextInput {...args} />,
 };
 
+export const Small: ComponentStoryObj<typeof TextInput> = {
+  ...Default,
+  args: {
+    size: 'small',
+  },
+};
+
 export const Invalid: ComponentStoryObj<typeof TextInput> = {
   ...Default,
   args: {
