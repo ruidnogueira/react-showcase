@@ -38,3 +38,15 @@ test('renders if provider is missing when default value is provided', () => {
 
   expect(result.current).toBe(value);
 });
+
+test('renders if provider is missing when context is optional', () => {
+  const [, useTest] = createContext<string>({
+    contextName: 'TestContext',
+    hookName: 'useTest',
+    isOptional: true,
+  });
+
+  const { result } = renderHook(() => useTest());
+
+  expect(result.current).toBeUndefined();
+});
