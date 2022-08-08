@@ -1,0 +1,56 @@
+@use 'sass:map';
+@use '../mixins';
+@use 'control';
+
+@mixin input {
+  @include mixins.theme('light') {
+    --input-color-border: var(--theme-color-gray-400);
+    --input-color-border-hover: var(--theme-color-gray-600);
+  }
+
+  @include mixins.theme('dark') {
+    --input-color-border: var(--theme-color-gray-600);
+    --input-color-border-hover: var(--theme-color-gray-400);
+  }
+
+  @include control.control;
+
+  background-color: var(--theme-color-background);
+  border-color: var(--input-color-border);
+  color: var(--theme-color-text);
+  transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+
+  &:hover {
+    border-color: var(--input-color-border-hover);
+  }
+
+  &:focus {
+    @include mixins.focus-ring;
+
+    border-color: transparent;
+  }
+
+  &:disabled {
+    @include mixins.disabled;
+
+    border-color: var(--input-color-border);
+  }
+}
+
+@mixin input--small {
+  @include control.control--small;
+}
+
+@mixin input--invalid {
+  border-color: var(--theme-color-negative);
+
+  &:hover {
+    border-color: var(--theme-color-negative);
+  }
+
+  &:focus {
+    @include mixins.focus-ring($color: var(--theme-color-negative));
+
+    border-color: transparent;
+  }
+}

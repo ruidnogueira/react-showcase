@@ -30,3 +30,12 @@ $control-padding-horizontal: calc(0.75em - #{$control-border-width});
 @mixin control--small {
   font-size: $control-font-size-small;
 }
+
+@mixin control--auto-height($border-width: $control-border-width) {
+  $padding-vertical: calc(
+    ((#{$control-height} - #{$control-font-size} * #{$control-line-height}) / 2) - #{$control-border-width}
+  );
+
+  height: auto;
+  padding: $padding-vertical $control-padding-horizontal;
+}

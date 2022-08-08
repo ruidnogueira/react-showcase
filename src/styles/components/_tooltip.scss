@@ -53,22 +53,17 @@ $-animation-slide-distance: 4px;
   }
 }
 
-$-tooltip-padding-vertical: calc(
-  (#{utils.$control-height} - #{utils.$control-font-size} * #{utils.$control-line-height}) / 2
-);
-
 .tooltip {
   --tooltip-color-background: var(--theme-color-text);
   --tooltip-color-text: var(--theme-color-background);
 
   @include utils.control;
+  @include utils.control--auto-height;
 
   background-color: var(--tooltip-color-background);
-  border: none;
   color: var(--tooltip-color-text);
-  height: auto;
-  padding: $-tooltip-padding-vertical utils.$control-padding-horizontal;
   user-select: none;
+  z-index: utils.$z-index-tooltip;
 
   @media (prefers-reduced-motion: no-preference) {
     &[data-state='delayed-open'] {

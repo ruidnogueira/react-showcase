@@ -3,6 +3,8 @@
 @use '../functions';
 @use 'functions' as color-functions;
 
+/* TODO: remove primary like secondary? */
+
 $-lightness: (
   100: 75%,
   200: 60%,
