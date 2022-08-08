@@ -1,9 +1,9 @@
 import { createContext } from 'src/app/utils/context';
 
-const [PortalContainerProvider, usePortalContainer] = createContext<HTMLElement | null>({
+const [PortalContainerProvider, usePortalContainer] = createContext<HTMLElement>({
   hookName: 'PortalContainerProvider',
   contextName: 'usePortalContainer',
-  defaultValue: null,
+  isOptional: true,
 });
 
 export {
