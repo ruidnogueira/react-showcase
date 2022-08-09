@@ -17,12 +17,16 @@ test('renders when provider exists', () => {
 });
 
 test('throws error if provider is missing', () => {
+  const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
   const [, useTest] = createContext<string>({
     contextName: 'TestContext',
     hookName: 'useTest',
   });
 
   expect(() => renderHook(() => useTest())).toThrow();
+
+  logErrorSpy.mockRestore();
 });
 
 test('renders if provider is missing when default value is provided', () => {

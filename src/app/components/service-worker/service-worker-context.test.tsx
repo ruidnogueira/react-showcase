@@ -10,5 +10,9 @@ test('renders when provider exists', () => {
 });
 
 test('throws error if provider is missing', () => {
+  const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
   expect(() => renderHook(() => useServiceWorker())).toThrow();
+
+  logErrorSpy.mockRestore();
 });

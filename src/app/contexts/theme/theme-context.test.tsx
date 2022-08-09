@@ -35,7 +35,11 @@ test('renders when provider exists', () => {
 });
 
 test('throws error if provider is missing', () => {
+  const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
   expect(() => setup({ withProvider: false })).toThrow();
+
+  logErrorSpy.mockRestore();
 });
 
 test('sets light theme by default', () => {
