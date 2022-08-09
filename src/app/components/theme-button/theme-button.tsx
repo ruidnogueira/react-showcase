@@ -29,7 +29,7 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ThemeButtonProps>((prop
         isCustom={true}
         onClick={toggleTheme}
       >
-        <IconButton.Icon description={description}>
+        <IconButton.Icon label={description}>
           <Icon />
         </IconButton.Icon>
       </IconButton>

@@ -2,7 +2,7 @@ import { composeStories } from '@storybook/testing-react';
 import { axe } from 'jest-axe';
 import { renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
-import * as stories from './icon.stories';
+import * as stories from './accessible-icon.stories';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);

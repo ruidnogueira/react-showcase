@@ -32,7 +32,7 @@ export const Default: ComponentStoryObj<typeof IconButton> = {
   args: {
     type: 'button',
     children: (
-      <IconButton.Icon description="subscribe">
+      <IconButton.Icon label="subscribe">
         <CrownSimple />
       </IconButton.Icon>
     ),
@@ -45,7 +45,7 @@ export const AsChild: ComponentStoryObj<typeof IconButton> = {
     asChild: true,
     children: (
       <div>
-        <IconButton.Icon description="subscribe">
+        <IconButton.Icon label="subscribe">
           <CrownSimple />
         </IconButton.Icon>
       </div>
