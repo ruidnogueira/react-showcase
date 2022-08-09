@@ -1,4 +1,4 @@
-import * as stories from './loading.stories';
+import * as stories from './loading-overlay.stories';
 import { composeStories } from '@storybook/testing-react';
 import { renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';

@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/models/styles';
 import { StorybookVariants } from 'src/stories/variants';
-import { Loading } from '../loading/loading';
+import { LoadingOverlay } from '../loading/loading-overlay';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
@@ -94,7 +94,7 @@ export const WithLoading: ComponentStoryObj<typeof Button> = {
     <StorybookVariants>
       {ButtonStyleVariants.map((variant) => (
         <Button {...args} key={variant} variant={variant}>
-          <Loading isLoading={true}>{children}</Loading>
+          <LoadingOverlay isLoading={true}>{children}</LoadingOverlay>
         </Button>
       ))}
     </StorybookVariants>
