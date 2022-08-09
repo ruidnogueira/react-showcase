@@ -1,2 +1,2 @@
-export const ControlSizes = ['medium', 'small'] as const;
+export const ControlSizes = ['small', 'medium'] as const;
 export type ControlSize = typeof ControlSizes[number];

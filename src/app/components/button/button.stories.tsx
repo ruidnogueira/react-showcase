@@ -60,11 +60,14 @@ export const Link: ComponentStoryObj<typeof Button> = {
   },
 };
 
-export const Small: ComponentStoryObj<typeof Button> = {
-  ...Filled,
-  args: {
-    size: 'small',
-  },
+export const Size: ComponentStoryObj<typeof Button> = {
+  render: (args) => (
+    <StoryVariants>
+      {ControlSizes.map((size) => (
+        <Button {...args} key={size} size={size} />
+      ))}
+    </StoryVariants>
+  ),
 };
 
 export const Disabled: ComponentStoryObj<typeof Button> = {

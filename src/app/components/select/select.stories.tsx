@@ -1,4 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
+import { ControlSizes } from 'src/app/models/styles';
+import { StoryVariants } from 'src/stories/variants';
 import { Select, SelectItem, SelectProps } from './select';
 
 export default {
@@ -30,11 +32,14 @@ export const Default: ComponentStoryObj<typeof Select> = {
   render: (args) => <ColorSelect {...args} />,
 };
 
-export const Small: ComponentStoryObj<typeof Select> = {
-  ...Default,
-  args: {
-    size: 'small',
-  },
+export const Size: ComponentStoryObj<typeof Select> = {
+  render: (args) => (
+    <StoryVariants>
+      {ControlSizes.map((size) => (
+        <ColorSelect {...args} key={size} size={size} />
+      ))}
+    </StoryVariants>
+  ),
 };
 
 export const Invalid: ComponentStoryObj<typeof Select> = {

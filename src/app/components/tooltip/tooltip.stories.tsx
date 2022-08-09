@@ -4,7 +4,7 @@ import { Button } from '../button/button';
 import { Tooltip, TooltipProps } from './tooltip';
 
 /* TODO: make one stories for sizes and stuff like that simplify */
-/* TODO: don't use stories for tests for simple things it makes no sense */
+/* TODO: move models to types */
 
 export default {
   title: 'Atoms/Tooltip',
