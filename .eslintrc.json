@@ -96,6 +96,10 @@
           {
             "name": "@radix-ui/react-tooltip",
             "message": "use our tooltip."
+          },
+          {
+            "name": "@radix-ui/react-select",
+            "message": "use our select."
           }
         ]
       }
