@@ -1,22 +1,22 @@
 import { Children, ReactNode } from 'react';
 import { createContext } from 'src/app/utils/context';
 
-const [HideStorybookVariantsProvider, useHideStorybookVariants] = createContext<boolean>({
-  contextName: 'HideStorybookVariantsContext',
-  hookName: 'useHideStorybookVariants',
+const [HideStoryVariantsProvider, useHideStoryVariants] = createContext<boolean>({
+  contextName: 'HideStoryVariantsContext',
+  hookName: 'useHideStoryVariants',
   defaultValue: false,
 });
 
-export { HideStorybookVariantsProvider };
+export { HideStoryVariantsProvider };
 
 /**
  * Shows story variants.
  *
- * Can be modified to only show the first variant with `HideStorybookVariantsContext`.
+ * Can be modified to only show the first variant with {@link HideStoryVariantsProvider}.
  * This is useful for using stories in tests.
  */
-export function StorybookVariants({ children }: { children: ReactNode }): JSX.Element | null {
-  const hideVariants = useHideStorybookVariants();
+export function StoryVariants({ children }: { children: ReactNode }): JSX.Element | null {
+  const hideVariants = useHideStoryVariants();
 
   if (hideVariants) {
     const variants = Children.toArray(children);

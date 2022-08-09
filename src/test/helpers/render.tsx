@@ -11,7 +11,7 @@ import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from 'src/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
 import { Theme, ThemeProvider } from 'src/app/contexts/theme/theme-context';
-import { HideStorybookVariantsProvider } from 'src/stories/variants';
+import { HideStoryVariantsProvider } from 'src/stories/variants';
 import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
 
 interface RenderWithProvidersOptions extends RenderOptions {
@@ -93,9 +93,9 @@ export function renderStory(ui: ReactElement, options: RenderStoryOptions = {}) 
   const { wrapper: Wrapper, hideVariants = true, ...props } = options;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <HideStorybookVariantsProvider value={hideVariants}>
+    <HideStoryVariantsProvider value={hideVariants}>
       {Wrapper ? <Wrapper>{children}</Wrapper> : children}
-    </HideStorybookVariantsProvider>
+    </HideStoryVariantsProvider>
   );
 
   return render(ui, { ...props, wrapper: AllProviders });
