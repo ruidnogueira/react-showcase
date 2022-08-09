@@ -3,15 +3,36 @@ import { ReactNode } from 'react';
 import { Button } from '../button/button';
 import { Tooltip, TooltipProps } from './tooltip';
 
+/* TODO: make one stories for sizes and stuff like that simplify */
+/* TODO: group buttons / loadings together */
+/* TODO: don't use stories for tests for simple things it makes no sense */
+
 export default {
   title: 'Atoms/Tooltip',
   component: Tooltip,
-  parameters: { layout: 'centered' },
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {},
   args: {
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
   },
 } as ComponentMeta<typeof Tooltip>;
+
+export const Default: ComponentStoryObj<typeof Tooltip> = {
+  render: (args) => (
+    <Tooltip {...args} style={{ maxWidth: '200px' }}>
+      <Button type="button">Button</Button>
+    </Tooltip>
+  ),
+};
+
+export const Open: ComponentStoryObj<typeof Tooltip> = {
+  ...Default,
+  args: {
+    isOpen: true,
+  },
+};
 
 export const Playground: ComponentStoryObj<typeof Tooltip> = {
   render: (args) => (
@@ -67,18 +88,7 @@ export const Playground: ComponentStoryObj<typeof Tooltip> = {
     </div>
   ),
   parameters: {
-    chromatic: { disableSnapshot: true },
-  },
-};
-
-export const Open: ComponentStoryObj<typeof Tooltip> = {
-  render: (args) => (
-    <Tooltip {...args} style={{ maxWidth: '200px' }}>
-      <Button type="button">Button</Button>
-    </Tooltip>
-  ),
-  args: {
-    isOpen: true,
+    chromatic: { disableSnapshot: false },
   },
 };
 

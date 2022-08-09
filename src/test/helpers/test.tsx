@@ -1,4 +1,4 @@
-import { StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/testing-react/dist/types';
 
 /**
  * Converts composed stories into test cases.
