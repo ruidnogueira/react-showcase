@@ -115,8 +115,10 @@
       "plugins": [],
       "rules": {
         "jest/consistent-test-it": ["error", { "fn": "test" }],
+        "jest/unbound-method": "error",
         "testing-library/no-manual-cleanup": "error",
-        "@typescript-eslint/no-non-null-assertion": "off"
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/unbound-method": "off"
       },
       "env": {
         "jest/globals": true
