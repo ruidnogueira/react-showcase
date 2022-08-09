@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { CaretDown, CaretUp, Check } from 'phosphor-react';
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
-import { ControlSize } from 'src/app/models/styles';
+import { ControlSize } from 'src/app/types/styles';
 
 /* TODO: check if labels work */
 /* TODO: ban radix imports */

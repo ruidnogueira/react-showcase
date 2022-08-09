@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import clsx from 'clsx';
 import { ReactElement, ReactNode, useId, useState } from 'react';
-import { ControlSize } from 'src/app/models/styles';
+import { ControlSize } from 'src/app/types/styles';
 import { Label } from '../label/label';
 import styles from './field.module.scss';
 

@@ -3,9 +3,6 @@ import { ReactNode } from 'react';
 import { Button } from '../button/button';
 import { Tooltip, TooltipProps } from './tooltip';
 
-/* TODO: make one stories for sizes and stuff like that simplify */
-/* TODO: move models to types */
-
 export default {
   title: 'Atoms/Tooltip',
   component: Tooltip,

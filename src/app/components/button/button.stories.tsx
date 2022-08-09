@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/models/styles';
+import { ControlSizes } from 'src/app/types/styles';
 import { StoryVariants } from 'src/stories/variants';
 import { LoadingOverlay } from '../loading/loading-overlay';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
