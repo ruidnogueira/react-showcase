@@ -5,7 +5,7 @@ import { ButtonColorVariants, ButtonStyleVariants } from '../button/button';
 import { IconButton } from './icon-button';
 
 export default {
-  title: 'Atoms/IconButton',
+  title: 'Atoms/Button/IconButton',
   component: IconButton,
   argTypes: {
     color: {
