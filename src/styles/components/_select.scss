@@ -79,4 +79,10 @@ $-select-item-indicator-size: 1em * utils.$control-line-height;
   }
 }
 
-/* TODO: scroll buttons */
+.select__scroll-button {
+  align-items: center;
+  display: flex;
+  font-size: utils.$control-font-size;
+  height: 1.5em;
+  justify-content: center;
+}

@@ -1,6 +1,6 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import clsx from 'clsx';
-import { CaretDown, Check } from 'phosphor-react';
+import { CaretDown, CaretUp, Check } from 'phosphor-react';
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
 import { ControlSize } from 'src/app/models/styles';
@@ -130,11 +130,15 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) =>
 
       <SelectPrimitive.Portal container={portalContainer}>
         <SelectPrimitive.Content className={clsx('select__dropdown', `select__dropdown--${size}`)}>
-          <SelectPrimitive.ScrollUpButton />
+          <SelectPrimitive.ScrollUpButton className="select__scroll-button">
+            <CaretUp weight="bold" />
+          </SelectPrimitive.ScrollUpButton>
 
           <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
 
-          <SelectPrimitive.ScrollDownButton />
+          <SelectPrimitive.ScrollDownButton className="select__scroll-button">
+            <CaretDown weight="bold" />
+          </SelectPrimitive.ScrollDownButton>
         </SelectPrimitive.Content>
       </SelectPrimitive.Portal>
     </SelectPrimitive.Root>
