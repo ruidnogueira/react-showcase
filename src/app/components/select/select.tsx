@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import * as SelectPrimitive from '@radix-ui/react-select';
 import clsx from 'clsx';
 import { CaretDown, CaretUp, Check } from 'phosphor-react';
@@ -5,8 +6,6 @@ import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
 import { ControlSize } from 'src/app/types/styles';
 
-/* TODO: check if labels work */
-/* TODO: ban radix imports */
 /* TODO: tests */
 
 export interface SelectProps extends Omit<SelectPrimitive.SelectTriggerProps, 'placeholder'> {
