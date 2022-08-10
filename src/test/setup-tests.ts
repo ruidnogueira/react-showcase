@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import '../mocks/i18n';
 import './mocks/dom-rect';
 import './mocks/get-computed-style';
+import './mocks/html-element';
 import './mocks/location';
 import './mocks/match-media';
 import './mocks/resize-observer';

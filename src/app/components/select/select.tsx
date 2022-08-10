@@ -2,11 +2,9 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import clsx from 'clsx';
 import { CaretDown, CaretUp, Check } from 'phosphor-react';
-import { forwardRef, HTMLAttributes, ReactNode } from 'react';
+import { forwardRef, HTMLAttributes, ReactNode, useId } from 'react';
 import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
 import { ControlSize } from 'src/app/types/styles';
-
-/* TODO: tests */
 
 export interface SelectProps extends Omit<SelectPrimitive.SelectTriggerProps, 'placeholder'> {
   children: ReactNode;
@@ -105,6 +103,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) =>
 
   const portalContainer = usePortalContainer();
 
+  const generatedId = useId();
+  const id = selectProps.id ? selectProps.id : `select-${generatedId}`;
+
   return (
     <SelectPrimitive.Root
       defaultValue={defaultValue}
@@ -117,6 +118,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) =>
       <SelectPrimitive.Trigger
         {...selectProps}
         ref={ref}
+        id={id}
         className={clsx('select', `select--${size}`, { ['select--invalid']: isInvalid }, className)}
       >
         <SelectPrimitive.Value
@@ -128,7 +130,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) =>
       </SelectPrimitive.Trigger>
 
       <SelectPrimitive.Portal container={portalContainer}>
-        <SelectPrimitive.Content className={clsx('select__dropdown', `select__dropdown--${size}`)}>
+        <SelectPrimitive.Content
+          className={clsx('select__dropdown', `select__dropdown--${size}`)}
+          aria-labelledby={id}
+        >
           <SelectPrimitive.ScrollUpButton className="select__scroll-button">
             <CaretUp weight="bold" />
           </SelectPrimitive.ScrollUpButton>
