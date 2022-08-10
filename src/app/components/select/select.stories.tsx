@@ -90,7 +90,6 @@ export const OpenWithDisabledItems: ComponentStoryObj<typeof Select> = {
   ),
   args: {
     isOpen: true,
-    value: colors[0]?.value,
   },
 };
 
