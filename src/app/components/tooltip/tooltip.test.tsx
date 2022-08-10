@@ -23,7 +23,7 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
 });
 
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
-  const { container } = renderStory(
+  const { baseElement } = renderStory(
     <TooltipProvider delayDuration={0}>
       <Story />
     </TooltipProvider>,
@@ -34,7 +34,7 @@ test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) 
   // eslint-disable-next-line testing-library/no-unnecessary-act
   await act(async () => {});
 
-  expect(await axe(container)).toHaveNoViolations();
+  expect(await axe(baseElement)).toHaveNoViolations();
 });
 
 test('shows tooltip while hovering trigger and disappears when unhovered', async () => {

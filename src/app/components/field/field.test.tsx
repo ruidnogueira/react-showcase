@@ -16,8 +16,8 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
 });
 
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
-  const { container } = renderStory(<Story />, { hideVariants: false });
-  expect(await axe(container)).toHaveNoViolations();
+  const { baseElement } = renderStory(<Story />, { hideVariants: false });
+  expect(await axe(baseElement)).toHaveNoViolations();
 });
 
 test('uses input id for label', () => {
