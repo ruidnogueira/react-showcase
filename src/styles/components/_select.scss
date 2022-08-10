@@ -59,6 +59,10 @@ $-select-item-indicator-size: 1em * utils.$control-line-height;
     background-color: var(--select-item-color-hover);
   }
 
+  &[data-disabled] {
+    @include utils.disabled;
+  }
+
   &:not([data-state='checked']) {
     padding-right: calc(#{utils.$control-padding-horizontal} + #{$-select-item-indicator-size});
   }

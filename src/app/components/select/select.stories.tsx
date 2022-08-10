@@ -32,6 +32,13 @@ export const Default: ComponentStoryObj<typeof Select> = {
   render: (args) => <ColorSelect {...args} />,
 };
 
+export const WithValue: ComponentStoryObj<typeof Select> = {
+  ...Default,
+  args: {
+    value: colors[0]?.value,
+  },
+};
+
 export const Size: ComponentStoryObj<typeof Select> = {
   render: (args) => (
     <StoryVariants>
@@ -56,24 +63,34 @@ export const Disabled: ComponentStoryObj<typeof Select> = {
   },
 };
 
-export const Scroll: ComponentStoryObj<typeof Select> = {
+export const OpenWithoutValue: ComponentStoryObj<typeof Select> = {
+  ...Default,
+  args: {
+    isOpen: true,
+  },
+};
+
+export const OpenWithValue: ComponentStoryObj<typeof Select> = {
+  ...Default,
+  args: {
+    isOpen: true,
+    value: colors[0]?.value,
+  },
+};
+
+export const OpenWithDisabledItems: ComponentStoryObj<typeof Select> = {
   render: (args) => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '100vh',
-        padding: '10px',
-      }}
-    >
-      <ColorSelect {...args} value={colors.at(-1)?.value} />
-      <ColorSelect {...args} value={colors.at(0)?.value} />
-    </div>
+    <Select {...args} style={{ width: '200px' }}>
+      <SelectItem value="red">Red</SelectItem>
+      <SelectItem value="green" disabled>
+        Green
+      </SelectItem>
+      <SelectItem value="blue">Blue</SelectItem>
+    </Select>
   ),
-  parameters: {
-    layout: 'fullscreen',
+  args: {
+    isOpen: true,
+    value: colors[0]?.value,
   },
 };
 
