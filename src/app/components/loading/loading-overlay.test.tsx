@@ -2,7 +2,7 @@ import * as stories from './loading-overlay.stories';
 import { composeStories } from '@storybook/testing-react';
 import { renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'jest-axe';
+import { axe } from 'src/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);

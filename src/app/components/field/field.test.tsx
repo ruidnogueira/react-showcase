@@ -1,6 +1,6 @@
 import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { axe } from 'src/test/helpers/axe';
 import { render, renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
 import { TextInput } from '../text-input/text-input';

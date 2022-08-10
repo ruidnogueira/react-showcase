@@ -85,6 +85,11 @@
             "message": "use our test helpers."
           },
           {
+            "name": "jest-axe",
+            "importNames": ["axe"],
+            "message": "use our axe wrapper."
+          },
+          {
             "name": "react",
             "importNames": ["createContext"],
             "message": "use our utils."

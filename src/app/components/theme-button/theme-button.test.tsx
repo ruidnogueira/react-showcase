@@ -1,11 +1,11 @@
 import { composeStories } from '@storybook/testing-react';
 import { renderStoryWithProviders, renderWithProviders } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'jest-axe';
 import * as stories from './theme-button.stories';
 import { ThemeButton } from './theme-button';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'src/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);

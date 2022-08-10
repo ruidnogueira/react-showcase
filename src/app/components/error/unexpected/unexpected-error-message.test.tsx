@@ -1,11 +1,11 @@
 import { composeStories } from '@storybook/testing-react';
-import { axe } from 'jest-axe';
 import { render, renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
 import { UnexpectedErrorMessage } from './unexpected-error-message';
 import * as stories from './unexpected-error-message.stories';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
+import { axe } from 'src/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);
