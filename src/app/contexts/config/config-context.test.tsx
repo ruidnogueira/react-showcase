@@ -8,7 +8,11 @@ test('renders when provider exists', () => {
 });
 
 test('throws error if provider is missing', () => {
+  const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
   expect(() => renderHook(() => useConfig())).toThrow();
+
+  logErrorSpy.mockRestore();
 });
 
 test('merges provided config with default config', () => {

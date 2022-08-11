@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/models/styles';
+import { ControlSizes } from 'src/app/types/styles';
+import { StoryVariants } from 'src/stories/variants';
 import { TextInput } from '../text-input/text-input';
 import { Label } from './label';
 
@@ -38,9 +39,15 @@ export const Nested: ComponentStoryObj<typeof Label> = {
   ),
 };
 
-export const Small: ComponentStoryObj<typeof Label> = {
-  ...HtmlFor,
-  args: {
-    size: 'small',
-  },
+export const Size: ComponentStoryObj<typeof Label> = {
+  render: (args) => (
+    <StoryVariants>
+      {ControlSizes.map((size) => (
+        <Label {...args} key={size} size={size}>
+          <span style={{ marginRight: '10px' }}>First name</span>
+          <TextInput type="text" size={size} />
+        </Label>
+      ))}
+    </StoryVariants>
+  ),
 };

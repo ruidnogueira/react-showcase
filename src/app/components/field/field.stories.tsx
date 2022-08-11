@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/models/styles';
+import { ControlSizes } from 'src/app/types/styles';
+import { StoryVariants } from 'src/stories/variants';
 import { TextInput } from '../text-input/text-input';
 import { Field } from './field';
 
@@ -34,9 +35,14 @@ export const HiddenLabel: ComponentStoryObj<typeof Field> = {
   },
 };
 
-export const Small: ComponentStoryObj<typeof Field> = {
-  ...Default,
-  args: {
-    size: 'small',
-  },
+export const Size: ComponentStoryObj<typeof Field> = {
+  render: (args) => (
+    <StoryVariants>
+      {ControlSizes.map((size) => (
+        <Field {...args} key={size} size={size}>
+          <TextInput type="text" size={size} />
+        </Field>
+      ))}
+    </StoryVariants>
+  ),
 };

@@ -4,7 +4,7 @@ import { PortalContainerProvider, usePortalContainer } from './portal-container'
 test('by default does not provide a portal container element', () => {
   const { result } = renderHook(() => usePortalContainer());
 
-  expect(result.current).toBeNull();
+  expect(result.current).toBeUndefined();
 });
 
 test('provides a portal container element', () => {

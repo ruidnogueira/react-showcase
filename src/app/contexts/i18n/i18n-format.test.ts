@@ -19,15 +19,21 @@ describe('date formatter', () => {
   const format = getI18nDateFormatter(config);
 
   test('throws error if value is not a date', () => {
+    const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const value = 'Test value';
 
     expect(() => format(value, 'en-US', { format: 'MMMM' })).toThrow();
+
+    logErrorSpy.mockRestore();
   });
 
   test('throws error if no format is provided', () => {
+    const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const value = new Date('2022-01-01');
 
     expect(() => format(value, 'en-US', {})).toThrow();
+
+    logErrorSpy.mockRestore();
   });
 
   test('formats dates for current language', () => {

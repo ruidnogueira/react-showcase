@@ -37,7 +37,7 @@ test('initializes i18n if not initialized', () => {
     </ConfigProvider>
   );
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method, import/no-named-as-default-member
+  // eslint-disable-next-line import/no-named-as-default-member
   expect(i18next.init).toHaveBeenCalledTimes(1);
 });
 
@@ -50,6 +50,6 @@ test('does not initialize i18n if not initialized', () => {
     </ConfigProvider>
   );
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method, import/no-named-as-default-member
+  // eslint-disable-next-line import/no-named-as-default-member
   expect(i18next.init).not.toHaveBeenCalled();
 });

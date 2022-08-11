@@ -6,12 +6,35 @@ import { Tooltip, TooltipProps } from './tooltip';
 export default {
   title: 'Atoms/Tooltip',
   component: Tooltip,
-  parameters: { layout: 'centered' },
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {},
   args: {
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
   },
 } as ComponentMeta<typeof Tooltip>;
+
+export const Default: ComponentStoryObj<typeof Tooltip> = {
+  render: (args) => (
+    <Tooltip {...args} style={{ maxWidth: '200px' }}>
+      <Button type="button">Button</Button>
+    </Tooltip>
+  ),
+};
+
+export const Open: ComponentStoryObj<typeof Tooltip> = {
+  ...Default,
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    docs: {
+      inlineStories: false,
+      iframeHeight: 300,
+    },
+  },
+};
 
 export const Playground: ComponentStoryObj<typeof Tooltip> = {
   render: (args) => (
@@ -67,18 +90,7 @@ export const Playground: ComponentStoryObj<typeof Tooltip> = {
     </div>
   ),
   parameters: {
-    chromatic: { disableSnapshot: true },
-  },
-};
-
-export const Open: ComponentStoryObj<typeof Tooltip> = {
-  render: (args) => (
-    <Tooltip {...args} style={{ maxWidth: '200px' }}>
-      <Button type="button">Button</Button>
-    </Tooltip>
-  ),
-  args: {
-    isOpen: true,
+    chromatic: { disableSnapshot: false },
   },
 };
 

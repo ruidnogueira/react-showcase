@@ -1,23 +1,23 @@
 import { composeStories } from '@storybook/testing-react';
 import { renderStoryWithProviders, renderWithProviders } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'jest-axe';
 import * as stories from './theme-button.stories';
 import { ThemeButton } from './theme-button';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'src/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
-  const { container } = renderStoryWithProviders(<Story />, { hideVariants: false });
+  const { container } = renderStoryWithProviders(<Story />);
   expect(container).toBeInTheDocument();
 });
 
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
-  const { container } = renderStoryWithProviders(<Story />, { hideVariants: false });
-  expect(await axe(container)).toHaveNoViolations();
+  const { baseElement } = renderStoryWithProviders(<Story />);
+  expect(await axe(baseElement)).toHaveNoViolations();
 });
 
 test('shows light theme', () => {

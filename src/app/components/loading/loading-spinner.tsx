@@ -2,7 +2,7 @@ import { ReactComponent as SpinnerSvg } from 'src/assets/spinner.svg';
 import { HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '../icon/icon';
+import { AccessibleIcon } from '../accessible-icon/accessible-icon';
 
 export type LoadingSpinnerProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'>;
 
@@ -17,9 +17,9 @@ export function LoadingSpinner(props: LoadingSpinnerProps) {
       aria-live="polite"
       aria-busy={true}
     >
-      <Icon description={t('components.loadingSpinner')}>
+      <AccessibleIcon label={t('components.loadingSpinner')}>
         <SpinnerSvg className="loading__spinner" />
-      </Icon>
+      </AccessibleIcon>
     </span>
   );
 }

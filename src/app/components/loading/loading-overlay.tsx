@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { LoadingSpinner, LoadingSpinnerProps } from './loading-spinner';
 
-export interface LoadingProps extends LoadingSpinnerProps {
+export interface LoadingOverlayProps extends LoadingSpinnerProps {
   children: ReactNode;
 
   /**
@@ -16,7 +16,7 @@ export interface LoadingProps extends LoadingSpinnerProps {
  *
  * Useful to show loading spinner while keeping the original element dimensions and content.
  */
-export function Loading(props: LoadingProps) {
+export function LoadingOverlay(props: LoadingOverlayProps) {
   const { className, children, isLoading, ...spinnerProps } = props;
 
   return (

@@ -1,11 +1,11 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/models/styles';
-import { StorybookVariants } from 'src/stories/variants';
-import { Loading } from '../loading/loading';
+import { ControlSizes } from 'src/app/types/styles';
+import { StoryVariants } from 'src/stories/variants';
+import { LoadingOverlay } from '../loading/loading-overlay';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
-  title: 'Atoms/Button',
+  title: 'Atoms/Button/Button',
   component: Button,
   argTypes: {
     color: {
@@ -29,13 +29,17 @@ export default {
   },
 } as ComponentMeta<typeof Button>;
 
+export const Default: ComponentStoryObj<typeof Button> = {
+  render: (args) => <Button {...args} />,
+};
+
 export const Filled: ComponentStoryObj<typeof Button> = {
   render: (args) => (
-    <StorybookVariants>
+    <StoryVariants>
       {ButtonColorVariants.map((color) => (
         <Button {...args} key={color} color={color} />
       ))}
-    </StorybookVariants>
+    </StoryVariants>
   ),
 };
 
@@ -60,20 +64,23 @@ export const Link: ComponentStoryObj<typeof Button> = {
   },
 };
 
-export const Small: ComponentStoryObj<typeof Button> = {
-  ...Filled,
-  args: {
-    size: 'small',
-  },
+export const Size: ComponentStoryObj<typeof Button> = {
+  render: (args) => (
+    <StoryVariants>
+      {ControlSizes.map((size) => (
+        <Button {...args} key={size} size={size} />
+      ))}
+    </StoryVariants>
+  ),
 };
 
 export const Disabled: ComponentStoryObj<typeof Button> = {
   render: (args) => (
-    <StorybookVariants>
+    <StoryVariants>
       {ButtonStyleVariants.map((variant) => (
         <Button {...args} key={variant} variant={variant} />
       ))}
-    </StorybookVariants>
+    </StoryVariants>
   ),
   args: {
     disabled: true,
@@ -91,13 +98,13 @@ export const Custom: ComponentStoryObj<typeof Button> = {
 
 export const WithLoading: ComponentStoryObj<typeof Button> = {
   render: ({ children, ...args }) => (
-    <StorybookVariants>
+    <StoryVariants>
       {ButtonStyleVariants.map((variant) => (
         <Button {...args} key={variant} variant={variant}>
-          <Loading isLoading={true}>{children}</Loading>
+          <LoadingOverlay isLoading={true}>{children}</LoadingOverlay>
         </Button>
       ))}
-    </StorybookVariants>
+    </StoryVariants>
   ),
   args: {
     disabled: true,
@@ -106,7 +113,7 @@ export const WithLoading: ComponentStoryObj<typeof Button> = {
 
 export const AsChild: ComponentStoryObj<typeof Button> = {
   render: ({ type, ...args }) => (
-    <StorybookVariants>
+    <StoryVariants>
       <Button {...args} asChild>
         <div>div</div>
       </Button>
@@ -118,7 +125,7 @@ export const AsChild: ComponentStoryObj<typeof Button> = {
       <Button {...args} asChild>
         {args.disabled ? <span>anchor</span> : <a href="#0">anchor</a>}
       </Button>
-    </StorybookVariants>
+    </StoryVariants>
   ),
 };
 

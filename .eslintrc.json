@@ -85,6 +85,11 @@
             "message": "use our test helpers."
           },
           {
+            "name": "jest-axe",
+            "importNames": ["axe"],
+            "message": "use our axe wrapper."
+          },
+          {
             "name": "react",
             "importNames": ["createContext"],
             "message": "use our utils."
@@ -96,6 +101,10 @@
           {
             "name": "@radix-ui/react-tooltip",
             "message": "use our tooltip."
+          },
+          {
+            "name": "@radix-ui/react-select",
+            "message": "use our select."
           }
         ]
       }
@@ -115,8 +124,10 @@
       "plugins": [],
       "rules": {
         "jest/consistent-test-it": ["error", { "fn": "test" }],
+        "jest/unbound-method": "error",
         "testing-library/no-manual-cleanup": "error",
-        "@typescript-eslint/no-non-null-assertion": "off"
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/unbound-method": "off"
       },
       "env": {
         "jest/globals": true
