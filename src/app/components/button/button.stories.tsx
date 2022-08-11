@@ -29,6 +29,10 @@ export default {
   },
 } as ComponentMeta<typeof Button>;
 
+export const Default: ComponentStoryObj<typeof Button> = {
+  render: (args) => <Button {...args} />,
+};
+
 export const Filled: ComponentStoryObj<typeof Button> = {
   render: (args) => (
     <StoryVariants>

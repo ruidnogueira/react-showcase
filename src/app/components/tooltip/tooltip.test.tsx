@@ -15,8 +15,7 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
   const { container } = renderStory(
     <TooltipProvider delayDuration={0}>
       <Story />
-    </TooltipProvider>,
-    { hideVariants: false }
+    </TooltipProvider>
   );
 
   expect(container).toBeInTheDocument();
@@ -26,8 +25,7 @@ test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) 
   const { baseElement } = renderStory(
     <TooltipProvider delayDuration={0}>
       <Story />
-    </TooltipProvider>,
-    { hideVariants: false }
+    </TooltipProvider>
   );
 
   // when the tooltip opens we need to wait for async calculations to finish otherwise test will finish before that

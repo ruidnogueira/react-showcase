@@ -11,7 +11,6 @@ import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from 'src/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
 import { Theme, ThemeProvider } from 'src/app/contexts/theme/theme-context';
-import { HideStoryVariantsProvider } from 'src/stories/variants';
 import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
 
 interface RenderWithProvidersOptions extends RenderOptions {
@@ -24,9 +23,7 @@ interface RenderHookWithProvidersOptions<Props> extends RenderHookOptions<Props>
   defaultTheme?: Theme;
 }
 
-interface RenderStoryOptions extends RenderOptions {
-  hideVariants?: boolean;
-}
+type RenderStoryOptions = RenderOptions;
 
 type RenderStoryWithProvidersOptions = RenderStoryOptions;
 
@@ -90,13 +87,10 @@ export function renderHookWithProviders<Props, Result>(
  * Renders a story
  */
 export function renderStory(ui: ReactElement, options: RenderStoryOptions = {}) {
-  const { wrapper: Wrapper, hideVariants = true, ...props } = options;
+  const { wrapper: Wrapper, ...props } = options;
 
-  const AllProviders = ({ children }: { children: ReactElement }) => (
-    <HideStoryVariantsProvider value={hideVariants}>
-      {Wrapper ? <Wrapper>{children}</Wrapper> : children}
-    </HideStoryVariantsProvider>
-  );
+  const AllProviders = ({ children }: { children: ReactElement }) =>
+    Wrapper ? <Wrapper>{children}</Wrapper> : children;
 
   return render(ui, { ...props, wrapper: AllProviders });
 }

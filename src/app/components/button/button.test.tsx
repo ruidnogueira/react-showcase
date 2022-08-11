@@ -4,26 +4,29 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'src/test/helpers/axe';
 import { renderStory } from 'src/test/helpers/render';
 import { getStoryTestCases } from 'src/test/helpers/test';
+import { Button } from './button';
 import * as stories from './button.stories';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);
 
-const { Filled, Disabled, AsChild, AsChildDisabled } = composedStories;
-
 test.each(storyTestCases)('renders %s story', (_, Story) => {
-  const { container } = renderStory(<Story />, { hideVariants: false });
+  const { container } = renderStory(<Story />);
   expect(container).toBeInTheDocument();
 });
 
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
-  const { baseElement } = renderStory(<Story />, { hideVariants: false });
+  const { baseElement } = renderStory(<Story />);
   expect(await axe(baseElement)).toHaveNoViolations();
 });
 
 test('is disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(<Disabled onClick={onClickMock} />);
+  renderStory(
+    <Button type="button" disabled onClick={onClickMock}>
+      Button
+    </Button>
+  );
 
   await userEvent.click(screen.getByRole('button'));
 
@@ -33,7 +36,11 @@ test('is disabled', async () => {
 
 test('is not disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(<Filled onClick={onClickMock} />);
+  renderStory(
+    <Button type="button" onClick={onClickMock}>
+      Button
+    </Button>
+  );
 
   await userEvent.click(screen.getByRole('button'));
 
@@ -43,7 +50,11 @@ test('is not disabled', async () => {
 
 test('asChild is disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(<AsChildDisabled onClick={onClickMock} />);
+  renderStory(
+    <Button asChild disabled onClick={onClickMock}>
+      <div>Button</div>
+    </Button>
+  );
 
   await userEvent.click(screen.getByRole('button'));
 
@@ -53,7 +64,11 @@ test('asChild is disabled', async () => {
 
 test('asChild is not disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(<AsChild onClick={onClickMock} />);
+  renderStory(
+    <Button asChild onClick={onClickMock}>
+      <div>Button</div>
+    </Button>
+  );
 
   await userEvent.click(screen.getByRole('button'));
 
