@@ -33,7 +33,7 @@
     "@radix-ui/react-visually-hidden": "1.0.0",
     "clsx": "1.2.1",
     "date-fns": "2.29.1",
-    "i18next": "21.8.14",
+    "i18next": "21.8.16",
     "i18next-browser-languagedetector": "6.1.4",
     "i18next-http-backend": "1.4.1",
     "modern-normalize": "1.1.0",
