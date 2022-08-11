@@ -1,17 +1,18 @@
 import { Parameters, DecoratorFunction } from '@storybook/addons';
 import { DecoratorFn } from '@storybook/react';
-import clsx from 'clsx';
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
 import { ConfigProvider } from '../src/app/contexts/config/config-context';
 import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
 import { useTranslation } from 'react-i18next';
-import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
 import 'src/styles/styles.scss';
 import 'src/mocks/i18n';
 import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
+import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
+
+// TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
@@ -24,7 +25,7 @@ export const parameters: Parameters = {
   },
   viewport: {
     viewports: {
-      galaxyS9: {
+      iPhone13Pro: {
         name: 'iPhone 13 Pro',
         styles: {
           width: '390px',
@@ -90,57 +91,49 @@ const reactDecorators: DecoratorFn[] = [
     return <Story />;
   },
 
-  (Story, { globals, parameters }) => {
-    return isChromatic() ? (
-      <>
-        <ThemeWrapper theme="light" parameters={parameters}>
-          <Story />
-        </ThemeWrapper>
+  (Story, { globals }) => {
+    const [theme, setTheme] = useState<Theme>(globals.theme);
 
-        <ThemeWrapper theme="dark" parameters={parameters}>
+    const toggleTheme = () => setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+
+    useEffect(() => {
+      if (theme !== globals.theme) {
+        setTheme(globals.theme);
+      }
+    }, [globals.theme]);
+
+    useEffect(() => {
+      document.documentElement.dataset.theme = theme;
+    }, [theme]);
+
+    return (
+      <>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
           <Story />
-        </ThemeWrapper>
+        </ThemeContext.Provider>
       </>
-    ) : (
-      <ThemeWrapper theme={globals.theme} parameters={parameters}>
+    );
+  },
+
+  /**
+   * For some reason stories with portals are not clearing portals corretly, when you switch to docs tab,
+   * if they are appended to the body
+   * So we create a container inside a decorator that will always be recreated
+   */
+  (Story) => {
+    const [container, setContainer] = useState<HTMLElement | null>(null);
+
+    return (
+      <PortalContainerProvider value={container}>
         <Story />
-      </ThemeWrapper>
+        <div id="portal-root" ref={setContainer}></div>
+      </PortalContainerProvider>
     );
   },
 ];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [
+  // Decorators are created last to first to so we reverse them
+  ...reactDecorators.reverse(),
   mswDecorator,
-  ...reactDecorators,
 ];
-
-function ThemeWrapper(props: { children: ReactNode; parameters: Parameters; theme: Theme }) {
-  const { children, parameters, theme: globalTheme } = props;
-  const [theme, setTheme] = useState(globalTheme);
-  const [wrapper, setWrapper] = useState<HTMLElement | null>(null);
-
-  const toggleTheme = () => setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
-
-  useEffect(() => {
-    if (theme !== globalTheme) {
-      setTheme(globalTheme);
-    }
-  }, [globalTheme]);
-
-  return (
-    <PortalContainerProvider value={wrapper}>
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <div
-          ref={setWrapper}
-          data-theme={theme}
-          data-testid={`storybook-theme-${theme}`}
-          className={clsx('storybook-theme_wrapper', {
-            [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
-          })}
-        >
-          {children}
-        </div>
-      </ThemeContext.Provider>
-    </PortalContainerProvider>
-  );
-}

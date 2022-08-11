@@ -35,7 +35,7 @@ export const Default: ComponentStoryObj<typeof Select> = {
 export const WithValue: ComponentStoryObj<typeof Select> = {
   ...Default,
   args: {
-    value: colors[0]?.value,
+    value: 'red',
   },
 };
 
@@ -68,13 +68,19 @@ export const OpenWithoutValue: ComponentStoryObj<typeof Select> = {
   args: {
     isOpen: true,
   },
+  parameters: {
+    docs: {
+      inlineStories: false,
+      iframeHeight: 300,
+    },
+  },
 };
 
 export const OpenWithValue: ComponentStoryObj<typeof Select> = {
-  ...Default,
+  ...OpenWithoutValue,
   args: {
     isOpen: true,
-    value: colors[0]?.value,
+    value: 'red',
   },
 };
 
@@ -90,6 +96,71 @@ export const OpenWithDisabledItems: ComponentStoryObj<typeof Select> = {
   ),
   args: {
     isOpen: true,
+  },
+  parameters: {
+    docs: {
+      inlineStories: false,
+      iframeHeight: 200,
+    },
+  },
+};
+
+export const OpenWithScrollUpButton: ComponentStoryObj<typeof Select> = {
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+      }}
+    >
+      <ColorSelect {...args} value="white" />
+    </div>
+  ),
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      inlineStories: false,
+      iframeHeight: 300,
+    },
+  },
+};
+
+export const OpenWithScrollDownButton: ComponentStoryObj<typeof Select> = {
+  render: (args) => (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '1rem',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ColorSelect {...args} value="red" />
+      </div>
+    </div>
+  ),
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      inlineStories: false,
+      iframeHeight: 300,
+    },
   },
 };
 

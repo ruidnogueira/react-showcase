@@ -28,6 +28,12 @@ export const Open: ComponentStoryObj<typeof Tooltip> = {
   args: {
     isOpen: true,
   },
+  parameters: {
+    docs: {
+      inlineStories: false,
+      iframeHeight: 300,
+    },
+  },
 };
 
 export const Playground: ComponentStoryObj<typeof Tooltip> = {
