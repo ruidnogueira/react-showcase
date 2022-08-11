@@ -9,7 +9,7 @@ export default {
     isLoading: true,
   },
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
 } as ComponentMeta<typeof LoadingOverlayComponent>;
 
