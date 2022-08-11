@@ -29,7 +29,7 @@ test('selects an option', async () => {
     </Select>
   );
 
-  await userEvent.type(screen.getByRole('combobox'), '{enter}');
+  await userEvent.click(screen.getByRole('combobox'));
   await userEvent.click(screen.getByRole('option', { name: 'Red' }));
 
   expect(screen.getByRole('combobox')).toHaveTextContent('Red');
@@ -46,7 +46,7 @@ test('cannot select a disabled option', async () => {
     </Select>
   );
 
-  await userEvent.type(screen.getByRole('combobox'), '{enter}');
+  await userEvent.click(screen.getByRole('combobox'));
   await userEvent.click(screen.getByRole('option', { name: 'Red' }));
 
   expect(screen.getByRole('listbox')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('is disabled', async () => {
     </Select>
   );
 
-  await userEvent.type(screen.getByRole('combobox'), '{enter}');
+  await userEvent.click(screen.getByRole('combobox'));
 
   expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   expect(screen.getByRole('combobox')).toBeDisabled();
