@@ -7,6 +7,7 @@ import { IconButton } from './icon-button';
 export default {
   title: 'Atoms/Button/IconButton',
   component: IconButton,
+  subcomponents: { IconButtonIcon: IconButton.Icon },
   argTypes: {
     color: {
       control: { type: 'select' },

@@ -30,3 +30,5 @@ void i18next
 
     i18next.services.formatter?.add('date', getI18nDateFormatter(i18nConfig));
   });
+
+export const i18nMock = i18next;

@@ -85,7 +85,7 @@ export interface SelectItemProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
 }
 
-export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) => {
+const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) => {
   const {
     children,
     className,
@@ -149,7 +149,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>((props, ref) =>
   );
 });
 
-export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
+const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
   const { children, className, ...itemProps } = props;
 
   return (
@@ -162,3 +162,9 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, re
     </SelectPrimitive.Item>
   );
 });
+
+const SelectNamespace = Object.assign(Select, { Item: SelectItem });
+
+export { SelectNamespace as Select };
+
+/* TODO: composite compound components do not appear correctly in storybook docs */
