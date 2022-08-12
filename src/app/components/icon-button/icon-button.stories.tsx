@@ -2,11 +2,12 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { CrownSimple } from 'phosphor-react';
 import { ControlSizes } from 'src/app/types/styles';
 import { ButtonColorVariants, ButtonStyleVariants } from '../button/button';
-import { IconButton } from './icon-button';
+import { IconButton, IconButtonIcon } from './icon-button';
 
 export default {
   title: 'Atoms/Button/IconButton',
   component: IconButton,
+  subcomponents: { IconButtonIcon },
   argTypes: {
     color: {
       control: { type: 'select' },
@@ -32,9 +33,9 @@ export const Default: ComponentStoryObj<typeof IconButton> = {
   args: {
     type: 'button',
     children: (
-      <IconButton.Icon label="subscribe">
+      <IconButtonIcon label="subscribe">
         <CrownSimple />
-      </IconButton.Icon>
+      </IconButtonIcon>
     ),
   },
 };
@@ -45,9 +46,9 @@ export const AsChild: ComponentStoryObj<typeof IconButton> = {
     asChild: true,
     children: (
       <div>
-        <IconButton.Icon label="subscribe">
+        <IconButtonIcon label="subscribe">
           <CrownSimple />
-        </IconButton.Icon>
+        </IconButtonIcon>
       </div>
     ),
   },

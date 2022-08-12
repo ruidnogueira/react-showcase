@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'src/app/contexts/theme/theme-context';
 import { Sun, Moon } from 'phosphor-react';
-import { IconButton } from '../icon-button/icon-button';
+import { IconButton, IconButtonIcon } from '../icon-button/icon-button';
 import styles from './theme-button.module.scss';
 import { Tooltip } from '../tooltip/tooltip';
 
@@ -29,9 +29,9 @@ export const ThemeButton = forwardRef<HTMLButtonElement, ThemeButtonProps>((prop
         isCustom={true}
         onClick={toggleTheme}
       >
-        <IconButton.Icon label={description}>
+        <IconButtonIcon label={description}>
           <Icon />
-        </IconButton.Icon>
+        </IconButtonIcon>
       </IconButton>
     </Tooltip>
   );

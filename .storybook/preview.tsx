@@ -43,7 +43,6 @@ export const globalTypes = {
     defaultValue: 'light',
     toolbar: {
       icon: 'circlehollow',
-      showName: true,
       dynamicTitle: true,
       items: [
         { value: 'light', title: 'Light' },
@@ -86,7 +85,7 @@ const reactDecorators: DecoratorFn[] = [
       if (i18n.languages[0] !== language) {
         i18n.changeLanguage(language);
       }
-    }, [i18n.languages[0], language]);
+    }, [language]);
 
     return <Story />;
   },

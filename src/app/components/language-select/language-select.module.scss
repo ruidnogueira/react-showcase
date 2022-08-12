@@ -1,0 +1,5 @@
+@use 'src/styles/utils';
+
+.select {
+  width: utils.px-to-rem(150px);
+}
