@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConfig } from 'src/app/contexts/config/config-context';
-import { Select } from '../select/select';
+import { Select, SelectItem } from '../select/select';
 import styles from './language-select.module.scss';
 
 export interface LanguageSelectProps {
@@ -29,9 +29,9 @@ export const LanguageSelect = forwardRef<HTMLButtonElement, LanguageSelectProps>
       aria-label={t('components.languageSelect')}
     >
       {i18nConfig.supportedLanguages.map(({ code, name }) => (
-        <Select.Item key={code} value={code}>
+        <SelectItem key={code} value={code}>
           {name}
-        </Select.Item>
+        </SelectItem>
       ))}
     </Select>
   );

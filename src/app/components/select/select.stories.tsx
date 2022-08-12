@@ -1,12 +1,12 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ControlSizes } from 'src/app/types/styles';
 import { StoryVariants } from 'src/stories/variants';
-import { Select, SelectProps } from './select';
+import { Select, SelectItem, SelectProps } from './select';
 
 export default {
   title: 'Atoms/Select',
   component: Select,
-  subcomponents: { SelectItem: Select.Item },
+  subcomponents: { SelectItem },
   argTypes: {},
   args: {
     placeholder: 'Select a color...',
@@ -87,11 +87,11 @@ export const OpenWithValue: ComponentStoryObj<typeof Select> = {
 export const OpenWithDisabledItems: ComponentStoryObj<typeof Select> = {
   render: (args) => (
     <Select {...args} style={{ width: '200px' }}>
-      <Select.Item value="red">Red</Select.Item>
-      <Select.Item value="green" disabled>
+      <SelectItem value="red">Red</SelectItem>
+      <SelectItem value="green" disabled>
         Green
-      </Select.Item>
-      <Select.Item value="blue">Blue</Select.Item>
+      </SelectItem>
+      <SelectItem value="blue">Blue</SelectItem>
     </Select>
   ),
   args: {
@@ -168,9 +168,9 @@ function ColorSelect(args: SelectProps) {
   return (
     <Select {...args} style={{ width: '200px' }}>
       {colors.map(({ value, label }) => (
-        <Select.Item key={value} value={value}>
+        <SelectItem key={value} value={value}>
           {label}
-        </Select.Item>
+        </SelectItem>
       ))}
     </Select>
   );

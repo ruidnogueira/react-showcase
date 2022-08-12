@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, renderStory } from 'src/test/helpers/render';
-import { Select } from './select';
+import { Select, SelectItem } from './select';
 import * as stories from './select.stories';
 import { composeStories } from '@storybook/testing-react';
 import { getStoryTestCases } from 'src/test/helpers/test';
@@ -23,9 +23,9 @@ test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) 
 test('selects an option', async () => {
   render(
     <Select>
-      <Select.Item value="red">Red</Select.Item>
-      <Select.Item value="green">Green</Select.Item>
-      <Select.Item value="blue">Blue</Select.Item>
+      <SelectItem value="red">Red</SelectItem>
+      <SelectItem value="green">Green</SelectItem>
+      <SelectItem value="blue">Blue</SelectItem>
     </Select>
   );
 
@@ -38,11 +38,11 @@ test('selects an option', async () => {
 test('cannot select a disabled option', async () => {
   render(
     <Select>
-      <Select.Item value="red" disabled={true}>
+      <SelectItem value="red" disabled={true}>
         Red
-      </Select.Item>
-      <Select.Item value="green">Green</Select.Item>
-      <Select.Item value="blue">Blue</Select.Item>
+      </SelectItem>
+      <SelectItem value="green">Green</SelectItem>
+      <SelectItem value="blue">Blue</SelectItem>
     </Select>
   );
 
@@ -57,9 +57,9 @@ test('cannot select a disabled option', async () => {
 test('is disabled', async () => {
   render(
     <Select disabled={true}>
-      <Select.Item value="red">Red</Select.Item>
-      <Select.Item value="green">Green</Select.Item>
-      <Select.Item value="blue">Blue</Select.Item>
+      <SelectItem value="red">Red</SelectItem>
+      <SelectItem value="green">Green</SelectItem>
+      <SelectItem value="blue">Blue</SelectItem>
     </Select>
   );
 
