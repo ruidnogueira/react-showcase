@@ -44,7 +44,7 @@ export default defineConfig(({ mode }) => {
         statements: 90,
 
         // config
-        all: true,
+        provider: 'istanbul',
         include: ['src/**/*.{ts,tsx}'],
         exclude: [
           '**/*.test.*',
