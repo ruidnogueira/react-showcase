@@ -68,3 +68,23 @@ test('is disabled', async () => {
   expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   expect(screen.getByRole('combobox')).toBeDisabled();
 });
+
+test('uses provided trigger id', () => {
+  render(
+    <Select id="example-id">
+      <SelectItem value="red">Red</SelectItem>
+    </Select>
+  );
+
+  expect(screen.getByRole('combobox')).toHaveAttribute('id', 'example-id');
+});
+
+test('generates trigger id when not provided', () => {
+  render(
+    <Select>
+      <SelectItem value="red">Red</SelectItem>
+    </Select>
+  );
+
+  expect(screen.getByRole('combobox')).toHaveAttribute('id', expect.stringMatching(/^select-.+/));
+});
