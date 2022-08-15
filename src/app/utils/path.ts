@@ -15,7 +15,7 @@ export function adjustPathSlashes(
   }: {
     hasLeadingSlash?: boolean;
     hasTrailingSlash?: boolean;
-  } = {}
+  }
 ) {
   const leadingSlash = hasLeadingSlash ? '/' : '';
   const trailingSlash = hasTrailingSlash ? '/' : '';
