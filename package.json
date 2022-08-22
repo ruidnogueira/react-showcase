@@ -81,7 +81,7 @@
     "@vitest/coverage-istanbul": "0.22.1",
     "autoprefixer": "10.4.8",
     "babel-loader": "8.2.5",
-    "chromatic": "6.7.3",
+    "chromatic": "6.7.4",
     "cross-env": "7.0.3",
     "dotenv": "16.0.1",
     "esbuild-register": "3.3.3",
