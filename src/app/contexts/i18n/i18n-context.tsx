@@ -18,6 +18,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 }
 
 function useInitI18n(i18nConfig: I18nConfig) {
+  /* TODO: this is not needed since we have i18next.isInitialized */
   useEffectOnMount(() => {
     if (i18next.isInitialized) {
       return;
