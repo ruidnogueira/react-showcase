@@ -1,0 +1,111 @@
+@use '../utils';
+@use 'sass:map';
+
+$toast-horizontal-margin: 12px;
+$toast-enter-timing: cubic-bezier(0, 1, 1, 1);
+$toast-exit-timing: linear;
+
+:root {
+  --toast-enter-duration: 400ms;
+  --toast-exit-duration: 200ms;
+}
+
+.toast {
+  --toast-color-background: var(--theme-color-text);
+  --toast-color-text: var(--theme-color-background);
+
+  @include utils.control;
+
+  background-color: var(--toast-color-background);
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 0.12), 0 6px 16px 0 rgb(0 0 0 / 0.08),
+    0 9px 28px 8px rgb(0 0 0 / 0.05);
+  color: var(--toast-color-text);
+  max-width: calc(100vw - #{2 * $toast-horizontal-margin});
+  min-width: 30rem;
+  pointer-events: auto;
+  z-index: utils.$z-index-toast;
+
+  &--enter {
+    animation-fill-mode: forwards;
+
+    .toast-manager--top & {
+      animation: slide-down var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-manager--bottom & {
+      animation: slide-up var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-manager--top-left &,
+    .toast-manager--bottom-left & {
+      animation: slide-right var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-manager--top-right &,
+    .toast-manager--bottom-right & {
+      animation: slide-left var(--toast-enter-duration) $toast-enter-timing;
+    }
+  }
+
+  &--exit {
+    animation-duration: var(--toast-exit-duration);
+    animation-fill-mode: forwards;
+    animation-name: fade-out, scale-3-4;
+    animation-timing-function: $toast-exit-timing;
+  }
+}
+
+.toast__close-button {
+  color: var(--toast-color-text);
+  margin-left: auto;
+}
+
+.toast-section {
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  position: fixed;
+  z-index: utils.$z-index-toast;
+
+  &--top {
+    flex-direction: column-reverse;
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-left {
+    flex-direction: column-reverse;
+    left: env(safe-area-inset-left, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-right {
+    flex-direction: column-reverse;
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--bottom {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+
+  &--bottom-left {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+  }
+
+  &--bottom-right {
+    bottom: env(safe-area-inset-top, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+}
+
+.toast-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: var(--theme-spacing-3);
+}
