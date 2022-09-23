@@ -5,6 +5,58 @@ $toast-horizontal-margin: 12px;
 $toast-enter-timing: cubic-bezier(0, 1, 1, 1);
 $toast-exit-timing: linear;
 
+@keyframes toast-enter-top {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes toast-enter-bottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes toast-enter-left {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes toast-enter-right {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes toast-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}
+
 :root {
   --toast-enter-duration: 400ms;
   --toast-exit-duration: 200ms;
@@ -21,37 +73,34 @@ $toast-exit-timing: linear;
     0 9px 28px 8px rgb(0 0 0 / 0.05);
   color: var(--toast-color-text);
   max-width: calc(100vw - #{2 * $toast-horizontal-margin});
-  min-width: 30rem;
+  min-width: utils.px-to-rem(300px);
   pointer-events: auto;
   z-index: utils.$z-index-toast;
 
   &--enter {
     animation-fill-mode: forwards;
 
-    .toast-manager--top & {
-      animation: slide-down var(--toast-enter-duration) $toast-enter-timing;
+    .toast-section--top & {
+      animation: toast-enter-top var(--toast-enter-duration) $toast-enter-timing;
     }
 
-    .toast-manager--bottom & {
-      animation: slide-up var(--toast-enter-duration) $toast-enter-timing;
+    .toast-section--bottom & {
+      animation: toast-enter-bottom var(--toast-enter-duration) $toast-enter-timing;
     }
 
-    .toast-manager--top-left &,
-    .toast-manager--bottom-left & {
-      animation: slide-right var(--toast-enter-duration) $toast-enter-timing;
+    .toast-section--top-left &,
+    .toast-section--bottom-left & {
+      animation: toast-enter-left var(--toast-enter-duration) $toast-enter-timing;
     }
 
-    .toast-manager--top-right &,
-    .toast-manager--bottom-right & {
-      animation: slide-left var(--toast-enter-duration) $toast-enter-timing;
+    .toast-section--top-right &,
+    .toast-section--bottom-right & {
+      animation: toast-enter-right var(--toast-enter-duration) $toast-enter-timing;
     }
   }
 
   &--exit {
-    animation-duration: var(--toast-exit-duration);
-    animation-fill-mode: forwards;
-    animation-name: fade-out, scale-3-4;
-    animation-timing-function: $toast-exit-timing;
+    animation: toast-exit var(--toast-exit-duration) $toast-exit-timing forwards;
   }
 }
 
