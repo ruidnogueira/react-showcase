@@ -89,5 +89,3 @@ function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {
     </IconButton>
   );
 }
-
-/* TODO: add component to auto create, update and delete a toast */

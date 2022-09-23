@@ -15,8 +15,6 @@ test('throws error if provider is missing', () => {
   logErrorSpy.mockRestore();
 });
 
-/* TODO wrap this in a describe for imperative actions and another for declarative toast component */
-
 test('opens a toast', () => {
   const { result } = renderHook(() => useToast(), { wrapper: ToastProvider });
 
@@ -112,4 +110,18 @@ test("calls onClose when toast's close button is clicked", async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
   expect(onCloseMock).toHaveBeenCalledTimes(1);
+});
+
+test('focuses the toast overlay when a hotkey is pressed', async () => {
+  renderHook(() => useToast(), {
+    wrapper: ({ children }) => <ToastProvider hotkeys={['F1']}>{children}</ToastProvider>,
+  });
+
+  const overlay = screen.getByTestId('toast-overlay');
+
+  expect(overlay).not.toHaveFocus();
+
+  await userEvent.keyboard('{F1}');
+
+  expect(overlay).toHaveFocus();
 });

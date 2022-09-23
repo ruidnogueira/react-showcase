@@ -22,7 +22,16 @@ interface ToastMethods {
 
 export interface ToastProviderProps {
   children: ReactNode;
+  /**
+   * The position that the toast will appear at when no position is specified.
+   */
   defaultPosition?: ToastPosition;
+  /**
+   * The keys that cause the toast overlay to be focused, for easy keyboard toast navigation.
+   *
+   * **Don't forget to inform users of the hotkeys.**
+   */
+  hotkeys?: string[];
 }
 
 const toastIdPrefix = 'toast';
@@ -35,13 +44,13 @@ const [ToastContextProvider, useToast] = createContext<ToastMethods>({
 export { useToast };
 
 export function ToastProvider(props: ToastProviderProps) {
-  const { children, defaultPosition } = props;
+  const { children, defaultPosition, hotkeys } = props;
 
   const { toasts, actions } = useToastManager(defaultPosition);
 
   return (
     <>
-      <ToastOverlay toasts={toasts} />
+      <ToastOverlay toasts={toasts} hotkeys={hotkeys} />
       <ToastContextProvider value={actions}>{children}</ToastContextProvider>
     </>
   );

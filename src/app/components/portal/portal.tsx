@@ -1,13 +1,11 @@
 import { forwardRef, HTMLAttributes } from 'react';
 import { createPortal } from 'react-dom';
 
-/* TODO: test */
-
 interface PortalProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Where the portal will be appended to.
    */
-  container?: HTMLElement | null;
+  container?: HTMLElement;
 }
 
 /**
@@ -16,5 +14,5 @@ interface PortalProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const Portal = forwardRef<HTMLDivElement, PortalProps>((props, ref) => {
   const { container = document.body, ...portalProps } = props;
-  return container ? createPortal(<div {...portalProps} ref={ref} />, container) : null;
+  return createPortal(<div {...portalProps} ref={ref} />, container);
 });
