@@ -8,8 +8,8 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'src/test/helpers/axe';
 
-const { Default, Open } = composeStories(stories);
-const storyTestCases = getStoryTestCases({ Default, Open });
+const { Playground, ...storiesToTest } = composeStories(stories);
+const storyTestCases = getStoryTestCases({ ...storiesToTest });
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
   const { container } = renderStory(

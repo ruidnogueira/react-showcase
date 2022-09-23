@@ -80,6 +80,11 @@
       {
         "paths": [
           {
+            "name": "react",
+            "importNames": ["createContext", "useLayoutEffect"],
+            "message": "use our 'createContext'. instead of 'useLayoutEffect' use 'useIsomorphicLayoutEffect'"
+          },
+          {
             "name": "@testing-library/react",
             "importNames": ["render", "renderHook"],
             "message": "use our test helpers."
@@ -88,11 +93,6 @@
             "name": "jest-axe",
             "importNames": ["axe"],
             "message": "use our axe wrapper."
-          },
-          {
-            "name": "react",
-            "importNames": ["createContext"],
-            "message": "use our utils."
           },
           {
             "name": "react-dom/test-utils",

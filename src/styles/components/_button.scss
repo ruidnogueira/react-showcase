@@ -31,7 +31,7 @@ $-button-border-width: 2px;
   @include utils.control;
   @include utils.unselectable;
 
-  background-color: inherit;
+  background-color: transparent;
   border-radius: utils.$control-height;
   border-width: 2px;
   color: inherit;

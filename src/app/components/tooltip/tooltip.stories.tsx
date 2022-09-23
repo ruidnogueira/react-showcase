@@ -90,7 +90,7 @@ export const Playground: ComponentStoryObj<typeof Tooltip> = {
     </div>
   ),
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: { disableSnapshot: true },
   },
 };
 

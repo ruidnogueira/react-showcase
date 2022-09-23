@@ -2,7 +2,7 @@ import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 import 'dotenv/config';
 
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const port = process.env.PORT ? Number(process.env.PORT) : 5173;
 
 const config: PlaywrightTestConfig = {
   testDir: 'e2e/tests',

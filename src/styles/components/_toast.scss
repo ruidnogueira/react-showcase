@@ -1,0 +1,160 @@
+@use '../utils';
+@use 'sass:map';
+
+$toast-horizontal-margin: 12px;
+$toast-enter-timing: cubic-bezier(0, 1, 1, 1);
+$toast-exit-timing: linear;
+
+@keyframes toast-enter-top {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes toast-enter-bottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes toast-enter-left {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes toast-enter-right {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes toast-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}
+
+:root {
+  --toast-enter-duration: 400ms;
+  --toast-exit-duration: 200ms;
+}
+
+.toast {
+  --toast-color-background: var(--theme-color-text);
+  --toast-color-text: var(--theme-color-background);
+
+  @include utils.control;
+
+  background-color: var(--toast-color-background);
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 0.12), 0 6px 16px 0 rgb(0 0 0 / 0.08),
+    0 9px 28px 8px rgb(0 0 0 / 0.05);
+  color: var(--toast-color-text);
+  max-width: calc(100vw - #{2 * $toast-horizontal-margin});
+  min-width: utils.px-to-rem(300px);
+  pointer-events: auto;
+  z-index: utils.$z-index-toast;
+
+  &--enter {
+    animation-fill-mode: forwards;
+
+    .toast-section--top & {
+      animation: toast-enter-top var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-section--bottom & {
+      animation: toast-enter-bottom var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-section--top-left &,
+    .toast-section--bottom-left & {
+      animation: toast-enter-left var(--toast-enter-duration) $toast-enter-timing;
+    }
+
+    .toast-section--top-right &,
+    .toast-section--bottom-right & {
+      animation: toast-enter-right var(--toast-enter-duration) $toast-enter-timing;
+    }
+  }
+
+  &--exit {
+    animation: toast-exit var(--toast-exit-duration) $toast-exit-timing forwards;
+  }
+}
+
+.toast__close-button {
+  color: var(--toast-color-text);
+  margin-left: auto;
+}
+
+.toast-section {
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  position: fixed;
+  z-index: utils.$z-index-toast;
+
+  &--top {
+    flex-direction: column-reverse;
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-left {
+    flex-direction: column-reverse;
+    left: env(safe-area-inset-left, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-right {
+    flex-direction: column-reverse;
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--bottom {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+
+  &--bottom-left {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+  }
+
+  &--bottom-right {
+    bottom: env(safe-area-inset-top, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+}
+
+.toast-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: var(--theme-spacing-3);
+}

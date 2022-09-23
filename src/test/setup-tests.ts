@@ -8,8 +8,11 @@ import './mocks/match-media';
 import './mocks/resize-observer';
 import { toHaveNoViolations } from 'jest-axe';
 import { server } from 'src/mocks/server/server';
+import { config } from 'react-transition-group';
 
 expect.extend(toHaveNoViolations);
+
+config.disabled = true;
 
 beforeAll(() => {
   server.listen();
