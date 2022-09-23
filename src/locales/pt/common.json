@@ -2,6 +2,7 @@
   "hello": "Olá Mundo!",
 
   "actions": {
+    "close": "Fechar",
     "reload": "Reload"
   },
 
