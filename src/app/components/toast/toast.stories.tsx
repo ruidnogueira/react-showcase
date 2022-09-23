@@ -29,6 +29,7 @@ export const Playground: ComponentStoryObj<typeof Toast> = {
   render: () => <PlaygroundComponent />,
   parameters: {
     layout: 'centered',
+    chromatic: { disableSnapshot: false },
   },
   decorators: [
     (Story) => (
