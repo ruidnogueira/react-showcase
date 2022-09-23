@@ -8,7 +8,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 const { Playground, ...storiesToTest } = composeStories(stories);
-const storyTestCases = getStoryTestCases(storiesToTest);
+const storyTestCases = getStoryTestCases({ ...storiesToTest });
 
 beforeEach(() => {
   vi.useFakeTimers();

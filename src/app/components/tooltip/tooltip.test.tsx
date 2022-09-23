@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'src/test/helpers/axe';
 
 const { Playground, ...storiesToTest } = composeStories(stories);
-const storyTestCases = getStoryTestCases(storiesToTest);
+const storyTestCases = getStoryTestCases({ ...storiesToTest });
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
   const { container } = renderStory(
