@@ -37,7 +37,7 @@ export function ToastOverlay(props: ToastOverlayProps) {
     <Portal>
       <>
         {positionToasts.map(([position, toasts]) => (
-          <ul
+          <ol
             key={position}
             id={`toast-section-${position}`}
             className={clsx('toast-section', `toast-section--${position}`)}
@@ -50,7 +50,7 @@ export function ToastOverlay(props: ToastOverlayProps) {
                 exitDuration={exitDuration}
               />
             ))}
-          </ul>
+          </ol>
         ))}
       </>
     </Portal>
@@ -90,3 +90,6 @@ function ToastContainer(props: ToastContainerProps) {
     </li>
   );
 }
+
+// TODO: ul tabindex -1 and li tabindex 0
+/* TODO: accessibility to access a toast (ex: press f8 to switch toasts) */
