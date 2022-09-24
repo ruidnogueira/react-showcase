@@ -35,7 +35,7 @@
     "date-fns": "2.29.3",
     "i18next": "21.9.2",
     "i18next-browser-languagedetector": "6.1.5",
-    "i18next-http-backend": "1.4.1",
+    "i18next-http-backend": "1.4.4",
     "modern-normalize": "1.1.0",
     "phosphor-react": "1.4.1",
     "rambda": "7.2.1",
