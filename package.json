@@ -32,7 +32,7 @@
     "@radix-ui/react-tooltip": "1.0.0",
     "@radix-ui/react-visually-hidden": "1.0.0",
     "clsx": "1.2.1",
-    "date-fns": "2.29.2",
+    "date-fns": "2.29.3",
     "i18next": "21.9.0",
     "i18next-browser-languagedetector": "6.1.4",
     "i18next-http-backend": "1.4.1",
