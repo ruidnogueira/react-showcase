@@ -3,7 +3,8 @@
 
   "actions": {
     "close": "Fechar",
-    "reload": "Reload"
+    "reload": "Reload",
+    "update": "Atualizar"
   },
 
   "states": {
