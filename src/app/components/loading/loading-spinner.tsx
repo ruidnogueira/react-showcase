@@ -1,4 +1,4 @@
-import { ReactComponent as SpinnerSvg } from 'src/assets/spinner.svg';
+import { ReactComponent as SpinnerSvg } from '@/assets/spinner.svg';
 import { HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';

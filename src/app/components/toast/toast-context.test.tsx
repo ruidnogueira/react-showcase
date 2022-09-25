@@ -1,5 +1,5 @@
 import { act, screen } from '@testing-library/react';
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { ToastProvider, useToast } from './toast-context';
 import userEvent from '@testing-library/user-event';
 

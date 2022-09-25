@@ -1,4 +1,4 @@
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { createContext } from './context';
 
 test('renders when provider exists', () => {

@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as Logo } from 'src/assets/logo.svg';
+import { ReactComponent as Logo } from '@/assets/logo.svg';
 import { Button } from './components/button/button';
 
 export function App() {

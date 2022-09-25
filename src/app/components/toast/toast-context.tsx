@@ -1,7 +1,7 @@
 import { ReactNode, useMemo, useRef, useState } from 'react';
-import { useIsomorphicLayoutEffect } from 'src/app/hooks/use-isomorphic-layout-effect';
-import { createContext } from 'src/app/utils/context';
-import { uniqueId } from 'src/app/utils/id';
+import { useIsomorphicLayoutEffect } from '@/app/hooks/use-isomorphic-layout-effect';
+import { createContext } from '@/app/utils/context';
+import { uniqueId } from '@/app/utils/id';
 import { ToastOverlay } from './toast-overlay';
 import { ToastConfig, ToastId, ToastPosition } from './toast-types';
 

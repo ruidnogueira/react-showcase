@@ -4,13 +4,13 @@ import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
-import { ConfigProvider } from '../src/app/contexts/config/config-context';
-import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
+import { ConfigProvider } from '@/app/contexts/config/config-context';
+import { Theme, ThemeContext } from '@/app/contexts/theme/theme-context';
 import { useTranslation } from 'react-i18next';
-import 'src/styles/styles.scss';
-import 'src/mocks/i18n';
-import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
-import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
+import '@/styles/styles.scss';
+import '@/mocks/i18n';
+import { TooltipProvider } from '@/app/components/tooltip/tooltip';
+import { PortalContainerProvider } from '@/app/contexts/portal-container/portal-container';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 

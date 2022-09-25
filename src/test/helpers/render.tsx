@@ -8,10 +8,10 @@ import {
   RenderOptions,
 } from '@testing-library/react';
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
-import { ConfigProvider } from 'src/app/contexts/config/config-context';
+import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
-import { Theme, ThemeProvider } from 'src/app/contexts/theme/theme-context';
-import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
+import { Theme, ThemeProvider } from '@/app/contexts/theme/theme-context';
+import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;

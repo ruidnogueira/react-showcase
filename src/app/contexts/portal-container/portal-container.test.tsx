@@ -1,4 +1,4 @@
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { PortalContainerProvider, usePortalContainer } from './portal-container';
 
 test('by default does not provide a portal container element', () => {

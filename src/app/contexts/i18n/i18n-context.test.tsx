@@ -1,6 +1,6 @@
-import { ConfigProvider } from 'src/app/contexts/config/config-context';
+import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { I18nProvider } from './i18n-context';
-import { render } from 'src/test/helpers/render';
+import { render } from '@/test/helpers/render';
 import { screen } from '@testing-library/react';
 import i18next from 'i18next';
 

@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef, MouseEvent } from 'react';
-import { ControlSize } from 'src/app/types/styles';
+import { ControlSize } from '@/app/types/styles';
 import { Slot } from '@radix-ui/react-slot';
-import { StrictUnion } from 'src/app/types/union';
+import { StrictUnion } from '@/app/types/union';
 import clsx from 'clsx';
 
 export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;

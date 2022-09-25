@@ -3,10 +3,10 @@ import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
-import { useConfig } from 'src/app/contexts/config/config-context';
+import { useConfig } from '@/app/contexts/config/config-context';
 import { getI18nDateFormatter } from './i18n-format';
 import urlJoin from 'url-join';
-import { useEffectOnMount } from 'src/app/hooks/use-effect-on-mount';
+import { useEffectOnMount } from '@/app/hooks/use-effect-on-mount';
 import { I18nConfig } from '../config/i18n-config';
 
 export function I18nProvider({ children }: { children: ReactNode }) {

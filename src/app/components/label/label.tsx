@@ -1,6 +1,6 @@
 import { forwardRef, LabelHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { ControlSize } from 'src/app/types/styles';
+import { ControlSize } from '@/app/types/styles';
 
 export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   /**
