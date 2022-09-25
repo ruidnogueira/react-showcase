@@ -1,4 +1,4 @@
-import { I18nConfig } from 'src/app/contexts/config/i18n-config';
+import { I18nConfig } from '@/app/contexts/config/i18n-config';
 import { format as formatDate } from 'date-fns';
 
 export function getI18nDateFormatter(i18nConfig: I18nConfig) {

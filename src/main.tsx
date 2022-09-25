@@ -14,7 +14,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { UnexpectedErrorMessage } from './app/components/error/unexpected/unexpected-error-message';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
-  const { worker } = await import('src/mocks/server/browser');
+  const { worker } = await import('@/mocks/server/browser');
 
   await worker.start({
     onUnhandledRequest: 'bypass',

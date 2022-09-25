@@ -1,4 +1,4 @@
-import { createContext } from 'src/app/utils/context';
+import { createContext } from '@/app/utils/context';
 import { ReactNode, useMemo } from 'react';
 import { constants, Constants } from './constants-config';
 import { I18nConfig, i18nConfig } from './i18n-config';

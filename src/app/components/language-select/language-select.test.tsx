@@ -1,13 +1,13 @@
 import { LanguageSelect } from './language-select';
 import * as stories from './language-select.stories';
 import { composeStories } from '@storybook/testing-react';
-import { getStoryTestCases } from 'src/test/helpers/test';
-import { render, renderStory } from 'src/test/helpers/render';
-import { axe } from 'src/test/helpers/axe';
-import { ConfigProvider } from 'src/app/contexts/config/config-context';
+import { getStoryTestCases } from '@/test/helpers/test';
+import { axe } from '@/test/helpers/axe';
+import { render, renderStory } from '@/test/helpers/render';
+import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { I18nextProvider } from 'react-i18next';
 import { act, screen } from '@testing-library/react';
-import { i18nMock } from 'src/mocks/i18n';
+import { i18nMock } from '@/mocks/i18n';
 import { Resource } from 'i18next';
 import userEvent from '@testing-library/user-event';
 

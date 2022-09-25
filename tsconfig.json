@@ -17,7 +17,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src", "e2e", "plugins", "playwright.config.ts", ".storybook/*"],
   "exclude": [".storybook/main.ts"],

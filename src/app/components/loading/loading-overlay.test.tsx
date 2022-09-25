@@ -1,8 +1,8 @@
 import * as stories from './loading-overlay.stories';
 import { composeStories } from '@storybook/testing-react';
-import { render, renderStory } from 'src/test/helpers/render';
-import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'src/test/helpers/axe';
+import { render, renderStory } from '@/test/helpers/render';
+import { getStoryTestCases } from '@/test/helpers/test';
+import { axe } from '@/test/helpers/axe';
 import { LoadingOverlay } from './loading-overlay';
 import { screen } from '@testing-library/react';
 

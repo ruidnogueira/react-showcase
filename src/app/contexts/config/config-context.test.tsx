@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { DeepPartial } from 'utility-types';
 import { ConfigProvider, GlobalConfig, useConfig } from './config-context';
 

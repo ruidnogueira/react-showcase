@@ -1,6 +1,6 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { ControlSize } from 'src/app/types/styles';
+import { ControlSize } from '@/app/types/styles';
 
 export interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {

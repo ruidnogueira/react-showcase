@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithProviders } from 'src/test/helpers/render';
+import { renderWithProviders } from '@/test/helpers/render';
 import { App } from './app';
 
 test('renders app', () => {

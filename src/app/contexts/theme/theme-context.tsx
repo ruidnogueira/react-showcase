@@ -1,7 +1,7 @@
 import { ReactNode, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { createContext } from 'src/app/utils/context';
-import { getFromLocalStorage, saveToLocalStorage } from 'src/app/utils/storage';
+import { createContext } from '@/app/utils/context';
+import { getFromLocalStorage, saveToLocalStorage } from '@/app/utils/storage';
 import { useConfig } from '../config/config-context';
 
 export const Themes = ['light', 'dark'] as const;

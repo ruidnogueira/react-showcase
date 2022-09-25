@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { TFunction } from 'i18next';
 import { X as CloseIcon } from 'phosphor-react';
-import { useTimeout } from 'src/app/hooks/use-timeout';
+import { useTimeout } from '@/app/hooks/use-timeout';
 
 export interface ToastProps {
   className?: string;

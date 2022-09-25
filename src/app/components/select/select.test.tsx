@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, renderStory } from 'src/test/helpers/render';
+import { render, renderStory } from '@/test/helpers/render';
 import { Select, SelectItem } from './select';
 import * as stories from './select.stories';
 import { composeStories } from '@storybook/testing-react';
-import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'src/test/helpers/axe';
+import { getStoryTestCases } from '@/test/helpers/test';
+import { axe } from '@/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);

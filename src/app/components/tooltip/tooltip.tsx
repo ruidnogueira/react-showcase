@@ -2,7 +2,7 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import clsx from 'clsx';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
-import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
+import { usePortalContainer } from '@/app/contexts/portal-container/portal-container';
 
 export interface TooltipProps {
   children: ReactElement;

@@ -1,4 +1,4 @@
-import { createContext } from 'src/app/utils/context';
+import { createContext } from '@/app/utils/context';
 import { ReactNode } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 

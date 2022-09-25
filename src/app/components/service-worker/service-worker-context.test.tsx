@@ -1,4 +1,4 @@
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { ServiceWorkerProvider, useServiceWorker } from './service-worker-context';
 
 vi.mock('virtual:pwa-register/react', () => ({ useRegisterSW: vi.fn().mockReturnValue({}) }));

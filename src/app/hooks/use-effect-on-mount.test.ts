@@ -1,4 +1,4 @@
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { useEffectOnMount } from './use-effect-on-mount';
 
 test('executes effect once', () => {

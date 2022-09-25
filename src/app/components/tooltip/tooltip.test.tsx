@@ -1,12 +1,12 @@
 import { composeStories } from '@storybook/testing-react';
-import { render, renderStory } from 'src/test/helpers/render';
-import { getStoryTestCases } from 'src/test/helpers/test';
+import { render, renderStory } from '@/test/helpers/render';
+import { getStoryTestCases } from '@/test/helpers/test';
 import { Button } from '../button/button';
 import { Tooltip, TooltipProvider } from './tooltip';
 import * as stories from './tooltip.stories';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { axe } from 'src/test/helpers/axe';
+import { axe } from '@/test/helpers/axe';
 
 const { Playground, ...storiesToTest } = composeStories(stories);
 const storyTestCases = getStoryTestCases({ ...storiesToTest });
