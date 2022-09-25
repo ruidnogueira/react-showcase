@@ -100,11 +100,15 @@
           },
           {
             "name": "@radix-ui/react-tooltip",
-            "message": "use our tooltip."
+            "message": "use our 'Tooltip'."
           },
           {
             "name": "@radix-ui/react-select",
-            "message": "use our select."
+            "message": "use our 'Select'."
+          },
+          {
+            "name": "@radix-ui/react-visually-hidden",
+            "message": "use our 'VisuallyHidden'"
           }
         ]
       }
