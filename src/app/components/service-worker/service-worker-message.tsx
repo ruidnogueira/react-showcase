@@ -22,6 +22,7 @@ export function ServiceWorkerMessage(props: ServiceWorkerMessageProps) {
         <Button
           type="button"
           variant="link"
+          color="primary"
           className={styles.updateButton}
           onClick={onRefreshClick}
         >

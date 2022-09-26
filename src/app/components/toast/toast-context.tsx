@@ -104,10 +104,8 @@ function useToastManager(defaultPosition: ToastPosition = 'top-right') {
     return {
       open,
 
-      /* TODO: test */
       openTemporary: (options) => open({ ...options, duration: constants.toastDuration }),
 
-      /* TODO: test */
       openIndefinite: (options) => open({ ...options, isClosable: true }),
 
       close: (toastId) => {

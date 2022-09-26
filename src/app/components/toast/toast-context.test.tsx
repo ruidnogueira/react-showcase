@@ -3,6 +3,8 @@ import { renderHook } from '@/test/helpers/render';
 import { ToastProvider, useToast } from './toast-context';
 import userEvent from '@testing-library/user-event';
 import { ConfigProvider } from '@/app/contexts/config/config-context';
+import { ThemeProvider } from '@/app/contexts/theme/theme-context';
+import { HelmetProvider } from 'react-helmet-async';
 
 test('renders when provider exists', () => {
   expect(() => setup()).not.toThrow();
@@ -186,9 +188,13 @@ test('indefinite toast has close button and does not close when duration expires
 function setup({ hotkeys }: { hotkeys?: string[] } = {}) {
   return renderHook(() => useToast(), {
     wrapper: ({ children }) => (
-      <ConfigProvider>
-        <ToastProvider hotkeys={hotkeys}>{children}</ToastProvider>
-      </ConfigProvider>
+      <HelmetProvider>
+        <ConfigProvider>
+          <ThemeProvider>
+            <ToastProvider hotkeys={hotkeys}>{children}</ToastProvider>
+          </ThemeProvider>
+        </ConfigProvider>
+      </HelmetProvider>
     ),
   });
 }

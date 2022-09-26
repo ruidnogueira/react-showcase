@@ -1,7 +1,7 @@
 import { composeStories } from '@storybook/testing-react';
 import * as stories from './toast.stories';
 import { getStoryTestCases } from '@/test/helpers/test';
-import { render, renderStory } from '@/test/helpers/render';
+import { renderStoryWithProviders, renderWithProviders } from '@/test/helpers/render';
 import { axe } from '@/test/helpers/axe';
 import { Toast } from './toast';
 import { act, screen } from '@testing-library/react';
@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
-  const { container } = renderStory(<Story />);
+  const { container } = renderStoryWithProviders(<Story />);
 
   expect(container).toBeInTheDocument();
 });
@@ -28,7 +28,7 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
 test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
   vi.useRealTimers();
 
-  const { baseElement } = renderStory(<Story />);
+  const { baseElement } = renderStoryWithProviders(<Story />);
 
   expect(await axe(baseElement)).toHaveNoViolations();
 
@@ -96,7 +96,7 @@ test('cancels close timer while hovered and restarts timer when unhovered', asyn
 function setup({ isClosable, duration }: { isClosable?: boolean; duration?: number } = {}) {
   const onCloseMock = vi.fn();
 
-  render(
+  renderWithProviders(
     <Toast isClosable={isClosable} duration={duration} onClose={onCloseMock}>
       Example toast
     </Toast>
