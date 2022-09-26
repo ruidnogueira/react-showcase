@@ -12,6 +12,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './app/contexts/theme/theme-context';
 import { ErrorBoundary } from 'react-error-boundary';
 import { UnexpectedErrorMessage } from './app/components/error/unexpected/unexpected-error-message';
+import { ServiceWorkerToast } from './app/components/service-worker/service-worker-toast';
+import { AppProviders } from './app/app-providers';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { worker } = await import('@/mocks/server/browser');
@@ -38,9 +40,13 @@ createRoot(document.getElementById('root') as Element).render(
             <I18nProvider>
               <ThemeProvider>
                 <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <App />
-                  </Suspense>
+                  <AppProviders>
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <App />
+
+                      {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
+                    </Suspense>
+                  </AppProviders>
                 </ErrorBoundary>
               </ThemeProvider>
             </I18nProvider>

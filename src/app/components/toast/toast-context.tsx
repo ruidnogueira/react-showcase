@@ -4,6 +4,7 @@ import { createContext } from '@/app/utils/context';
 import { uniqueId } from '@/app/utils/id';
 import { ToastOverlay } from './toast-overlay';
 import { ToastConfig, ToastId, ToastPosition } from './toast-types';
+import { useConfig } from '@/app/contexts/config/config-context';
 
 interface ToastOptions {
   message: ReactNode;
@@ -14,8 +15,18 @@ interface ToastOptions {
   onClose?: () => void;
 }
 
+type TimedToastOptions = Omit<ToastOptions, 'duration' | 'isClosable'>;
+
 interface ToastMethods {
   open: (options: ToastOptions) => void;
+  /**
+   * Opens a toast that closes after a set amount of time.
+   */
+  openTemporary: (options: TimedToastOptions) => void;
+  /**
+   * Opens a toast that only closes manually.
+   */
+  openIndefinite: (options: TimedToastOptions) => void;
   close: (id: ToastId) => void;
   closeAll: () => void;
 }
@@ -57,6 +68,7 @@ export function ToastProvider(props: ToastProviderProps) {
 }
 
 function useToastManager(defaultPosition: ToastPosition = 'top-right') {
+  const { constants } = useConfig();
   const defaultPositionRef = useRef<ToastPosition>(defaultPosition);
   const toastsRef = useRef<ToastConfig[]>([]);
   const [toasts, setToasts] = useState<ToastConfig[]>([]);
@@ -67,28 +79,34 @@ function useToastManager(defaultPosition: ToastPosition = 'top-right') {
   });
 
   const actions = useMemo<ToastMethods>(() => {
+    const open = ({ position, id, onClose, ...options }: ToastOptions) => {
+      const toastId = id || id === 0 ? id : uniqueId(toastIdPrefix);
+
+      const toast: ToastConfig = {
+        ...options,
+
+        id: toastId,
+        position: position ?? defaultPositionRef.current,
+
+        onClose: () => {
+          const toastsToKeep = toastsRef.current.filter((toast) => toast.id !== toastId);
+
+          toastsRef.current = toastsToKeep;
+          setToasts(toastsToKeep);
+
+          onClose?.();
+        },
+      };
+
+      setToasts((toasts) => toasts.concat(toast));
+    };
+
     return {
-      open: ({ position, id, onClose, ...options }) => {
-        const toastId = id || id === 0 ? id : uniqueId(toastIdPrefix);
+      open,
 
-        const toast: ToastConfig = {
-          ...options,
+      openTemporary: (options) => open({ ...options, duration: constants.toastDuration }),
 
-          id: toastId,
-          position: position ?? defaultPositionRef.current,
-
-          onClose: () => {
-            const toastsToKeep = toastsRef.current.filter((toast) => toast.id !== toastId);
-
-            toastsRef.current = toastsToKeep;
-            setToasts(toastsToKeep);
-
-            onClose?.();
-          },
-        };
-
-        setToasts((toasts) => toasts.concat(toast));
-      },
+      openIndefinite: (options) => open({ ...options, isClosable: true }),
 
       close: (toastId) => {
         const toastsToKeep: ToastConfig[] = [];
@@ -111,7 +129,7 @@ function useToastManager(defaultPosition: ToastPosition = 'top-right') {
         setToasts([]);
       },
     };
-  }, []);
+  }, [constants.toastDuration]);
 
   return { toasts, actions };
 }

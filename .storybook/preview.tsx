@@ -11,6 +11,7 @@ import '@/styles/styles.scss';
 import '@/mocks/i18n';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { PortalContainerProvider } from '@/app/contexts/portal-container/portal-container';
+import { AppProviders } from '@/app/app-providers';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 
@@ -129,6 +130,12 @@ const reactDecorators: DecoratorFn[] = [
       </PortalContainerProvider>
     );
   },
+
+  (Story) => (
+    <AppProviders>
+      <Story />
+    </AppProviders>
+  ),
 ];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [

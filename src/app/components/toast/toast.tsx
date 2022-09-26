@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import { TFunction } from 'i18next';
 import { X as CloseIcon } from 'phosphor-react';
 import { useTimeout } from '@/app/hooks/use-timeout';
+import { Theme } from '@/app/contexts/theme/theme-context';
+import { useContrastTheme } from '@/app/hooks/use-contrast-theme';
 
 export interface ToastProps {
   className?: string;
@@ -29,6 +31,7 @@ export interface ToastProps {
 interface ToastCardProps {
   className?: string;
   children: ReactNode;
+  theme?: Theme;
   onMouseLeave: () => void;
   onMouseEnter: () => void;
 }
@@ -37,6 +40,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
   const { className, children, isClosable, duration, onClose } = props;
 
   const { t } = useTranslation();
+  const theme = useContrastTheme();
   const [isHovered, setIsHovered] = useState(false);
 
   useTimeout(() => onClose?.(), isHovered ? null : duration);
@@ -48,6 +52,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
     <ToastCard
       ref={ref}
       className={className}
+      theme={theme}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -59,7 +64,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 });
 
 const ToastCard = forwardRef<HTMLDivElement, ToastCardProps>((props, ref) => {
-  const { children, className, onMouseEnter, onMouseLeave } = props;
+  const { children, className, theme, onMouseEnter, onMouseLeave } = props;
 
   return (
     <div
@@ -68,6 +73,7 @@ const ToastCard = forwardRef<HTMLDivElement, ToastCardProps>((props, ref) => {
       className={clsx('toast', className)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      data-theme={theme}
     >
       {children}
     </div>

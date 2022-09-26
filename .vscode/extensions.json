@@ -6,6 +6,7 @@
     "stylelint.vscode-stylelint",
     "KnisterPeter.vscode-commitizen",
     "ZixuanChen.vitest-explorer",
-    "mrmlnc.vscode-scss"
+    "mrmlnc.vscode-scss",
+    "ms-playwright.playwright"
   ]
 }

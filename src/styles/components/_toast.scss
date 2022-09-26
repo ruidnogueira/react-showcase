@@ -63,15 +63,12 @@ $toast-exit-timing: linear;
 }
 
 .toast {
-  --toast-color-background: var(--theme-color-text);
-  --toast-color-text: var(--theme-color-background);
-
   @include utils.control;
 
-  background-color: var(--toast-color-background);
+  background-color: var(--theme-color-background);
   box-shadow: 0 3px 6px -4px rgb(0 0 0 / 0.12), 0 6px 16px 0 rgb(0 0 0 / 0.08),
     0 9px 28px 8px rgb(0 0 0 / 0.05);
-  color: var(--toast-color-text);
+  color: var(--theme-color-text);
   max-width: calc(100vw - #{2 * $toast-horizontal-margin});
   min-width: utils.px-to-rem(300px);
   pointer-events: auto;
