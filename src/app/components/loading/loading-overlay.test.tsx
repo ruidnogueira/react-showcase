@@ -14,7 +14,7 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
   expect(container).toBeInTheDocument();
 });
 
-test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
+test.each(storyTestCases)('%s has no accessibility violations', async (_, Story) => {
   const { baseElement } = renderStory(<Story />);
   expect(await axe(baseElement)).toHaveNoViolations();
 });
