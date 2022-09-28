@@ -75,6 +75,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-restricted-imports": [
       "error",
       {
@@ -109,6 +110,16 @@
           {
             "name": "@radix-ui/react-visually-hidden",
             "message": "use our 'VisuallyHidden'"
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["fp-ts/lib/*"],
+            "message": "remove 'lib' from the import"
+          },
+          {
+            "group": ["fp-ts/es6/*"],
+            "message": "remove 'es6' from the import"
           }
         ]
       }
