@@ -7,7 +7,7 @@ import './mocks/location';
 import './mocks/match-media';
 import './mocks/resize-observer';
 import { toHaveNoViolations } from 'jest-axe';
-import { server } from '@/mocks/server/server';
+import { mockServer } from '@/mocks/server/server';
 import { config } from 'react-transition-group';
 
 expect.extend(toHaveNoViolations);
@@ -15,7 +15,7 @@ expect.extend(toHaveNoViolations);
 config.disabled = true;
 
 beforeAll(() => {
-  server.listen();
+  mockServer.listen();
 });
 
 afterEach(() => {
@@ -24,9 +24,9 @@ afterEach(() => {
   localStorage.clear();
   sessionStorage.clear();
 
-  server.resetHandlers();
+  mockServer.resetHandlers();
 });
 
 afterAll(() => {
-  server.close();
+  mockServer.close();
 });

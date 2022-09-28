@@ -16,9 +16,9 @@ import { ServiceWorkerToast } from './app/components/service-worker/service-work
 import { AppProviders } from './app/app-providers';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
-  const { worker } = await import('@/mocks/server/browser');
+  const { mockWorker } = await import('@/mocks/server/browser');
 
-  await worker.start({
+  await mockWorker.start({
     onUnhandledRequest: 'bypass',
     serviceWorker: {
       url: urlJoin(import.meta.env.BASE_URL, 'mockServiceWorker.js'),
