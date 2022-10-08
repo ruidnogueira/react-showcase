@@ -4,8 +4,8 @@ import { pipe } from 'fp-ts/function';
 import { TaskEither } from 'fp-ts/TaskEither';
 import { adjustPathSlashes } from '@/app/utils/path';
 
-type Headers = Record<string, string | number | boolean>;
-type Params = Record<string, string | number | boolean>;
+type Headers = Record<string, string | number | boolean | undefined>;
+type Params = Record<string, string | number | boolean | undefined>;
 
 export interface ApiResponse<T> {
   status: number;
@@ -27,6 +27,7 @@ export interface ApiRequestConfig {
   headers?: Headers;
   params?: Params;
   responseType?: ResponseType;
+  signal?: AbortSignal;
 }
 
 function createApi(axios: AxiosInstance) {
@@ -61,7 +62,7 @@ function withAsync<T>(
   requestFn: () => Promise<AxiosResponse<T>>
 ): TaskEither<Error | ApiErrorResponse, ApiResponse<T>> {
   return pipe(
-    taskEither.tryCatch(requestFn, (error) => formatError(error)),
+    taskEither.tryCatch(requestFn, formatError),
     taskEither.map((response): ApiResponse<T> => {
       return {
         status: response.status,
