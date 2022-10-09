@@ -1,4 +1,5 @@
 export interface ApiAuthSession {
+  id: number;
   name: string;
 }
 
