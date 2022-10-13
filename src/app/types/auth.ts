@@ -1,6 +1,6 @@
 export interface ApiAuthSession {
   id: number;
-  name: string;
+  username: string;
 }
 
 export interface ApiCreateAuthSessionRequest {

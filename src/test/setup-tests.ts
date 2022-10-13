@@ -9,6 +9,8 @@ import './mocks/resize-observer';
 import { toHaveNoViolations } from 'jest-axe';
 import { mockServer } from '@/mocks/server/server';
 import { config } from 'react-transition-group';
+import { drop } from '@mswjs/data';
+import { mockDatabase } from '@/mocks/server/database/database';
 
 expect.extend(toHaveNoViolations);
 
@@ -25,6 +27,7 @@ afterEach(() => {
   sessionStorage.clear();
 
   mockServer.resetHandlers();
+  drop(mockDatabase);
 });
 
 afterAll(() => {

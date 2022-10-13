@@ -1,5 +1,4 @@
 import { primaryKey } from '@mswjs/data';
-import { FactoryAPI } from '@mswjs/data/lib/glossary';
 import Chance from 'chance';
 
 const chance = new Chance('user-database');
@@ -8,12 +7,8 @@ const chance = new Chance('user-database');
 export const userDataFactory = {
   user: {
     id: primaryKey(chance.natural),
-    name: chance.name,
+    username: chance.name,
+    email: chance.email,
+    password: () => chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
   },
 };
-
-export function seedUserData(database: FactoryAPI<typeof userDataFactory>) {
-  for (let index = 0; index < 10; index++) {
-    database.user.create();
-  }
-}
