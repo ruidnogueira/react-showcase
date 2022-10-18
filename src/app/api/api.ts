@@ -1,8 +1,34 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, ResponseType } from 'axios';
+import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults, ResponseType } from 'axios';
 import { taskEither } from 'fp-ts';
 import { pipe } from 'fp-ts/function';
 import { TaskEither } from 'fp-ts/TaskEither';
 import { adjustPathSlashes } from '@/app/utils/path';
+
+export interface ApiClient {
+  get: <Response>(
+    url: string,
+    config?: ApiRequestConfig
+  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+  delete: <Response>(
+    url: string,
+    config?: ApiRequestConfig
+  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+  post: <Response, Request = unknown>(
+    url: string,
+    data?: Request,
+    config?: ApiRequestConfig
+  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+  put: <Response, Request = unknown>(
+    url: string,
+    data?: Request,
+    config?: ApiRequestConfig
+  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+  patch: <Response, Request = unknown>(
+    url: string,
+    data?: Request,
+    config?: ApiRequestConfig
+  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+}
 
 type Headers = Record<string, string | number | boolean | undefined>;
 type Params = Record<string, string | number | boolean | undefined>;
@@ -28,34 +54,6 @@ export interface ApiRequestConfig {
   params?: Params;
   responseType?: ResponseType;
   signal?: AbortSignal;
-}
-
-function createApi(axios: AxiosInstance) {
-  return {
-    get: <Response>(url: string, config: ApiRequestConfig = {}) =>
-      withAsync(() => axios.get<Response>(url, config)),
-
-    delete: <Response>(url: string, config: ApiRequestConfig = {}) =>
-      withAsync(() => axios.delete<Response>(url, config)),
-
-    post: <Response, Request = unknown>(
-      url: string,
-      data?: Request,
-      config: ApiRequestConfig = {}
-    ) => withAsync(() => axios.post<Response>(url, { ...config, data })),
-
-    put: <Response, Request = unknown>(
-      url: string,
-      data?: Request,
-      config: ApiRequestConfig = {}
-    ) => withAsync(() => axios.put<Response>(url, { ...config, data })),
-
-    patch: <Response, Request = unknown>(
-      url: string,
-      data?: Request,
-      config: ApiRequestConfig = {}
-    ) => withAsync(() => axios.patch<Response>(url, { ...config, data })),
-  };
 }
 
 function withAsync<T>(
@@ -93,16 +91,24 @@ function formatAxiosError(error: AxiosError): ApiErrorResponse | Error {
 }
 
 function getBaseUrl() {
-  if (!location.origin) {
-    return 'http://localhost:4000';
-  }
-
   const url = location.origin + import.meta.env.VITE_API_BASE_URL;
   return adjustPathSlashes(url, { hasLeadingSlash: false, hasTrailingSlash: false });
 }
 
-const axiosInstance = axios.create({
-  baseURL: getBaseUrl(),
-});
+/**
+ * Creates the api client. It's defaults can be overridden.
+ */
+export function createApi(config: CreateAxiosDefaults = {}): ApiClient {
+  const instance = axios.create({
+    baseURL: getBaseUrl(),
+    ...config,
+  });
 
-export const api = createApi(axiosInstance);
+  return {
+    get: (url, config) => withAsync(() => instance.get(url, config)),
+    delete: (url, config = {}) => withAsync(() => instance.delete(url, config)),
+    post: (url, data, config = {}) => withAsync(() => instance.post(url, { ...config, data })),
+    put: (url, data, config = {}) => withAsync(() => instance.put(url, { ...config, data })),
+    patch: (url, data, config = {}) => withAsync(() => instance.patch(url, { ...config, data })),
+  };
+}

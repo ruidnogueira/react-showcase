@@ -1,7 +1,11 @@
 import { mockServer } from '@/mocks/server/server';
 import { fromEitherLeft, fromEitherRight } from '@/test/helpers/either';
 import { rest } from 'msw';
-import { api, ApiErrorResponse } from './api';
+import { ApiErrorResponse, createApi } from './api';
+
+const api = createApi({
+  baseURL: 'http://localhost:4000',
+});
 
 const testCases = [
   ['get', api.get('/example')],

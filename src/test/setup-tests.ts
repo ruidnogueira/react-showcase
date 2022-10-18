@@ -11,13 +11,19 @@ import { mockServer } from '@/mocks/server/server';
 import { config } from 'react-transition-group';
 import { drop } from '@mswjs/data';
 import { mockDatabase } from '@/mocks/server/database/database';
+import { createMocks as createIdleTimerMocks } from 'react-idle-timer';
+import { MessageChannel } from 'worker_threads';
 
 expect.extend(toHaveNoViolations);
 
 config.disabled = true;
 
+vi.stubGlobal('MessageChannel', MessageChannel);
+
 beforeAll(() => {
   mockServer.listen();
+
+  createIdleTimerMocks();
 });
 
 afterEach(() => {

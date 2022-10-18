@@ -1,10 +1,14 @@
 import { ApiAuthSession, ApiCreateAuthSessionRequest } from '../types/auth';
-import { api, ApiRequestConfig } from './api';
+import { ApiClient, ApiRequestConfig } from './api';
 
-export const authApi = {
-  getSession: (config?: Pick<ApiRequestConfig, 'signal'>) =>
-    api.get<ApiAuthSession>('/auth/session', config),
+export type AuthApi = ReturnType<typeof createAuthApi>;
 
-  createSession: (data: ApiCreateAuthSessionRequest, config?: Pick<ApiRequestConfig, 'signal'>) =>
-    api.post<ApiAuthSession>('/user/session', data, config),
-};
+export function createAuthApi(api: ApiClient) {
+  return {
+    getSession: (config?: Pick<ApiRequestConfig, 'signal'>) =>
+      api.get<ApiAuthSession>('/auth/session', config),
+
+    createSession: (data: ApiCreateAuthSessionRequest, config?: Pick<ApiRequestConfig, 'signal'>) =>
+      api.post<ApiAuthSession>('/user/session', data, config),
+  };
+}

@@ -23,7 +23,7 @@ export const userHandlers = [
       },
     });
 
-    if (!user) {
+    if (!user?.hasSession) {
       return res(ctx.status(404));
     }
 

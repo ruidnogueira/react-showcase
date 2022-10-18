@@ -7,7 +7,7 @@ import { useAuth } from './modules/auth/use-auth';
 
 export function App() {
   const { i18n } = useTranslation();
-  const { isLoading } = useAuth(); // TODO
+  useAuth(); // TODO
 
   return (
     <>

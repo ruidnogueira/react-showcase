@@ -1,22 +1,41 @@
 import { ApiAuthSession } from '@/app/types/auth';
 import { either } from 'fp-ts';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import { useConfig } from '@/app/contexts/config/config-context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { authApi } from '@/app/api/auth-api';
+import { createContext } from '@/app/utils/context';
+import { useApi } from '@/app/api/api-context';
+import { AuthApi } from '@/app/api/auth-api';
+
+export interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export interface UseAuthResponse {
+  isCheckingIfLoggedIn: boolean;
+  isLoggingIn: boolean;
+  isLoggingOut: boolean;
+  isLoggedIn: boolean;
+  user: ApiAuthSession | null;
+  logIn: (user: ApiAuthSession) => void;
+  logOut: () => void;
+}
 
 interface UseCheckIfLoggedInProps {
+  authApi: AuthApi;
   setIsLoading: (isLoading: boolean) => void;
   setUser: (user: ApiAuthSession | null) => void;
 }
 
 interface UseLogInProps {
+  authApi: AuthApi;
   setIsLoading: (isLoading: boolean) => void;
   setUser: (user: ApiAuthSession | null) => void;
 }
 
 interface UseLogOutProps {
+  authApi: AuthApi;
   setIsLoading: (isLoading: boolean) => void;
   setUser: (user: ApiAuthSession | null) => void;
 }
@@ -28,8 +47,24 @@ interface UseAuthIdleTimerProps {
   navigate: NavigateFunction;
 }
 
-export function useAuth() {
+const [AuthContextProvider, useAuth] = createContext<UseAuthResponse>({
+  contextName: 'AuthContext',
+  hookName: 'useAuth',
+});
+
+export { useAuth };
+
+export function AuthProvider(props: AuthProviderProps) {
+  const { children } = props;
+
+  const options = useAuthManager(); // TODO: add a way to bypass session request?
+
+  return <AuthContextProvider value={options}>{children}</AuthContextProvider>;
+}
+
+function useAuthManager(): UseAuthResponse {
   const { constants } = useConfig();
+  const { authApi } = useApi();
   const navigate = useNavigate();
 
   const [isCheckingIfLoggedIn, setIsCheckingIfLoggedIn] = useState(false);
@@ -39,10 +74,10 @@ export function useAuth() {
 
   const isLoggedIn = Boolean(user);
 
-  useCheckIfLoggedIn({ setUser, setIsLoading: setIsCheckingIfLoggedIn });
+  useCheckIfLoggedIn({ authApi, setUser, setIsLoading: setIsCheckingIfLoggedIn });
 
-  const logIn = createLogInHandler({ setUser, setIsLoading: setIsLoggingIn });
-  const logOut = createLogOutHandler({ setUser, setIsLoading: setIsLoggingOut });
+  const logIn = createLogInHandler({ authApi, setUser, setIsLoading: setIsLoggingIn });
+  const logOut = createLogOutHandler({ authApi, setUser, setIsLoading: setIsLoggingOut });
 
   useAuthIdleTimer({
     timeout: constants.authIdleTimeout,
@@ -63,7 +98,7 @@ export function useAuth() {
 }
 
 function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
-  const { setIsLoading, setUser } = props;
+  const { authApi, setIsLoading, setUser } = props;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -81,13 +116,10 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
       }
 
       /* TODO: create util */
-      // if (
-      //   !(response.left instanceof Error) &&
-      //   response.left.status === HttpStatusCode.Unauthorized
-      // ) {
-      //   // TODO router navigate
-      //   return;
-      // }
+      if (!(response.left instanceof Error) && response.left.status === 401) {
+        // TODO router navigate
+        return;
+      }
 
       // TODO
       // TODO toast / error page
@@ -98,12 +130,11 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
     return () => {
       controller.abort();
     };
-  }, [setIsLoading, setUser]);
+  }, [authApi, setIsLoading, setUser]);
 }
 
-/* TODO: this is not a hook */
 function createLogInHandler(props: UseLogInProps) {
-  const { setUser } = props;
+  const { authApi, setUser } = props;
 
   return (user: ApiAuthSession) => {
     // TODO log in request
@@ -112,9 +143,8 @@ function createLogInHandler(props: UseLogInProps) {
   };
 }
 
-/* TODO: this is not a hook */
 function createLogOutHandler(props: UseLogOutProps) {
-  const { setUser } = props;
+  const { authApi, setUser } = props;
 
   return () => {
     // TODO log out request
@@ -130,9 +160,8 @@ function useAuthIdleTimer(props: UseAuthIdleTimerProps) {
     timeout,
     crossTab: true,
     leaderElection: true,
+    // syncTimers: 200, // TODO: what does this do?
     onIdle: () => {
-      console.log('IDLE');
-
       if (!isLoggedIn) {
         return;
       }

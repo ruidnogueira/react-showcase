@@ -13,6 +13,9 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Theme, ThemeProvider } from '@/app/contexts/theme/theme-context';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { AppProviders } from '@/app/app-providers';
+import { testApi } from './api';
+import { ApiClientProvider } from '@/app/api/api-client-context';
+import { ApiProvider } from '@/app/api/api-context';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
@@ -119,11 +122,15 @@ function TestProviders({ children, routerProps, defaultTheme }: TestProviderProp
     <MemoryRouter {...routerProps}>
       <HelmetProvider>
         <ConfigProvider>
-          <ThemeProvider defaultTheme={defaultTheme}>
-            <TooltipProvider delayDuration={0}>
-              <AppProviders>{children}</AppProviders>
-            </TooltipProvider>
-          </ThemeProvider>
+          <ApiClientProvider api={testApi}>
+            <ApiProvider>
+              <ThemeProvider defaultTheme={defaultTheme}>
+                <TooltipProvider delayDuration={0}>
+                  <AppProviders>{children}</AppProviders>
+                </TooltipProvider>
+              </ThemeProvider>
+            </ApiProvider>
+          </ApiClientProvider>
         </ConfigProvider>
       </HelmetProvider>
     </MemoryRouter>
@@ -134,11 +141,15 @@ function StoryTestProviders({ children }: { children: ReactNode }) {
   return (
     <HelmetProvider>
       <ConfigProvider>
-        <ThemeProvider>
-          <TooltipProvider delayDuration={0}>
-            <AppProviders>{children}</AppProviders>
-          </TooltipProvider>
-        </ThemeProvider>
+        <ApiClientProvider api={testApi}>
+          <ApiProvider>
+            <ThemeProvider>
+              <TooltipProvider delayDuration={0}>
+                <AppProviders>{children}</AppProviders>
+              </TooltipProvider>
+            </ThemeProvider>
+          </ApiProvider>
+        </ApiClientProvider>
       </ConfigProvider>
     </HelmetProvider>
   );
