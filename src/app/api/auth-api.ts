@@ -9,6 +9,9 @@ export function createAuthApi(api: ApiClient) {
       api.get<ApiAuthSession>('/auth/session', config),
 
     createSession: (data: ApiCreateAuthSessionRequest, config?: Pick<ApiRequestConfig, 'signal'>) =>
-      api.post<ApiAuthSession>('/user/session', data, config),
+      api.post<ApiAuthSession>('/auth/session', data, config),
+
+    deleteSession: (config?: Pick<ApiRequestConfig, 'signal'>) =>
+      api.delete('/auth/session', config),
   };
 }

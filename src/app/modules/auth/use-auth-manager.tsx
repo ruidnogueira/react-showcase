@@ -1,16 +1,11 @@
-import { ApiAuthSession } from '@/app/types/auth';
+import { ApiAuthSession, ApiCreateAuthSessionRequest } from '@/app/types/auth';
 import { either } from 'fp-ts';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import { useConfig } from '@/app/contexts/config/config-context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { createContext } from '@/app/utils/context';
 import { useApi } from '@/app/api/api-context';
 import { AuthApi } from '@/app/api/auth-api';
-
-export interface AuthProviderProps {
-  children: ReactNode;
-}
 
 export interface UseAuthResponse {
   isCheckingIfLoggedIn: boolean;
@@ -18,8 +13,8 @@ export interface UseAuthResponse {
   isLoggingOut: boolean;
   isLoggedIn: boolean;
   user: ApiAuthSession | null;
-  logIn: (user: ApiAuthSession) => void;
-  logOut: () => void;
+  logIn: (user: ApiCreateAuthSessionRequest) => Promise<void>;
+  logOut: () => Promise<void>;
 }
 
 interface UseCheckIfLoggedInProps {
@@ -43,26 +38,12 @@ interface UseLogOutProps {
 interface UseAuthIdleTimerProps {
   timeout: number;
   isLoggedIn: boolean;
-  logOut: () => void;
+  logOut: () => Promise<void>;
+  setUser: (user: ApiAuthSession | null) => void;
   navigate: NavigateFunction;
 }
 
-const [AuthContextProvider, useAuth] = createContext<UseAuthResponse>({
-  contextName: 'AuthContext',
-  hookName: 'useAuth',
-});
-
-export { useAuth };
-
-export function AuthProvider(props: AuthProviderProps) {
-  const { children } = props;
-
-  const options = useAuthManager(); // TODO: add a way to bypass session request?
-
-  return <AuthContextProvider value={options}>{children}</AuthContextProvider>;
-}
-
-function useAuthManager(): UseAuthResponse {
+export function useAuthManager(): UseAuthResponse {
   const { constants } = useConfig();
   const { authApi } = useApi();
   const navigate = useNavigate();
@@ -83,6 +64,7 @@ function useAuthManager(): UseAuthResponse {
     timeout: constants.authIdleTimeout,
     isLoggedIn,
     logOut,
+    setUser,
     navigate,
   });
 
@@ -112,17 +94,11 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
 
       if (either.isRight(response)) {
         setUser(response.right.data);
-        return;
+      } else if (!(response.left instanceof Error) && response.left.status === 401) {
+        // TODO router navigate or maybe do nothing and router will redirect if invalid route?
+      } else {
+        // TODO toast / error page
       }
-
-      /* TODO: create util */
-      if (!(response.left instanceof Error) && response.left.status === 401) {
-        // TODO router navigate
-        return;
-      }
-
-      // TODO
-      // TODO toast / error page
     }
 
     void checkIfLoggedIn();
@@ -134,27 +110,43 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
 }
 
 function createLogInHandler(props: UseLogInProps) {
-  const { authApi, setUser } = props;
+  const { authApi, setUser, setIsLoading } = props;
 
-  return (user: ApiAuthSession) => {
-    // TODO log in request
+  return async (user: ApiCreateAuthSessionRequest) => {
+    setIsLoading(true);
 
-    setUser(user);
+    const response = await authApi.createSession(user)();
+
+    setIsLoading(false);
+
+    if (either.isRight(response)) {
+      setUser(response.right.data);
+    } else {
+      // TODO: error handling
+    }
   };
 }
 
 function createLogOutHandler(props: UseLogOutProps) {
-  const { authApi, setUser } = props;
+  const { authApi, setUser, setIsLoading } = props;
 
-  return () => {
-    // TODO log out request
+  return async () => {
+    setIsLoading(true);
 
-    setUser(null);
+    const response = await authApi.deleteSession()();
+
+    setIsLoading(false);
+
+    if (either.isRight(response)) {
+      setUser(null);
+    } else {
+      // TODO: error handling
+    }
   };
 }
 
 function useAuthIdleTimer(props: UseAuthIdleTimerProps) {
-  const { timeout, isLoggedIn, logOut, navigate } = props;
+  const { timeout, isLoggedIn, logOut, setUser, navigate } = props;
 
   const { isLeader } = useIdleTimer({
     timeout,
@@ -167,11 +159,12 @@ function useAuthIdleTimer(props: UseAuthIdleTimerProps) {
       }
 
       if (isLeader()) {
-        logOut();
+        void logOut();
+      } else {
+        /* TODO: navigate in a useeffect whenever user is set to null? */
+        setUser(null);
+        navigate('/'); // TODO routes const?
       }
-
-      // TODO routes const?
-      navigate('/');
     },
   });
 }
