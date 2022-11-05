@@ -13,6 +13,7 @@ import { drop } from '@mswjs/data';
 import { mockDatabase } from '@/mocks/server/database/database';
 import { createMocks as createIdleTimerMocks } from 'react-idle-timer';
 import { MessageChannel } from 'worker_threads';
+import { deleteAllCookies } from './helpers/cookie';
 
 expect.extend(toHaveNoViolations);
 
@@ -31,6 +32,8 @@ afterEach(() => {
 
   localStorage.clear();
   sessionStorage.clear();
+
+  deleteAllCookies();
 
   mockServer.resetHandlers();
   drop(mockDatabase);
