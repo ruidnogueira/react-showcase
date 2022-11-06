@@ -8,19 +8,29 @@ import { act, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider, useAuth } from './auth-context';
 import userEvent from '@testing-library/user-event';
+import { AuthLoginError } from './use-auth-manager';
+import { mockServer } from '@/mocks/server/server';
+import { handleApiCreateSession, handleApiGetSession } from '@/mocks/server/handlers/user-handlers';
+import { ErrorContext } from '../error/error-context';
 
-function setup({ userId }: { userId: number }) {
-  document.cookie = `userId=${userId}`;
+const handleErrorMock = vi.fn();
+
+function setup({ userId }: { userId: number | null }) {
+  if (userId !== null) {
+    document.cookie = `userId=${userId}`;
+  }
 
   return renderHook(() => useAuth(), {
     wrapper: ({ children }) => (
       <MemoryRouter>
         <ConfigProvider>
-          <ApiClientProvider api={testApi}>
-            <ApiProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </ApiProvider>
-          </ApiClientProvider>
+          <ErrorContext.Provider value={{ handleError: handleErrorMock }}>
+            <ApiClientProvider api={testApi}>
+              <ApiProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </ApiProvider>
+            </ApiClientProvider>
+          </ErrorContext.Provider>
         </ConfigProvider>
       </MemoryRouter>
     ),
@@ -51,6 +61,21 @@ describe('context', () => {
 });
 
 describe('check if logged in', () => {
+  test('user is logged out if no cookie is provided', async () => {
+    const { result } = setup({ userId: null });
+
+    expect(result.current.isCheckingIfLoggedIn).toBe(true);
+    expect(result.current.isLoggedIn).toBe(false);
+
+    await waitFor(() => {
+      expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    });
+
+    expect(result.current.isLoggedIn).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(handleErrorMock).not.toHaveBeenCalled();
+  });
+
   test('user is logged out if it does not have a session', async () => {
     const user = mockDatabase.user.create({ hasSession: false });
     const { result } = setup({ userId: user.id });
@@ -64,6 +89,22 @@ describe('check if logged in', () => {
 
     expect(result.current.isLoggedIn).toBe(false);
     expect(result.current.user).toBeNull();
+    expect(handleErrorMock).not.toHaveBeenCalled();
+  });
+
+  test('user is logged out if it fails to check', async () => {
+    mockServer.use(handleApiGetSession((_, res, ctx) => res.once(ctx.status(500))));
+
+    const user = mockDatabase.user.create({ hasSession: true });
+    const { result } = setup({ userId: user.id });
+
+    await waitFor(() => {
+      expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    });
+
+    expect(result.current.isLoggedIn).toBe(false);
+    expect(result.current.user).toBeNull();
+    expect(handleErrorMock).toHaveBeenCalled();
   });
 
   test('user is logged in if it has a session', async () => {
@@ -79,12 +120,11 @@ describe('check if logged in', () => {
 
     expect(result.current.isLoggedIn).toBe(true);
     expect(result.current.user).toEqual(expect.objectContaining({ id: user.id }));
+    expect(handleErrorMock).not.toHaveBeenCalled();
   });
 });
 
 describe('login', () => {
-  // TODO: error handling
-
   test('user logs in', async () => {
     const user = mockDatabase.user.create({ hasSession: false });
     const { result } = setup({ userId: user.id });
@@ -97,20 +137,64 @@ describe('login', () => {
       void result.current.logIn({ email: user.email, password: user.password });
     });
 
-    expect(result.current.isLoggingIn).toBe(true);
+    expect(result.current.loginState.isLoading).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.isLoggingIn).toBe(false);
+      expect(result.current.loginState.hasLoaded).toBe(true);
     });
 
     expect(result.current.isLoggedIn).toBe(true);
     expect(result.current.user).toEqual(expect.objectContaining({ id: user.id }));
   });
+
+  test('fails to log in if wrong email or password', async () => {
+    const user = mockDatabase.user.create({ password: '12345Abc.', hasSession: false });
+    const { result } = setup({ userId: user.id });
+
+    await waitFor(() => {
+      expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    });
+
+    act(() => {
+      void result.current.logIn({ email: user.email, password: 'wrong password' });
+    });
+
+    expect(result.current.loginState.isLoading).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.loginState.hasError).toBe(true);
+    });
+
+    expect(result.current.isLoggedIn).toBe(false);
+    expect(result.current.loginState.error).toBe(AuthLoginError.Invalid);
+  });
+
+  test('fails to log in if server has problems', async () => {
+    mockServer.use(handleApiCreateSession((_, res, ctx) => res.once(ctx.status(500))));
+
+    const user = mockDatabase.user.create({ hasSession: false });
+    const { result } = setup({ userId: user.id });
+
+    await waitFor(() => {
+      expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    });
+
+    act(() => {
+      void result.current.logIn({ email: user.email, password: user.password });
+    });
+
+    expect(result.current.loginState.isLoading).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.loginState.hasError).toBe(true);
+    });
+
+    expect(result.current.isLoggedIn).toBe(false);
+    expect(result.current.loginState.error).toBe(AuthLoginError.Unexpected);
+  });
 });
 
 describe('logout', () => {
-  // TODO: error handling
-
   test('user logs out', async () => {
     const user = mockDatabase.user.create({ hasSession: true });
     const { result } = setup({ userId: user.id });
@@ -131,6 +215,28 @@ describe('logout', () => {
 
     expect(result.current.isLoggedIn).toBe(false);
     expect(result.current.user).toBeNull();
+    expect(handleErrorMock).not.toHaveBeenCalled();
+  });
+
+  test('fails to log out', async () => {
+    mockDatabase.user.create({ hasSession: false });
+    const { result } = setup({ userId: null });
+
+    await waitFor(() => {
+      expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    });
+
+    act(() => {
+      void result.current.logOut();
+    });
+
+    expect(result.current.isLoggingOut).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.isLoggingOut).toBe(false);
+    });
+
+    expect(handleErrorMock).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -147,6 +253,7 @@ describe('idle timer', () => {
     await userEvent.click(document.body);
 
     expect(result.current.isLoggedIn).toBe(false);
+    expect(result.current.user).toBeNull();
   });
 
   test('user is not logged out if idle for less than 15 min', async () => {
@@ -157,9 +264,10 @@ describe('idle timer', () => {
       expect(result.current.isLoggedIn).toBe(true);
     });
 
-    vi.advanceTimersByTime(14 * 60 * 1000);
+    vi.advanceTimersByTime(15 * 60 * 1000 - 1000);
     await userEvent.click(document.body);
 
     expect(result.current.isLoggedIn).toBe(true);
+    expect(result.current.user).toEqual(expect.objectContaining({ id: user.id }));
   });
 });
