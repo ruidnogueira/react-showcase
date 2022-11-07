@@ -1,6 +1,6 @@
 export const storageKeys = {
   theme: 'app-theme',
-  authToken: 'auth-token',
+  authBypass: 'auth-bypass',
 };
 
 export type StorageKeys = typeof storageKeys;

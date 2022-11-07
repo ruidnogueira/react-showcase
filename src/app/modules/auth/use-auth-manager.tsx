@@ -9,6 +9,7 @@ import { isApiStatusError } from '@/app/api/is-api-error';
 import { AsyncState, useAsyncState } from '@/app/hooks/use-async';
 import { ErrorHandler } from '@/app/modules/error/use-error';
 import { useError } from '../error/error-context';
+import { getFromSessionStorage } from '@/app/utils/storage';
 
 export enum AuthLoginError {
   Invalid = 'INVALID',
@@ -26,6 +27,7 @@ export interface UseAuthResponse {
 }
 
 interface UseCheckIfLoggedInProps {
+  bypassStorageKey: string;
   authApi: AuthApi;
   setUser: (user: ApiAuthSession | null) => void;
   handleError: ErrorHandler;
@@ -50,7 +52,7 @@ interface UseAuthIdleTimerProps {
 }
 
 export function useAuthManager(): UseAuthResponse {
-  const { constants } = useConfig();
+  const { constants, storageKeys } = useConfig();
   const { authApi } = useApi();
   const { handleError } = useError();
 
@@ -58,7 +60,13 @@ export function useAuthManager(): UseAuthResponse {
 
   const isLoggedIn = Boolean(user);
 
-  const { isCheckingIfLoggedIn } = useCheckIfLoggedIn({ authApi, setUser, handleError });
+  const { isCheckingIfLoggedIn } = useCheckIfLoggedIn({
+    bypassStorageKey: storageKeys.authBypass,
+    authApi,
+    setUser,
+    handleError,
+  });
+
   const { loginState, logIn } = useLogIn({ authApi, setUser });
   const { isLoggingOut, logOut } = useLogOut({ authApi, setUser, handleError });
 
@@ -81,11 +89,19 @@ export function useAuthManager(): UseAuthResponse {
 }
 
 function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
-  const { authApi, setUser, handleError } = props;
+  const { bypassStorageKey, authApi, setUser, handleError } = props;
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const userBypass = getFromSessionStorage<ApiAuthSession>(bypassStorageKey);
+
+    if (userBypass) {
+      document.cookie = `userId=${userBypass.id}`;
+      setUser(userBypass);
+      return;
+    }
+
     const controller = new AbortController();
 
     async function checkIfLoggedIn() {
@@ -109,7 +125,7 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
     return () => {
       controller.abort();
     };
-  }, [authApi, setIsLoading, setUser, handleError]);
+  }, [bypassStorageKey, authApi, setIsLoading, setUser, handleError]);
 
   return { isCheckingIfLoggedIn: isLoading };
 }

@@ -12,6 +12,9 @@ import { AuthLoginError } from './use-auth-manager';
 import { mockServer } from '@/mocks/server/server';
 import { handleApiCreateSession, handleApiGetSession } from '@/mocks/server/handlers/user-handlers';
 import { ErrorContext } from '../error/error-context';
+import { databaseUserToAuthSession } from '@/mocks/server/dtos/user-dtos';
+import { saveToSessionStorage } from '@/app/utils/storage';
+import { storageKeys } from '@/app/contexts/config/storage-config';
 
 const handleErrorMock = vi.fn();
 
@@ -107,7 +110,7 @@ describe('check if logged in', () => {
     expect(handleErrorMock).toHaveBeenCalled();
   });
 
-  test('user is logged in if it has a session', async () => {
+  test('user is logged in', async () => {
     const user = mockDatabase.user.create({ hasSession: true });
     const { result } = setup({ userId: user.id });
 
@@ -121,6 +124,20 @@ describe('check if logged in', () => {
     expect(result.current.isLoggedIn).toBe(true);
     expect(result.current.user).toEqual(expect.objectContaining({ id: user.id }));
     expect(handleErrorMock).not.toHaveBeenCalled();
+  });
+
+  test('bypasses logged in check', () => {
+    const user = mockDatabase.user.create({ hasSession: true });
+    const session = databaseUserToAuthSession(user);
+
+    saveToSessionStorage(storageKeys.authBypass, session);
+
+    const { result } = setup({ userId: null });
+
+    expect(result.current.isCheckingIfLoggedIn).toBe(false);
+    expect(result.current.isLoggedIn).toBe(true);
+    expect(result.current.user).toEqual(expect.objectContaining({ id: user.id }));
+    expect(document.cookie).toBe(`userId=${user.id}`);
   });
 });
 
