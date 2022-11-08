@@ -11,7 +11,8 @@ import '@/styles/styles.scss';
 import '@/mocks/i18n';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { PortalContainerProvider } from '@/app/contexts/portal-container/portal-container';
-import { AppProviders } from '@/app/app-providers';
+import { ErrorProvider } from '@/app/modules/error/error-context';
+import { ToastProvider } from '@/app/components/toast/toast-context';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 
@@ -71,25 +72,10 @@ const reactDecorators: DecoratorFn[] = [
   (Story) => (
     <HelmetProvider>
       <ConfigProvider>
-        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
-          <Story />
-        </TooltipProvider>
+        <Story />
       </ConfigProvider>
     </HelmetProvider>
   ),
-
-  (Story, { globals }) => {
-    const { i18n } = useTranslation(undefined, { useSuspense: true });
-    const language = globals.language;
-
-    useEffect(() => {
-      if (i18n.languages[0] !== language) {
-        i18n.changeLanguage(language);
-      }
-    }, [language]);
-
-    return <Story />;
-  },
 
   (Story, { globals }) => {
     const [theme, setTheme] = useState<Theme>(globals.theme);
@@ -115,12 +101,26 @@ const reactDecorators: DecoratorFn[] = [
     );
   },
 
+  (Story, { globals }) => {
+    const { i18n } = useTranslation(undefined, { useSuspense: true });
+    const language = globals.language;
+
+    useEffect(() => {
+      if (i18n.languages[0] !== language) {
+        i18n.changeLanguage(language);
+      }
+    }, [language]);
+
+    return <Story />;
+  },
+
   /**
    * For some reason stories with portals are not clearing portals corretly, when you switch to docs tab,
    * if they are appended to the body
    * So we create a container inside a decorator that will always be recreated
    */
   (Story) => {
+    // TODO: remove this decorator when possible
     const [container, setContainer] = useState<HTMLElement | null>(null);
 
     return (
@@ -132,9 +132,13 @@ const reactDecorators: DecoratorFn[] = [
   },
 
   (Story) => (
-    <AppProviders>
-      <Story />
-    </AppProviders>
+    <ToastProvider>
+      <ErrorProvider>
+        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
+          <Story />
+        </TooltipProvider>
+      </ErrorProvider>
+    </ToastProvider>
   ),
 ];
 

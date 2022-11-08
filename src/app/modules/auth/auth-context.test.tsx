@@ -1,42 +1,22 @@
-import { ApiClientProvider } from '@/app/api/api-client-context';
-import { ApiProvider } from '@/app/api/api-context';
-import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { mockDatabase } from '@/mocks/server/database/database';
-import { testApi } from '@/test/helpers/api';
-import { renderHook } from '@/test/helpers/render';
+import { renderHook, renderHookWithProviders } from '@/test/helpers/render';
 import { act, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider, useAuth } from './auth-context';
 import userEvent from '@testing-library/user-event';
 import { AuthLoginError } from './use-auth-manager';
 import { mockServer } from '@/mocks/server/server';
 import { handleApiCreateSession, handleApiGetSession } from '@/mocks/server/handlers/user-handlers';
-import { ErrorContext } from '../error/error-context';
 import { databaseUserToAuthSession } from '@/mocks/server/dtos/user-dtos';
 import { saveToSessionStorage } from '@/app/utils/storage';
 import { storageKeys } from '@/app/contexts/config/storage-config';
-
-const handleErrorMock = vi.fn();
 
 function setup({ userId }: { userId: number | null }) {
   if (userId !== null) {
     document.cookie = `userId=${userId}`;
   }
 
-  return renderHook(() => useAuth(), {
-    wrapper: ({ children }) => (
-      <MemoryRouter>
-        <ConfigProvider>
-          <ErrorContext.Provider value={{ handleError: handleErrorMock }}>
-            <ApiClientProvider api={testApi}>
-              <ApiProvider>
-                <AuthProvider>{children}</AuthProvider>
-              </ApiProvider>
-            </ApiClientProvider>
-          </ErrorContext.Provider>
-        </ConfigProvider>
-      </MemoryRouter>
-    ),
+  return renderHookWithProviders(() => useAuth(), {
+    wrapper: ({ children }) => <AuthProvider>{children}</AuthProvider>,
   });
 }
 
@@ -65,7 +45,7 @@ describe('context', () => {
 
 describe('check if logged in', () => {
   test('user is logged out if no cookie is provided', async () => {
-    const { result } = setup({ userId: null });
+    const { result, handleErrorMock } = setup({ userId: null });
 
     expect(result.current.isCheckingIfLoggedIn).toBe(true);
     expect(result.current.isLoggedIn).toBe(false);
@@ -81,7 +61,7 @@ describe('check if logged in', () => {
 
   test('user is logged out if it does not have a session', async () => {
     const user = mockDatabase.user.create({ hasSession: false });
-    const { result } = setup({ userId: user.id });
+    const { result, handleErrorMock } = setup({ userId: user.id });
 
     expect(result.current.isCheckingIfLoggedIn).toBe(true);
     expect(result.current.isLoggedIn).toBe(false);
@@ -99,7 +79,7 @@ describe('check if logged in', () => {
     mockServer.use(handleApiGetSession((_, res, ctx) => res.once(ctx.status(500))));
 
     const user = mockDatabase.user.create({ hasSession: true });
-    const { result } = setup({ userId: user.id });
+    const { result, handleErrorMock } = setup({ userId: user.id });
 
     await waitFor(() => {
       expect(result.current.isCheckingIfLoggedIn).toBe(false);
@@ -112,7 +92,7 @@ describe('check if logged in', () => {
 
   test('user is logged in', async () => {
     const user = mockDatabase.user.create({ hasSession: true });
-    const { result } = setup({ userId: user.id });
+    const { result, handleErrorMock } = setup({ userId: user.id });
 
     expect(result.current.isCheckingIfLoggedIn).toBe(true);
     expect(result.current.isLoggedIn).toBe(false);
@@ -214,7 +194,7 @@ describe('login', () => {
 describe('logout', () => {
   test('user logs out', async () => {
     const user = mockDatabase.user.create({ hasSession: true });
-    const { result } = setup({ userId: user.id });
+    const { result, handleErrorMock } = setup({ userId: user.id });
 
     await waitFor(() => {
       expect(result.current.isCheckingIfLoggedIn).toBe(false);
@@ -237,7 +217,7 @@ describe('logout', () => {
 
   test('fails to log out', async () => {
     mockDatabase.user.create({ hasSession: false });
-    const { result } = setup({ userId: null });
+    const { result, handleErrorMock } = setup({ userId: null });
 
     await waitFor(() => {
       expect(result.current.isCheckingIfLoggedIn).toBe(false);

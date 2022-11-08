@@ -22,8 +22,8 @@ export interface UseAuthResponse {
   isLoggingOut: boolean;
   isLoggedIn: boolean;
   user: ApiAuthSession | null;
-  logIn: (user: ApiCreateAuthSessionRequest) => Promise<void>;
-  logOut: () => Promise<void>;
+  logIn: (user: ApiCreateAuthSessionRequest) => void;
+  logOut: () => void;
 }
 
 interface UseCheckIfLoggedInProps {
@@ -47,7 +47,7 @@ interface UseLogOutProps {
 interface UseAuthIdleTimerProps {
   timeout: number;
   isLoggedIn: boolean;
-  logOut: () => Promise<void>;
+  logOut: () => void;
   setUser: (user: ApiAuthSession | null) => void;
 }
 
@@ -135,19 +135,23 @@ function useLogIn(props: UseLogInProps) {
 
   const [status, setStatus] = useAsyncState<AuthLoginError>();
 
-  const logIn = async (user: ApiCreateAuthSessionRequest) => {
-    setStatus('loading');
+  const logIn = (user: ApiCreateAuthSessionRequest) => {
+    const request = async () => {
+      setStatus('loading');
 
-    const response = await authApi.createSession(user)();
+      const response = await authApi.createSession(user)();
 
-    if (either.isRight(response)) {
-      setStatus('success');
-      setUser(response.right.data);
-    } else if (isApiStatusError(401, response.left)) {
-      setStatus('failure', AuthLoginError.Invalid);
-    } else {
-      setStatus('failure', AuthLoginError.Unexpected);
-    }
+      if (either.isRight(response)) {
+        setStatus('success');
+        setUser(response.right.data);
+      } else if (isApiStatusError(401, response.left)) {
+        setStatus('failure', AuthLoginError.Invalid);
+      } else {
+        setStatus('failure', AuthLoginError.Unexpected);
+      }
+    };
+
+    void request();
   };
 
   return { loginState: status, logIn };
@@ -158,18 +162,22 @@ function useLogOut(props: UseLogOutProps) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const logOut = async () => {
-    setIsLoading(true);
+  const logOut = () => {
+    const request = async () => {
+      setIsLoading(true);
 
-    const response = await authApi.deleteSession()();
+      const response = await authApi.deleteSession()();
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    if (either.isRight(response)) {
-      setUser(null);
-    } else {
-      handleError(response.left, 'secondary');
-    }
+      if (either.isRight(response)) {
+        setUser(null);
+      } else {
+        handleError(response.left, 'secondary');
+      }
+    };
+
+    void request();
   };
 
   return { isLoggingOut: isLoading, logOut };
@@ -182,14 +190,14 @@ function useAuthIdleTimer(props: UseAuthIdleTimerProps) {
     timeout,
     crossTab: true,
     leaderElection: true,
-    syncTimers: 200,
+    syncTimers: 1000,
     onIdle: () => {
       if (!isLoggedIn) {
         return;
       }
 
       if (isLeader()) {
-        void logOut();
+        logOut();
       } else {
         setUser(null);
       }

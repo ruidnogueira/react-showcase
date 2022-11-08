@@ -13,9 +13,11 @@ import { ThemeProvider } from './app/contexts/theme/theme-context';
 import { ErrorBoundary } from 'react-error-boundary';
 import { UnexpectedErrorMessage } from './app/components/error/unexpected/unexpected-error-message';
 import { ServiceWorkerToast } from './app/components/service-worker/service-worker-toast';
-import { AppProviders } from './app/app-providers';
 import { ApiClientProvider } from './app/api/api-client-context';
 import { ApiProvider } from './app/api/api-context';
+import { ToastProvider } from './app/components/toast/toast-context';
+import { ErrorProvider } from './app/modules/error/error-context';
+import { AuthProvider } from './app/modules/auth/auth-context';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { mockWorker } = await import('@/mocks/server/browser');
@@ -41,19 +43,23 @@ createRoot(document.getElementById('root') as Element).render(
           <ConfigProvider>
             <I18nProvider>
               <ThemeProvider>
-                <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
-                  <ApiClientProvider>
-                    <ApiProvider>
-                      <AppProviders>
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <App />
+                <ToastProvider>
+                  <ErrorProvider>
+                    <ApiClientProvider>
+                      <ApiProvider>
+                        <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
+                          <AuthProvider>
+                            <Suspense fallback={<div>Loading...</div>}>
+                              <App />
 
-                          {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
-                        </Suspense>
-                      </AppProviders>
-                    </ApiProvider>
-                  </ApiClientProvider>
-                </ErrorBoundary>
+                              {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
+                            </Suspense>
+                          </AuthProvider>
+                        </ErrorBoundary>
+                      </ApiProvider>
+                    </ApiClientProvider>
+                  </ErrorProvider>
+                </ToastProvider>
               </ThemeProvider>
             </I18nProvider>
           </ConfigProvider>

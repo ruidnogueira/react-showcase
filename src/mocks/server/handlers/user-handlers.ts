@@ -1,7 +1,11 @@
+import { storageKeys } from '@/app/contexts/config/storage-config';
 import { ApiAuthSession, ApiCreateAuthSessionRequest } from '@/app/types/auth';
+import { startOfYesterday } from 'date-fns';
 import { rest } from 'msw';
 import { mockDatabase } from '../database/database';
 import { RestResponseResolver } from './handler-types';
+
+const cookieName = storageKeys.userIdCookie;
 
 export function handleApiCreateSession(
   resolver: RestResponseResolver<ApiCreateAuthSessionRequest, never, ApiAuthSession>
@@ -45,11 +49,11 @@ export const userHandlers = [
       username: user.username,
     };
 
-    return res(ctx.json(data));
+    return res(ctx.json(data), ctx.cookie(cookieName, user.id.toString(), { sameSite: 'strict' }));
   }),
 
   handleApiGetSession((req, res, ctx) => {
-    const { userId } = req.cookies;
+    const { [cookieName]: userId } = req.cookies;
 
     if (!userId) {
       return res(ctx.status(401));
@@ -93,6 +97,9 @@ export const userHandlers = [
       },
     });
 
-    return res(ctx.status(204));
+    return res(
+      ctx.status(204),
+      ctx.cookie(cookieName, '', { sameSite: 'strict', expires: startOfYesterday() })
+    );
   }),
 ];
