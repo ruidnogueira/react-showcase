@@ -1,6 +1,8 @@
 import { I18nConfig } from '@/app/contexts/config/i18n-config';
 import { format as formatDate } from 'date-fns';
 
+/* TODO: restrict imports from feature folders to index.ts */
+
 export function getI18nDateFormatter(i18nConfig: I18nConfig) {
   return (value: any, language: string | undefined, { format }: { format?: string }): string => {
     if (!(value instanceof Date)) {

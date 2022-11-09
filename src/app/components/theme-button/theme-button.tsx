@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '@/app/contexts/theme/theme-context';
+import { useTheme } from '@/app/features/theme/theme-context';
 import { Sun, Moon } from 'phosphor-react';
 import { IconButton, IconButtonIcon } from '../icon-button/icon-button';
 import styles from './theme-button.module.scss';

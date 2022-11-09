@@ -1,4 +1,4 @@
-import { useTheme } from '../contexts/theme/theme-context';
+import { useTheme } from '../features/theme/theme-context';
 
 /**
  * Picks a different theme from the current.

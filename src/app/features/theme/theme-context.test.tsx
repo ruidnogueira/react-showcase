@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { getFromLocalStorage, saveToLocalStorage } from '@/app/utils/storage';
 import { renderHook } from '@/test/helpers/render';
-import { ConfigProvider } from '../config/config-context';
+import { ConfigProvider } from '../../contexts/config/config-context';
 import { Theme, ThemeProvider, useTheme } from './theme-context';
 
 function setup({

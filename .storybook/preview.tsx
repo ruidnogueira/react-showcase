@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
 import { ConfigProvider } from '@/app/contexts/config/config-context';
-import { Theme, ThemeContext } from '@/app/contexts/theme/theme-context';
+import { Theme, ThemeContext } from '@/app/features/theme/theme-context';
 import { useTranslation } from 'react-i18next';
 import '@/styles/styles.scss';
 import '@/mocks/i18n';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { PortalContainerProvider } from '@/app/contexts/portal-container/portal-container';
-import { ErrorProvider } from '@/app/modules/error/error-context';
+import { ErrorProvider } from '@/app/features/error/error-context';
 import { ToastProvider } from '@/app/components/toast/toast-context';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543

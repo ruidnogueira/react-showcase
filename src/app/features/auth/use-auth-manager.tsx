@@ -7,7 +7,7 @@ import { useApi } from '@/app/api/api-context';
 import { AuthApi } from '@/app/api/auth-api';
 import { isApiStatusError } from '@/app/api/is-api-error';
 import { AsyncState, useAsyncState } from '@/app/hooks/use-async';
-import { ErrorHandler } from '@/app/modules/error/use-error';
+import { ErrorHandler } from '@/app/features/error/use-error';
 import { useError } from '../error/error-context';
 import { getFromSessionStorage } from '@/app/utils/storage';
 

@@ -10,14 +10,14 @@ import {
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
-import { Theme, ThemeProvider } from '@/app/contexts/theme/theme-context';
+import { Theme, ThemeProvider } from '@/app/features/theme/theme-context';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { testApi } from './api';
 import { ApiClientContext } from '@/app/api/api-client-context';
 import { ApiProvider } from '@/app/api/api-context';
 import { ToastProvider } from '@/app/components/toast/toast-context';
-import { ErrorContext, ErrorProvider } from '@/app/modules/error/error-context';
-import { ErrorHandler } from '@/app/modules/error/use-error';
+import { ErrorContext, ErrorProvider } from '@/app/features/error/error-context';
+import { ErrorHandler } from '@/app/features/error/use-error';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
