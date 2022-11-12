@@ -7,8 +7,7 @@ import { useApi } from '@/app/api/api-context';
 import { AuthApi } from '@/app/api/auth-api';
 import { isApiStatusError } from '@/app/api/is-api-error';
 import { AsyncState, useAsyncState } from '@/app/hooks/use-async';
-import { ErrorHandler } from '@/app/features/error/use-error';
-import { useError } from '../error/error-context';
+import { ErrorHandler, useError } from '@/app/features/error';
 import { getFromSessionStorage } from '@/app/utils/storage';
 
 export enum AuthLoginError {
