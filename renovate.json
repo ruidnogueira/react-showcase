@@ -1,6 +1,7 @@
 {
   "extends": ["config:base"],
   "schedule": ["after 1am before 5am on Monday"],
+  "prHourlyLimit": 0,
   "npm": {
     "stabilityDays": 3
   },
