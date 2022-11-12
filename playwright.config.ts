@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   reporter: [['list']],
   use: {
-    baseURL: `http://localhost:${port}${process.env.VITE_BASE_URL}`,
+    baseURL: `http://127.0.0.1:${port}${process.env.VITE_BASE_URL}`,
     headless: true,
     locale: 'en-GB',
     screenshot: 'only-on-failure',

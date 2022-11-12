@@ -7,7 +7,7 @@ import { useConfig } from '@/app/contexts/config/config-context';
 import { getI18nDateFormatter } from './i18n-format';
 import urlJoin from 'url-join';
 import { useEffectOnMount } from '@/app/hooks/use-effect-on-mount';
-import { I18nConfig } from '../config/i18n-config';
+import { I18nConfig } from '../../contexts/config/i18n-config';
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const { i18nConfig } = useConfig();

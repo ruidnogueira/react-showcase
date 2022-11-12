@@ -17,3 +17,18 @@ Run `npm ci` to install all dependencies and then...
 ## 📚 Recommended VS Code extensions
 
 A list of recommended extensions is provided. When this project is opened **VS Code** will prompt to install the recommended extensions.
+
+## 💭 Thoughts
+
+### State Management
+
+In the past you would use state management solutions, like **Redux** or **Zustand**, to manage your application state. The application state had both data owned by the client (UI state, route state, etc) and data owned by the server (data from the database).
+
+Now we have specialized solutions like, **React-Query** to manage server state. This means that solutions like **Redux** or **Zustand** are only responsible for managing client state. Since client state tends to be scarce and not update that often you can probably use **React Hooks + React Context** to manage the client state. Only if you have a lot of client state / state that updates frequenty / complex state should you bother use a proper client state management solution.
+
+To me the best approach to right now is:
+
+- **React-Query** to manage server state
+- **React Hooks + React Context** for simple client state management
+- **Redux**, **Zustand**, etc for a more scalable client state management
+- **XState** if you need to constraint/forbid some state changes and you are interested in transitions (ex: Multi-step forms, complex flows of actions)

@@ -1,3 +1,7 @@
 import { setupWorker } from 'msw';
+import { handlers } from './handlers/handlers';
+import { seedDatabase } from './seeds/seed-database';
 
-export const worker = setupWorker();
+seedDatabase();
+
+export const mockWorker = setupWorker(...handlers);

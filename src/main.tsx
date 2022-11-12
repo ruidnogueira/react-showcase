@@ -5,20 +5,24 @@ import urlJoin from 'url-join';
 import { ServiceWorkerProvider } from './app/components/service-worker/service-worker-context';
 import { BrowserRouter } from 'react-router-dom';
 import { adjustPathSlashes } from './app/utils/path';
-import { I18nProvider } from './app/contexts/i18n/i18n-context';
+import { I18nProvider } from './app/features/i18n';
 import { ConfigProvider } from './app/contexts/config/config-context';
 import './styles/styles.scss';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from './app/contexts/theme/theme-context';
+import { ThemeProvider } from './app/features/theme';
 import { ErrorBoundary } from 'react-error-boundary';
 import { UnexpectedErrorMessage } from './app/components/error/unexpected/unexpected-error-message';
 import { ServiceWorkerToast } from './app/components/service-worker/service-worker-toast';
-import { AppProviders } from './app/app-providers';
+import { ApiClientProvider } from './app/api/api-client-context';
+import { ApiProvider } from './app/api/api-context';
+import { ToastProvider } from './app/components/toast/toast-context';
+import { ErrorProvider } from './app/features/error';
+import { AuthProvider } from './app/features/auth';
 
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
-  const { worker } = await import('@/mocks/server/browser');
+  const { mockWorker } = await import('@/mocks/server/browser');
 
-  await worker.start({
+  await mockWorker.start({
     onUnhandledRequest: 'bypass',
     serviceWorker: {
       url: urlJoin(import.meta.env.BASE_URL, 'mockServiceWorker.js'),
@@ -39,15 +43,23 @@ createRoot(document.getElementById('root') as Element).render(
           <ConfigProvider>
             <I18nProvider>
               <ThemeProvider>
-                <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
-                  <AppProviders>
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <App />
+                <ToastProvider>
+                  <ErrorProvider>
+                    <ApiClientProvider>
+                      <ApiProvider>
+                        <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
+                          <AuthProvider>
+                            <Suspense fallback={<div>Loading...</div>}>
+                              <App />
 
-                      {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
-                    </Suspense>
-                  </AppProviders>
-                </ErrorBoundary>
+                              {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
+                            </Suspense>
+                          </AuthProvider>
+                        </ErrorBoundary>
+                      </ApiProvider>
+                    </ApiClientProvider>
+                  </ErrorProvider>
+                </ToastProvider>
               </ThemeProvider>
             </I18nProvider>
           </ConfigProvider>

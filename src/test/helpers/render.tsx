@@ -10,9 +10,13 @@ import {
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from '@/app/contexts/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
-import { Theme, ThemeProvider } from '@/app/contexts/theme/theme-context';
+import { Theme, ThemeProvider } from '@/app/features/theme';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
-import { AppProviders } from '@/app/app-providers';
+import { testApi } from './api';
+import { ApiClientContext } from '@/app/api/api-client-context';
+import { ApiProvider } from '@/app/api/api-context';
+import { ToastProvider } from '@/app/components/toast/toast-context';
+import { ErrorContext, ErrorProvider, ErrorHandler } from '@/app/features/error';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
@@ -30,6 +34,7 @@ type RenderStoryWithProvidersOptions = RenderStoryOptions;
 
 interface TestProviderProps {
   children: ReactNode;
+  handleError: ErrorHandler;
   routerProps?: MemoryRouterProps;
   defaultTheme?: Theme;
 }
@@ -47,13 +52,21 @@ export function render(ui: ReactElement, options?: RenderOptions) {
 export function renderWithProviders(ui: ReactElement, options: RenderWithProvidersOptions = {}) {
   const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
 
+  const handleErrorMock = vi.fn();
+
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders routerProps={routerProps} defaultTheme={defaultTheme}>
+    <TestProviders
+      routerProps={routerProps}
+      defaultTheme={defaultTheme}
+      handleError={handleErrorMock}
+    >
       {Wrapper ? <Wrapper>{children}</Wrapper> : children}
     </TestProviders>
   );
 
-  return render(ui, { ...props, wrapper: AllProviders });
+  const view = render(ui, { ...props, wrapper: AllProviders });
+
+  return { ...view, handleErrorMock };
 }
 
 /**
@@ -75,13 +88,21 @@ export function renderHookWithProviders<Props, Result>(
 ) {
   const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
 
+  const handleErrorMock = vi.fn();
+
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <TestProviders routerProps={routerProps} defaultTheme={defaultTheme}>
+    <TestProviders
+      routerProps={routerProps}
+      defaultTheme={defaultTheme}
+      handleError={handleErrorMock}
+    >
       {Wrapper ? <Wrapper>{children}</Wrapper> : children}
     </TestProviders>
   );
 
-  return renderHook(callback, { ...props, wrapper: AllProviders });
+  const result = renderHook(callback, { ...props, wrapper: AllProviders });
+
+  return { ...result, handleErrorMock };
 }
 
 /**
@@ -114,15 +135,23 @@ export function renderStoryWithProviders(
   return renderStory(ui, { ...props, wrapper: AllProviders });
 }
 
-function TestProviders({ children, routerProps, defaultTheme }: TestProviderProps) {
+function TestProviders(props: TestProviderProps) {
+  const { children, routerProps, defaultTheme, handleError } = props;
+
   return (
     <MemoryRouter {...routerProps}>
       <HelmetProvider>
         <ConfigProvider>
           <ThemeProvider defaultTheme={defaultTheme}>
-            <TooltipProvider delayDuration={0}>
-              <AppProviders>{children}</AppProviders>
-            </TooltipProvider>
+            <ToastProvider>
+              <ErrorContext.Provider value={{ handleError }}>
+                <ApiClientContext.Provider value={testApi}>
+                  <ApiProvider>
+                    <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+                  </ApiProvider>
+                </ApiClientContext.Provider>
+              </ErrorContext.Provider>
+            </ToastProvider>
           </ThemeProvider>
         </ConfigProvider>
       </HelmetProvider>
@@ -135,9 +164,15 @@ function StoryTestProviders({ children }: { children: ReactNode }) {
     <HelmetProvider>
       <ConfigProvider>
         <ThemeProvider>
-          <TooltipProvider delayDuration={0}>
-            <AppProviders>{children}</AppProviders>
-          </TooltipProvider>
+          <ToastProvider>
+            <ErrorProvider>
+              <ApiClientContext.Provider value={testApi}>
+                <ApiProvider>
+                  <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+                </ApiProvider>
+              </ApiClientContext.Provider>
+            </ErrorProvider>
+          </ToastProvider>
         </ThemeProvider>
       </ConfigProvider>
     </HelmetProvider>

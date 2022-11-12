@@ -6,6 +6,8 @@ import { storageKeys, StorageKeys } from './storage-config';
 import { DeepPartial } from 'utility-types';
 import { mergeDeepRight } from 'rambda';
 
+/* TODO: add readme to each type of folder */
+
 export interface GlobalConfig {
   i18nConfig: I18nConfig;
   storageKeys: StorageKeys;
