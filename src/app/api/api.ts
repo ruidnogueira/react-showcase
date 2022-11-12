@@ -4,30 +4,23 @@ import { pipe } from 'fp-ts/function';
 import { TaskEither } from 'fp-ts/TaskEither';
 import { adjustPathSlashes } from '@/app/utils/path';
 
+type RequestWithoutData = <Response>(
+  url: string,
+  config?: ApiRequestConfig
+) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+
+type RequestWithData = <Response, Request = unknown>(
+  url: string,
+  data?: Request,
+  config?: ApiRequestConfig
+) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+
 export interface ApiClient {
-  get: <Response>(
-    url: string,
-    config?: ApiRequestConfig
-  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
-  delete: <Response>(
-    url: string,
-    config?: ApiRequestConfig
-  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
-  post: <Response, Request = unknown>(
-    url: string,
-    data?: Request,
-    config?: ApiRequestConfig
-  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
-  put: <Response, Request = unknown>(
-    url: string,
-    data?: Request,
-    config?: ApiRequestConfig
-  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
-  patch: <Response, Request = unknown>(
-    url: string,
-    data?: Request,
-    config?: ApiRequestConfig
-  ) => TaskEither<Error | ApiErrorResponse, ApiResponse<Response>>;
+  get: RequestWithoutData;
+  delete: RequestWithoutData;
+  post: RequestWithoutData;
+  put: RequestWithData;
+  patch: RequestWithData;
 }
 
 type Headers = Record<string, string | number | boolean | undefined>;
