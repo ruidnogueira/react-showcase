@@ -2,6 +2,9 @@ name: 'Chromatic'
 
 on: push
 
+env:
+  HUSKY: 0
+
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
