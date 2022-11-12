@@ -18,7 +18,7 @@ type RequestWithData = <Response, Request = unknown>(
 export interface ApiClient {
   get: RequestWithoutData;
   delete: RequestWithoutData;
-  post: RequestWithoutData;
+  post: RequestWithData;
   put: RequestWithData;
   patch: RequestWithData;
 }
