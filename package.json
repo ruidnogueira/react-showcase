@@ -86,7 +86,7 @@
     "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.1",
-    "@vitejs/plugin-react": "2.1.0",
+    "@vitejs/plugin-react": "2.2.0",
     "@vitest/coverage-istanbul": "0.23.4",
     "autoprefixer": "10.4.13",
     "babel-loader": "8.2.5",
