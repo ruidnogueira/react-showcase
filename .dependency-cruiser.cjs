@@ -192,9 +192,30 @@ module.exports = {
         pathNot: ['$1$2', '$1[^/]+/index.ts'],
       },
     },
-
-    /* TODO: forbid importing features outside features*/
-    /* TODO: prevent dead code (utils/hooks) */
+    {
+      name: 'use-feature-entrypoint',
+      comment: "Import a feature's index.ts",
+      severity: 'error',
+      from: {
+        pathNot: ['^src/app/features/'],
+      },
+      to: {
+        path: '^src/app/features/',
+        pathNot: ['^src/app/features/[^/]+/index.ts'],
+      },
+    },
+    {
+      name: 'no-features-import',
+      comment: 'Do not import features in this folder',
+      severity: 'error',
+      from: {
+        path: '^src/app/[^/]+',
+        pathNot: ['^src/app/features/'],
+      },
+      to: {
+        path: '^src/app/features/',
+      },
+    },
   ],
   options: {
     /* conditions specifying which files not to follow further when encountered:
