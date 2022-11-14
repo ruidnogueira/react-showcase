@@ -2,8 +2,8 @@ import { act, screen } from '@testing-library/react';
 import { renderHook } from '@/test/helpers/render';
 import { ToastProvider, useToast } from './toast-context';
 import userEvent from '@testing-library/user-event';
-import { ConfigProvider } from '@/app/contexts/config/config-context';
-import { ThemeProvider } from '@/app/features/theme';
+import { ConfigProvider } from '@/app/core/config/config-context';
+import { ThemeProvider } from '@/app/core/theme/theme-context';
 import { HelmetProvider } from 'react-helmet-async';
 
 test('renders when provider exists', () => {

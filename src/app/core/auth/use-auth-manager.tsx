@@ -2,13 +2,14 @@ import { ApiAuthSession, ApiCreateAuthSessionRequest } from '@/app/types/auth';
 import { either } from 'fp-ts';
 import { useEffect, useState } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
-import { useConfig } from '@/app/contexts/config/config-context';
+import { useConfig } from '@/app/core/config/config-context';
 import { useApi } from '@/app/api/api-context';
 import { AuthApi } from '@/app/api/auth-api';
 import { isApiStatusError } from '@/app/api/is-api-error';
 import { AsyncState, useAsyncState } from '@/app/hooks/use-async';
-import { ErrorHandler, useError } from '@/app/features/error';
+import { useError } from '@/app/core/error/error-context';
 import { getFromSessionStorage } from '@/app/utils/storage';
+import { ErrorHandler } from '../error/use-error-manager';
 
 export enum AuthLoginError {
   Invalid = 'INVALID',

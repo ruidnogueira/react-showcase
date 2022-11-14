@@ -1,4 +1,4 @@
-import { I18nConfig } from '@/app/contexts/config/i18n-config';
+import { I18nConfig } from '@/app/core/config/i18n-config';
 import { format as formatDate } from 'date-fns';
 
 /* TODO: restrict imports from feature folders to index.ts */

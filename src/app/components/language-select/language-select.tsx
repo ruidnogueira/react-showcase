@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConfig } from '@/app/contexts/config/config-context';
+import { useConfig } from '@/app/core/config/config-context';
 import { Select, SelectItem } from '../select/select';
 import styles from './language-select.module.scss';
 

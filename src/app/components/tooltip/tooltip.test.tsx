@@ -8,8 +8,8 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from '@/test/helpers/axe';
 import { HelmetProvider } from 'react-helmet-async';
-import { ConfigProvider } from '@/app/contexts/config/config-context';
-import { ThemeProvider } from '@/app/features/theme';
+import { ConfigProvider } from '@/app/core/config/config-context';
+import { ThemeProvider } from '@/app/core/theme/theme-context';
 
 const { Playground, ...storiesToTest } = composeStories(stories);
 const storyTestCases = getStoryTestCases({ ...storiesToTest });

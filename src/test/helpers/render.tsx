@@ -8,15 +8,16 @@ import {
   RenderOptions,
 } from '@testing-library/react';
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
-import { ConfigProvider } from '@/app/contexts/config/config-context';
+import { ConfigProvider } from '@/app/core/config/config-context';
 import { HelmetProvider } from 'react-helmet-async';
-import { Theme, ThemeProvider } from '@/app/features/theme';
+import { Theme, ThemeProvider } from '@/app/core/theme/theme-context';
 import { TooltipProvider } from '@/app/components/tooltip/tooltip';
 import { testApi } from './api';
 import { ApiClientContext } from '@/app/api/api-client-context';
 import { ApiProvider } from '@/app/api/api-context';
 import { ToastProvider } from '@/app/components/toast/toast-context';
-import { ErrorContext, ErrorProvider, ErrorHandler } from '@/app/features/error';
+import { ErrorContext, ErrorProvider } from '@/app/core/error/error-context';
+import { ErrorHandler } from '@/app/core/error/use-error-manager';
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;

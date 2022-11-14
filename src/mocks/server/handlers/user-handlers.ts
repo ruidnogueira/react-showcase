@@ -1,4 +1,4 @@
-import { storageKeys } from '@/app/contexts/config/storage-config';
+import { storageKeys } from '@/app/core/config/storage-config';
 import { ApiAuthSession, ApiCreateAuthSessionRequest } from '@/app/types/auth';
 import { startOfYesterday } from 'date-fns';
 import { rest } from 'msw';
