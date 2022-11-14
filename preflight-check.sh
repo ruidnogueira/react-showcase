@@ -2,6 +2,7 @@
 set -e
 
 export CI=1
+export VITE_E2E=true
 
 npm ci
 npm run lint
