@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { renderHook } from '@/test/helpers/render';
-import { DeepPartial } from 'utility-types';
 import { ConfigProvider, GlobalConfig, useConfig } from './config-context';
+import { PartialDeep } from 'type-fest';
 
 test('renders when provider exists', () => {
   expect(() => renderHook(() => useConfig(), { wrapper: ConfigProvider })).not.toThrow();
@@ -16,7 +16,7 @@ test('throws error if provider is missing', () => {
 });
 
 test('merges provided config with default config', () => {
-  const config: DeepPartial<GlobalConfig> = {
+  const config: PartialDeep<GlobalConfig> = {
     i18nConfig: {
       supportedLanguages: [],
     },

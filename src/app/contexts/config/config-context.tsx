@@ -3,8 +3,8 @@ import { ReactNode, useMemo } from 'react';
 import { constants, Constants } from './constants-config';
 import { I18nConfig, i18nConfig } from './i18n-config';
 import { storageKeys, StorageKeys } from './storage-config';
-import { DeepPartial } from 'utility-types';
 import { mergeDeepRight } from 'rambda';
+import { PartialDeep } from 'type-fest';
 
 /* TODO: add readme to each type of folder */
 
@@ -26,7 +26,7 @@ export function ConfigProvider({
   config,
 }: {
   children: ReactNode;
-  config?: DeepPartial<GlobalConfig>;
+  config?: PartialDeep<GlobalConfig>;
 }) {
   const currentConfig: GlobalConfig = useMemo(() => {
     const defaultConfig = {
