@@ -19,6 +19,8 @@ import { ToastProvider } from './app/components/toast/toast-context';
 import { ErrorProvider } from './app/core/error/error-context';
 import { AuthProvider } from './app/core/auth/auth-context';
 
+/* TODO: fix service worker, toasts, errors imported in main */
+
 if (import.meta.env.DEV && !import.meta.env.VITE_E2E) {
   const { mockWorker } = await import('@/mocks/server/browser');
 
