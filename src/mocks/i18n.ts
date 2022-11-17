@@ -12,6 +12,7 @@ void i18next
   .init({
     lng: i18nConfig.fallbackLanguage,
     debug: false,
+    returnNull: false,
     ns: [namespace],
     defaultNS: namespace,
 
