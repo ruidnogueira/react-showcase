@@ -32,6 +32,7 @@ function useInitI18n(i18nConfig: I18nConfig) {
         .init({
           fallbackLng: i18nConfig.fallbackLanguage,
           debug: import.meta.env.DEV,
+          returnNull: false,
 
           detection: {
             order: ['localStorage', 'navigator', 'path'],
