@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { TFunction } from 'i18next';
 import { X as CloseIcon } from 'phosphor-react';
 import { useTimeout } from '@/app/hooks/use-timeout';
-import { Theme } from '@/app/features/theme';
+import { Theme } from '@/app/core/theme/theme-context';
 import { useContrastTheme } from '@/app/hooks/use-contrast-theme';
 
 export interface ToastProps {

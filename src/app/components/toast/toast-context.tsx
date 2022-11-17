@@ -4,7 +4,7 @@ import { createContext } from '@/app/utils/context';
 import { uniqueId } from '@/app/utils/id';
 import { ToastOverlay } from './toast-overlay';
 import { ToastConfig, ToastId, ToastPosition } from './toast-types';
-import { useConfig } from '@/app/contexts/config/config-context';
+import { useConfig } from '@/app/core/config/config-context';
 
 interface ToastOptions {
   message: ReactNode;

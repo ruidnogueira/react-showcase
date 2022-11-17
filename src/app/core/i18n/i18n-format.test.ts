@@ -1,4 +1,4 @@
-import { I18nConfig, i18nConfig } from '@/app/contexts/config/i18n-config';
+import { I18nConfig, i18nConfig } from '@/app/core/config/i18n-config';
 import enGB from 'date-fns/locale/en-GB';
 import enUS from 'date-fns/locale/en-US';
 import ptPT from 'date-fns/locale/pt';

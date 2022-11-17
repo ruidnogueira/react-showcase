@@ -4,7 +4,7 @@ import { composeStories } from '@storybook/testing-react';
 import { getStoryTestCases } from '@/test/helpers/test';
 import { axe } from '@/test/helpers/axe';
 import { render, renderStory } from '@/test/helpers/render';
-import { ConfigProvider } from '@/app/contexts/config/config-context';
+import { ConfigProvider } from '@/app/core/config/config-context';
 import { I18nextProvider } from 'react-i18next';
 import { act, screen } from '@testing-library/react';
 import { i18nMock } from '@/mocks/i18n';

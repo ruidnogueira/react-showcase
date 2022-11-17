@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { i18nConfig } from '@/app/contexts/config/i18n-config';
-import { getI18nDateFormatter } from '@/app/features/i18n/i18n-format';
+import { i18nConfig } from '@/app/core/config/i18n-config';
+import { getI18nDateFormatter } from '@/app/core/i18n/i18n-format';
 import resources from 'virtual:i18n';
 
 const namespace = 'translation';

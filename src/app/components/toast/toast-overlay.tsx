@@ -26,7 +26,7 @@ export function ToastOverlay(props: ToastOverlayProps) {
   const { toasts, hotkeys = defaultHotkeys } = props;
 
   const { enterDuration, exitDuration } = useToastDurations();
-  const { overlayRef } = useToastKeyboardNavigation(toasts, hotkeys);
+  const { overlayRef } = useToastKeyboardNavigation(hotkeys);
 
   const positionToasts = useMemo(() => toPairs(groupToasts(toasts)), [toasts]);
 
@@ -97,7 +97,7 @@ function useToastDurations() {
   }, []);
 }
 
-function useToastKeyboardNavigation(toasts: ToastConfig[], hotkeys: string[]) {
+function useToastKeyboardNavigation(hotkeys: string[]) {
   const overlayRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

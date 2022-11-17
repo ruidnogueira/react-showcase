@@ -1,4 +1,4 @@
-import { ConfigProvider } from '@/app/contexts/config/config-context';
+import { ConfigProvider } from '@/app/core/config/config-context';
 import { I18nProvider } from './i18n-context';
 import { render } from '@/test/helpers/render';
 import { screen } from '@testing-library/react';

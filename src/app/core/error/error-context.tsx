@@ -1,6 +1,6 @@
 import { createContext } from '@/app/utils/context';
 import { ReactNode } from 'react';
-import { useErrorManager, UseErrorResponse } from './use-error';
+import { useErrorManager, UseErrorResponse } from './use-error-manager';
 
 export interface ErrorProviderProps {
   children: ReactNode;

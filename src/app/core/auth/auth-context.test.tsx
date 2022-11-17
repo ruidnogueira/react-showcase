@@ -8,7 +8,7 @@ import { mockServer } from '@/mocks/server/server';
 import { handleApiCreateSession, handleApiGetSession } from '@/mocks/server/handlers/user-handlers';
 import { databaseUserToAuthSession } from '@/mocks/server/dtos/user-dtos';
 import { saveToSessionStorage } from '@/app/utils/storage';
-import { storageKeys } from '@/app/contexts/config/storage-config';
+import { storageKeys } from '@/app/core/config/storage-config';
 
 function setup({ userId }: { userId: number | null }) {
   if (userId !== null) {
