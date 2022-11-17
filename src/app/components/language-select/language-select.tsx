@@ -26,7 +26,7 @@ export const LanguageSelect = forwardRef<HTMLButtonElement, LanguageSelectProps>
       size="small"
       value={i18n.languages[0]}
       onValueChange={handleLanguageChange}
-      aria-label={t('components.languageSelect')}
+      aria-label={t('components.languageSelect') ?? undefined}
     >
       {i18nConfig.supportedLanguages.map(({ code, name }) => (
         <SelectItem key={code} value={code}>
