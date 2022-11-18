@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { Toast } from '../toast/toast';
+import { Toast } from '../../../components/toast/toast';
 import { ServiceWorkerMessage } from './service-worker-message';
 
 export default {
-  title: 'Organisms/ServiceWorkerMessage',
+  title: 'Features/App/ServiceWorkerMessage',
   args: {
     onRefreshClick: () => {},
   },

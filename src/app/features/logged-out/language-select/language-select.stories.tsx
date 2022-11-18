@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { LanguageSelect as LanguageSelectComponent } from './language-select';
 
 export default {
-  title: 'Organisms/LanguageSelect',
+  title: 'Features/LoggedOut/LanguageSelect',
   component: LanguageSelectComponent,
   argTypes: {},
   args: {},

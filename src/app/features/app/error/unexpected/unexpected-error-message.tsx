@@ -1,6 +1,6 @@
 import { XCircle } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../button/button';
+import { Button } from '../../../../components/button/button';
 import styles from './unexpected-error-message.module.scss';
 
 export function UnexpectedErrorMessage() {

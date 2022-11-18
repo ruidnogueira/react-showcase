@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { ThemeButton as ThemeButtonComponent } from './theme-button';
 
 export default {
-  title: 'Organisms/ThemeButton',
+  title: 'Features/LoggedOut/ThemeButton',
   component: ThemeButtonComponent,
   argTypes: {},
   args: {},

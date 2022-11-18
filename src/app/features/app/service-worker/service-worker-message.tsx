@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Button } from '../button/button';
+import { Button } from '../../../components/button/button';
 import styles from './service-worker-message.module.scss';
 
 export type ServiceWorkerMessageType = 'offlineReady' | 'needRefresh';

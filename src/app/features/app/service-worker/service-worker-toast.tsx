@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useToast } from '../toast/toast-context';
+import { useToast } from '../../../components/toast/toast-context';
 import { useServiceWorker } from './service-worker-context';
 import { ServiceWorkerMessage, ServiceWorkerMessageType } from './service-worker-message';
 
