@@ -1,5 +1,8 @@
 {
-  "src/**/*": "ls-lint",
+  "src/**/*": [
+    "ls-lint",
+    "dependency-cruise --output-type err-long --config .dependency-cruiser.cjs"
+  ],
   "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix --max-warnings=0",
   "src/**/*.{css,scss}": "stylelint --fix",
   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
