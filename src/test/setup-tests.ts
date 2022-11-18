@@ -4,6 +4,7 @@ import './mocks/dom-rect';
 import './mocks/html-element';
 import './mocks/location';
 import './mocks/match-media';
+import './mocks/pointer';
 import './mocks/resize-observer';
 import { toHaveNoViolations } from 'jest-axe';
 import { mockServer } from '@/mocks/server/server';
