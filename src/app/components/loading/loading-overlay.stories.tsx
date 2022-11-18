@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { LoadingOverlay as LoadingOverlayComponent } from './loading-overlay';
 
 export default {
-  title: 'Atoms/Loading/LoadingOverlay',
+  title: 'Components/Loading/LoadingOverlay',
   component: LoadingOverlayComponent,
   argTypes: {},
   args: {

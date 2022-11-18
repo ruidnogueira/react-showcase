@@ -4,7 +4,7 @@ import { StoryVariants } from '@/stories/variants';
 import { Select, SelectItem, SelectProps } from './select';
 
 export default {
-  title: 'Atoms/Select',
+  title: 'Components/Select',
   component: Select,
   subcomponents: { SelectItem },
   argTypes: {},

@@ -4,7 +4,7 @@ import { Button } from '../button/button';
 import { Tooltip, TooltipProps } from './tooltip';
 
 export default {
-  title: 'Atoms/Tooltip',
+  title: 'Components/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

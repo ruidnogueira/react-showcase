@@ -3,9 +3,9 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/app/core/theme/theme-context';
 import { Sun, Moon } from 'phosphor-react';
-import { IconButton, IconButtonIcon } from '../icon-button/icon-button';
+import { IconButton, IconButtonIcon } from '../../../components/icon-button/icon-button';
 import styles from './theme-button.module.scss';
-import { Tooltip } from '../tooltip/tooltip';
+import { Tooltip } from '../../../components/tooltip/tooltip';
 
 export interface ThemeButtonProps {
   className?: string;

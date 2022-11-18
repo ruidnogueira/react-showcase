@@ -5,7 +5,7 @@ import { TextInput } from '../text-input/text-input';
 import { Field } from './field';
 
 export default {
-  title: 'Molecules/Field',
+  title: 'Components/Field',
   component: Field,
   argTypes: {
     size: {

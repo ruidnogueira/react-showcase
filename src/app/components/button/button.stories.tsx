@@ -5,7 +5,7 @@ import { LoadingOverlay } from '../loading/loading-overlay';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
-  title: 'Atoms/Button/Button',
+  title: 'Components/Button/Button',
   component: Button,
   argTypes: {
     color: {

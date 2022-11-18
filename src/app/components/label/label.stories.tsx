@@ -5,7 +5,7 @@ import { TextInput } from '../text-input/text-input';
 import { Label } from './label';
 
 export default {
-  title: 'Atoms/Label',
+  title: 'Components/Label',
   component: Label,
   argTypes: {
     size: {
