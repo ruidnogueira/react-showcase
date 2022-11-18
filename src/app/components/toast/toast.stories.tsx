@@ -6,7 +6,7 @@ import { ToastProvider, useToast } from './toast-context';
 import { ToastPosition } from './toast-types';
 
 export default {
-  title: 'Atoms/Toast',
+  title: 'Components/Toast',
   component: Toast,
   argTypes: {},
   args: {

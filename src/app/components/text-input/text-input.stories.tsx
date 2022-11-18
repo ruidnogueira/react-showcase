@@ -4,7 +4,7 @@ import { StoryVariants } from '@/stories/variants';
 import { TextInput } from './text-input';
 
 export default {
-  title: 'Atoms/TextInput',
+  title: 'Components/TextInput',
   component: TextInput,
   argTypes: {
     size: {

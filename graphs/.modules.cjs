@@ -23,7 +23,7 @@ module.exports = {
       dot: {
         collapsePattern: [
           '^node_modules/[^/]+',
-          '^src/app/(components|core)/[^/]+',
+          '^src/app/(components|core|features)/[^/]+',
           '^src/app/(api|utils|hooks|types)',
         ],
 

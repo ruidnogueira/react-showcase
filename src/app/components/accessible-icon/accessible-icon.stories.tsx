@@ -3,7 +3,7 @@ import { CrownSimple } from 'phosphor-react';
 import { AccessibleIcon as AccessibleIconComponent } from './accessible-icon';
 
 export default {
-  title: 'Atoms/AccessibleIcon',
+  title: 'Components/AccessibleIcon',
   component: AccessibleIconComponent,
   argTypes: {},
   args: {},
