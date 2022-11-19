@@ -16,7 +16,9 @@ function setup({ userId }: { userId: number | null }) {
   }
 
   return renderHookWithProviders(() => useAuth(), {
-    wrapper: ({ children }) => <AuthProvider>{children}</AuthProvider>,
+    renderOptions: {
+      wrapper: ({ children }) => <AuthProvider>{children}</AuthProvider>,
+    },
   });
 }
 

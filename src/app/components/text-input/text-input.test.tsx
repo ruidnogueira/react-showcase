@@ -1,6 +1,5 @@
 import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { axe } from '@/test/helpers/axe';
 import { renderStory } from '@/test/helpers/render';
 import { getStoryTestCases } from '@/test/helpers/test';
@@ -22,7 +21,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 });
 
 test('is disabled', async () => {
-  renderStory(<Disabled />);
+  const { userEvent } = renderStory(<Disabled />);
 
   await userEvent.click(screen.getByRole('textbox'));
 
@@ -30,7 +29,7 @@ test('is disabled', async () => {
 });
 
 test('is not disabled', async () => {
-  renderStory(<Default />);
+  const { userEvent } = renderStory(<Default />);
 
   await userEvent.click(screen.getByRole('textbox'));
 

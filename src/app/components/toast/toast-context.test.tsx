@@ -1,7 +1,6 @@
 import { act, screen } from '@testing-library/react';
-import { renderHook } from '@/test/helpers/render';
+import { renderHook, UserEventOptions } from '@/test/helpers/render';
 import { ToastProvider, useToast } from './toast-context';
-import userEvent from '@testing-library/user-event';
 import { ConfigProvider } from '@/app/core/config/config-context';
 import { ThemeProvider } from '@/app/core/theme/theme-context';
 import { HelmetProvider } from 'react-helmet-async';
@@ -100,7 +99,7 @@ test('closes all toasts', () => {
 
 test("calls onClose when toast's close button is clicked", async () => {
   const onCloseMock = vi.fn();
-  const { result } = setup();
+  const { result, userEvent } = setup();
 
   act(() => {
     result.current.open({
@@ -117,7 +116,7 @@ test("calls onClose when toast's close button is clicked", async () => {
 });
 
 test('focuses the toast overlay when a hotkey is pressed', async () => {
-  setup({ hotkeys: ['F1'] });
+  const { userEvent } = setup({ hotkeys: ['F1'] });
 
   const overlay = screen.getByTestId('toast-overlay');
 
@@ -158,7 +157,11 @@ test('indefinite toast has close button and does not close when duration expires
   vi.useFakeTimers();
 
   const onCloseMock = vi.fn();
-  const { result } = setup();
+  const { result, userEvent } = setup({
+    userEventOptions: {
+      advanceTimers: (delay) => vi.advanceTimersByTime(delay),
+    },
+  });
 
   act(() => {
     result.current.openIndefinite({
@@ -174,9 +177,7 @@ test('indefinite toast has close button and does not close when duration expires
   expect(onCloseMock).not.toHaveBeenCalled();
   expect(screen.getByRole('alert')).toBeInTheDocument();
 
-  await userEvent.click(screen.getByRole('button', { name: 'Close' }), {
-    advanceTimers: (delay) => vi.advanceTimersByTime(delay),
-  });
+  await userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
   expect(onCloseMock).toHaveBeenCalledTimes(1);
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -185,16 +186,19 @@ test('indefinite toast has close button and does not close when duration expires
   vi.useRealTimers();
 });
 
-function setup({ hotkeys }: { hotkeys?: string[] } = {}) {
+function setup(options: { hotkeys?: string[]; userEventOptions?: UserEventOptions } = {}) {
   return renderHook(() => useToast(), {
-    wrapper: ({ children }) => (
-      <HelmetProvider>
-        <ConfigProvider>
-          <ThemeProvider>
-            <ToastProvider hotkeys={hotkeys}>{children}</ToastProvider>
-          </ThemeProvider>
-        </ConfigProvider>
-      </HelmetProvider>
-    ),
+    userEventOptions: options.userEventOptions,
+    renderOptions: {
+      wrapper: ({ children }) => (
+        <HelmetProvider>
+          <ConfigProvider>
+            <ThemeProvider>
+              <ToastProvider hotkeys={options.hotkeys}>{children}</ToastProvider>
+            </ThemeProvider>
+          </ConfigProvider>
+        </HelmetProvider>
+      ),
+    },
   });
 }

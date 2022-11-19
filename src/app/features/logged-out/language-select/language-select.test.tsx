@@ -9,7 +9,6 @@ import { I18nextProvider } from 'react-i18next';
 import { act, screen } from '@testing-library/react';
 import { i18nMock } from '@/mocks/i18n';
 import { Resource } from 'i18next';
-import userEvent from '@testing-library/user-event';
 
 const supportedLanguages = [
   { code: 'en-GB', name: 'GB' },
@@ -49,7 +48,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 });
 
 test('changes language when new option is selected', async () => {
-  setup();
+  const { userEvent } = setup();
 
   const selectButton = screen.getByRole('combobox');
   expect(selectButton).toHaveTextContent('GB');
@@ -76,7 +75,7 @@ test('updates selected language on i18n language changes', () => {
 function setup() {
   void testI18n.changeLanguage('en-GB');
 
-  render(
+  return render(
     <ConfigProvider config={{ i18nConfig: { supportedLanguages } }}>
       <I18nextProvider i18n={testI18n}>
         <LanguageSelect />

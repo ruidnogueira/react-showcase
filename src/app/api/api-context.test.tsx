@@ -5,11 +5,13 @@ import { ApiProvider, useApi } from './api-context';
 test('renders when provider exists', () => {
   expect(() =>
     renderHook(() => useApi(), {
-      wrapper: ({ children }) => (
-        <ApiClientProvider>
-          <ApiProvider>{children}</ApiProvider>
-        </ApiClientProvider>
-      ),
+      renderOptions: {
+        wrapper: ({ children }) => (
+          <ApiClientProvider>
+            <ApiProvider>{children}</ApiProvider>
+          </ApiClientProvider>
+        ),
+      },
     })
   ).not.toThrow();
 });
@@ -17,7 +19,9 @@ test('renders when provider exists', () => {
 test('throws error if provider is missing', () => {
   const logErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-  expect(() => renderHook(() => useApi(), { wrapper: ApiClientProvider })).toThrow();
+  expect(() =>
+    renderHook(() => useApi(), { renderOptions: { wrapper: ApiClientProvider } })
+  ).toThrow();
 
   logErrorSpy.mockRestore();
 });

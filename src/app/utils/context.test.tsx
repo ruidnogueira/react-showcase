@@ -10,7 +10,9 @@ test('renders when provider exists', () => {
   });
 
   const { result } = renderHook(() => useTest(), {
-    wrapper: ({ children }) => <TestProvider value={value}>{children}</TestProvider>,
+    renderOptions: {
+      wrapper: ({ children }) => <TestProvider value={value}>{children}</TestProvider>,
+    },
   });
 
   expect(result.current).toBe(value);

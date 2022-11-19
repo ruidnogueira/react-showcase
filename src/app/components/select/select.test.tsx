@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { render, renderStory } from '@/test/helpers/render';
 import { Select, SelectItem } from './select';
 import * as stories from './select.stories';
@@ -21,7 +20,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 });
 
 test('selects an option', async () => {
-  render(
+  const { userEvent } = render(
     <Select>
       <SelectItem value="red">Red</SelectItem>
       <SelectItem value="green">Green</SelectItem>
@@ -36,7 +35,7 @@ test('selects an option', async () => {
 });
 
 test('cannot select a disabled option', async () => {
-  render(
+  const { userEvent } = render(
     <Select>
       <SelectItem value="red" disabled={true}>
         Red
@@ -55,7 +54,7 @@ test('cannot select a disabled option', async () => {
 });
 
 test('is disabled', async () => {
-  render(
+  const { userEvent } = render(
     <Select disabled={true}>
       <SelectItem value="red">Red</SelectItem>
       <SelectItem value="green">Green</SelectItem>

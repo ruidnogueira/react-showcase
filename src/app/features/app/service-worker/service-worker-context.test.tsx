@@ -5,7 +5,9 @@ vi.mock('virtual:pwa-register/react', () => ({ useRegisterSW: vi.fn().mockReturn
 
 test('renders when provider exists', () => {
   expect(() =>
-    renderHook(() => useServiceWorker(), { wrapper: ServiceWorkerProvider })
+    renderHook(() => useServiceWorker(), {
+      renderOptions: { wrapper: ServiceWorkerProvider },
+    })
   ).not.toThrow();
 });
 

@@ -1,6 +1,5 @@
 import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { axe } from '@/test/helpers/axe';
 import { renderStory } from '@/test/helpers/render';
 import { getStoryTestCases } from '@/test/helpers/test';
@@ -22,7 +21,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 
 test('is disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(
+  const { userEvent } = renderStory(
     <Button type="button" disabled onClick={onClickMock}>
       Button
     </Button>
@@ -36,7 +35,7 @@ test('is disabled', async () => {
 
 test('is not disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(
+  const { userEvent } = renderStory(
     <Button type="button" onClick={onClickMock}>
       Button
     </Button>
@@ -50,7 +49,7 @@ test('is not disabled', async () => {
 
 test('asChild is disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(
+  const { userEvent } = renderStory(
     <Button asChild disabled onClick={onClickMock}>
       <div>Button</div>
     </Button>
@@ -64,7 +63,7 @@ test('asChild is disabled', async () => {
 
 test('asChild is not disabled', async () => {
   const onClickMock = vi.fn();
-  renderStory(
+  const { userEvent } = renderStory(
     <Button asChild onClick={onClickMock}>
       <div>Button</div>
     </Button>

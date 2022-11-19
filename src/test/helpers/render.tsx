@@ -4,8 +4,8 @@ import {
   render as tlRender,
   // eslint-disable-next-line @typescript-eslint/no-restricted-imports
   renderHook as tlRenderHook,
-  RenderHookOptions,
-  RenderOptions,
+  RenderHookOptions as TlRenderHookOptions,
+  RenderOptions as TlRenderOptions,
 } from '@testing-library/react';
 import { MemoryRouterProps, MemoryRouter } from 'react-router-dom';
 import { ConfigProvider } from '@/app/core/config/config-context';
@@ -18,10 +18,23 @@ import { ApiProvider } from '@/app/api/api-context';
 import { ToastProvider } from '@/app/components/toast/toast-context';
 import { ErrorContext, ErrorProvider } from '@/app/core/error/error-context';
 import { ErrorHandler } from '@/app/core/error/use-error-manager';
+import userEvent from '@testing-library/user-event';
+
+export type UserEventOptions = Parameters<typeof userEvent.setup>[0];
+
+interface RenderOptions {
+  renderOptions?: TlRenderOptions;
+  userEventOptions?: UserEventOptions;
+}
 
 interface RenderWithProvidersOptions extends RenderOptions {
   routerProps?: MemoryRouterProps;
   defaultTheme?: Theme;
+}
+
+interface RenderHookOptions<Props> {
+  renderOptions?: TlRenderHookOptions<Props>;
+  userEventOptions?: UserEventOptions;
 }
 
 interface RenderHookWithProvidersOptions<Props> extends RenderHookOptions<Props> {
@@ -41,17 +54,21 @@ interface TestProviderProps {
 }
 
 /**
- * Renders elements
+ * Renders elements and sets up userEvent
  */
-export function render(ui: ReactElement, options?: RenderOptions) {
-  return tlRender(ui, options);
+export function render(ui: ReactElement, options: RenderOptions = {}) {
+  return {
+    ...tlRender(ui, options.renderOptions),
+    userEvent: userEvent.setup(options.userEventOptions),
+  };
 }
 
 /**
  * Provides global providers required for smart components (i18n, routing, etc)
  */
 export function renderWithProviders(ui: ReactElement, options: RenderWithProvidersOptions = {}) {
-  const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
+  const { renderOptions = {}, userEventOptions, routerProps, defaultTheme } = options;
+  const Wrapper = renderOptions.wrapper;
 
   const handleErrorMock = vi.fn();
 
@@ -65,7 +82,10 @@ export function renderWithProviders(ui: ReactElement, options: RenderWithProvide
     </TestProviders>
   );
 
-  const view = render(ui, { ...props, wrapper: AllProviders });
+  const view = render(ui, {
+    userEventOptions,
+    renderOptions: { ...renderOptions, wrapper: AllProviders },
+  });
 
   return { ...view, handleErrorMock };
 }
@@ -75,9 +95,12 @@ export function renderWithProviders(ui: ReactElement, options: RenderWithProvide
  */
 export function renderHook<Props, Result>(
   callback: (props: Props) => Result,
-  options?: RenderHookOptions<Props>
+  options: RenderHookOptions<Props> = {}
 ) {
-  return tlRenderHook(callback, options);
+  return {
+    ...tlRenderHook(callback, options.renderOptions),
+    userEvent: userEvent.setup(options.userEventOptions),
+  };
 }
 
 /**
@@ -87,7 +110,8 @@ export function renderHookWithProviders<Props, Result>(
   callback: (props: Props) => Result,
   options: RenderHookWithProvidersOptions<Props> = {}
 ) {
-  const { wrapper: Wrapper, routerProps, defaultTheme, ...props } = options;
+  const { renderOptions = {}, userEventOptions, routerProps, defaultTheme } = options;
+  const Wrapper = renderOptions.wrapper;
 
   const handleErrorMock = vi.fn();
 
@@ -101,7 +125,10 @@ export function renderHookWithProviders<Props, Result>(
     </TestProviders>
   );
 
-  const result = renderHook(callback, { ...props, wrapper: AllProviders });
+  const result = renderHook(callback, {
+    userEventOptions,
+    renderOptions: { ...renderOptions, wrapper: AllProviders },
+  });
 
   return { ...result, handleErrorMock };
 }
@@ -110,12 +137,16 @@ export function renderHookWithProviders<Props, Result>(
  * Renders a story
  */
 export function renderStory(ui: ReactElement, options: RenderStoryOptions = {}) {
-  const { wrapper: Wrapper, ...props } = options;
+  const { renderOptions = {}, userEventOptions } = options;
+  const Wrapper = renderOptions.wrapper;
 
   const AllProviders = ({ children }: { children: ReactElement }) =>
     Wrapper ? <Wrapper>{children}</Wrapper> : children;
 
-  return render(ui, { ...props, wrapper: AllProviders });
+  return render(ui, {
+    userEventOptions,
+    renderOptions: { ...renderOptions, wrapper: AllProviders },
+  });
 }
 
 /**
@@ -125,15 +156,17 @@ export function renderStoryWithProviders(
   ui: ReactElement,
   options: RenderStoryWithProvidersOptions = {}
 ) {
-  const { wrapper: Wrapper, ...props } = options;
+  const { renderOptions = {}, userEventOptions } = options;
+  const Wrapper = renderOptions.wrapper;
 
   const AllProviders = ({ children }: { children: ReactElement }) => (
-    <StoryTestProviders>
-      {Wrapper ? <Wrapper {...props}>{children}</Wrapper> : children}
-    </StoryTestProviders>
+    <StoryTestProviders>{Wrapper ? <Wrapper>{children}</Wrapper> : children}</StoryTestProviders>
   );
 
-  return renderStory(ui, { ...props, wrapper: AllProviders });
+  return renderStory(ui, {
+    userEventOptions,
+    renderOptions: { ...renderOptions, wrapper: AllProviders },
+  });
 }
 
 function TestProviders(props: TestProviderProps) {

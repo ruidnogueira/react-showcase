@@ -16,17 +16,19 @@ function setup({
   withProvider?: boolean;
 } = {}) {
   return renderHook(() => useTheme(), {
-    wrapper: ({ children }: { children: ReactNode }) => (
-      <ConfigProvider config={{ storageKeys: { theme: themeStorageKey } }}>
-        <HelmetProvider>
-          {withProvider ? (
-            <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>
-          ) : (
-            children
-          )}
-        </HelmetProvider>
-      </ConfigProvider>
-    ),
+    renderOptions: {
+      wrapper: ({ children }: { children: ReactNode }) => (
+        <ConfigProvider config={{ storageKeys: { theme: themeStorageKey } }}>
+          <HelmetProvider>
+            {withProvider ? (
+              <ThemeProvider defaultTheme={defaultTheme}>{children}</ThemeProvider>
+            ) : (
+              children
+            )}
+          </HelmetProvider>
+        </ConfigProvider>
+      ),
+    },
   });
 }
 
