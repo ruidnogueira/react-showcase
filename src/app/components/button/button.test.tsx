@@ -1,7 +1,7 @@
 import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
 import { axe } from '@/test/helpers/axe';
-import { renderStory } from '@/test/helpers/render';
+import { render, renderStory } from '@/test/helpers/render';
 import { getStoryTestCases } from '@/test/helpers/test';
 import { Button } from './button';
 import * as stories from './button.stories';
@@ -21,7 +21,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 
 test('is disabled', async () => {
   const onClickMock = vi.fn();
-  const { userEvent } = renderStory(
+  const { userEvent } = render(
     <Button type="button" disabled onClick={onClickMock}>
       Button
     </Button>
@@ -35,7 +35,7 @@ test('is disabled', async () => {
 
 test('is not disabled', async () => {
   const onClickMock = vi.fn();
-  const { userEvent } = renderStory(
+  const { userEvent } = render(
     <Button type="button" onClick={onClickMock}>
       Button
     </Button>
@@ -49,7 +49,7 @@ test('is not disabled', async () => {
 
 test('asChild is disabled', async () => {
   const onClickMock = vi.fn();
-  const { userEvent } = renderStory(
+  const { userEvent } = render(
     <Button asChild disabled onClick={onClickMock}>
       <div>Button</div>
     </Button>
@@ -63,7 +63,7 @@ test('asChild is disabled', async () => {
 
 test('asChild is not disabled', async () => {
   const onClickMock = vi.fn();
-  const { userEvent } = renderStory(
+  const { userEvent } = render(
     <Button asChild onClick={onClickMock}>
       <div>Button</div>
     </Button>
