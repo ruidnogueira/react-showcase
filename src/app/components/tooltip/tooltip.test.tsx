@@ -5,7 +5,6 @@ import { Button } from '../button/button';
 import { Tooltip, TooltipProvider } from './tooltip';
 import * as stories from './tooltip.stories';
 import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { axe } from '@/test/helpers/axe';
 import { HelmetProvider } from 'react-helmet-async';
 import { ConfigProvider } from '@/app/core/config/config-context';
@@ -51,7 +50,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 });
 
 test('shows tooltip while hovering trigger and disappears when unhovered', async () => {
-  const { isOpenChangeMock } = setup();
+  const { userEvent, isOpenChangeMock } = setup();
 
   expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
 
@@ -91,7 +90,7 @@ test('shows tooltip while focusing trigger and disappears when blurred', async (
 function setup() {
   const isOpenChangeMock = vi.fn();
 
-  render(
+  const view = render(
     <HelmetProvider>
       <ConfigProvider>
         <ThemeProvider>
@@ -105,5 +104,5 @@ function setup() {
     </HelmetProvider>
   );
 
-  return { isOpenChangeMock };
+  return { ...view, isOpenChangeMock };
 }

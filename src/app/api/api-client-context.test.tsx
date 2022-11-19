@@ -2,7 +2,9 @@ import { renderHook } from '@/test/helpers/render';
 import { ApiClientProvider, useApiClient } from './api-client-context';
 
 test('renders when provider exists', () => {
-  expect(() => renderHook(() => useApiClient(), { wrapper: ApiClientProvider })).not.toThrow();
+  expect(() =>
+    renderHook(() => useApiClient(), { renderOptions: { wrapper: ApiClientProvider } })
+  ).not.toThrow();
 });
 
 test('throws error if provider is missing', () => {

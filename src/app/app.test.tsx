@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '@/test/helpers/render';
 import { App } from './app';
 
@@ -9,7 +8,7 @@ test('renders app', () => {
 });
 
 test('increments count', async () => {
-  renderWithProviders(<App />);
+  const { userEvent } = renderWithProviders(<App />);
 
   expect(screen.getByRole('button', { name: 'count is: 0' })).toBeInTheDocument();
 

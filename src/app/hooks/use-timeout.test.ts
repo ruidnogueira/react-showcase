@@ -34,7 +34,7 @@ test('clears timer if component unmounts', () => {
 test('clears timer if timeout changes', () => {
   const callbackMock = vi.fn();
   const { rerender } = renderHook(({ timeout }) => useTimeout(callbackMock, timeout), {
-    initialProps: { timeout: 5000 as number | null },
+    renderOptions: { initialProps: { timeout: 5000 as number | null } },
   });
 
   rerender({ timeout: null });
@@ -57,7 +57,7 @@ test('does not retrigger timeout if callback changes, and uses latest value when
   const finalCallbackMock = vi.fn();
 
   const { rerender } = renderHook(({ callback }) => useTimeout(callback, 5000), {
-    initialProps: { callback: initialCallbackMock },
+    renderOptions: { initialProps: { callback: initialCallbackMock } },
   });
 
   rerender({ callback: finalCallbackMock });

@@ -12,9 +12,11 @@ test('provides a portal container element', () => {
   div.id = 'example-container';
 
   const { result } = renderHook(() => usePortalContainer(), {
-    wrapper: ({ children }) => (
-      <PortalContainerProvider value={div}>{children}</PortalContainerProvider>
-    ),
+    renderOptions: {
+      wrapper: ({ children }) => (
+        <PortalContainerProvider value={div}>{children}</PortalContainerProvider>
+      ),
+    },
   });
 
   expect(result.current).toHaveProperty('id', 'example-container');

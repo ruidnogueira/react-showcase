@@ -3,7 +3,6 @@ import { render, renderStory } from '@/test/helpers/render';
 import { getStoryTestCases } from '@/test/helpers/test';
 import { UnexpectedErrorMessage } from './unexpected-error-message';
 import * as stories from './unexpected-error-message.stories';
-import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { axe } from '@/test/helpers/axe';
 
@@ -21,7 +20,7 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
 });
 
 test('reload page', async () => {
-  render(<UnexpectedErrorMessage />);
+  const { userEvent } = render(<UnexpectedErrorMessage />);
 
   await userEvent.click(screen.getByRole('button', { name: 'Reload' }));
 

@@ -4,7 +4,6 @@ import { getStoryTestCases } from '@/test/helpers/test';
 import * as stories from './theme-button.stories';
 import { ThemeButton } from './theme-button';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { axe } from '@/test/helpers/axe';
 
 const composedStories = composeStories(stories);
@@ -33,7 +32,7 @@ test('shows dark theme', () => {
 });
 
 test('switches to dark theme', async () => {
-  renderWithProviders(<ThemeButton />, { defaultTheme: 'light' });
+  const { userEvent } = renderWithProviders(<ThemeButton />, { defaultTheme: 'light' });
 
   await userEvent.click(screen.getByRole('button', { name: /switch to dark theme/i }));
 
@@ -41,7 +40,7 @@ test('switches to dark theme', async () => {
 });
 
 test('switches to light theme', async () => {
-  renderWithProviders(<ThemeButton />, { defaultTheme: 'dark' });
+  const { userEvent } = renderWithProviders(<ThemeButton />, { defaultTheme: 'dark' });
 
   await userEvent.click(screen.getByRole('button', { name: /switch to light theme/i }));
 

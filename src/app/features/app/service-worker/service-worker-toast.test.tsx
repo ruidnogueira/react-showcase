@@ -1,6 +1,5 @@
 import { renderWithProviders } from '@/test/helpers/render';
 import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Dispatch, SetStateAction } from 'react';
 
 type EventState = [boolean, Dispatch<SetStateAction<boolean>>];
@@ -62,7 +61,7 @@ test('closes offline ready toast', () => {
 });
 
 test('closes need refresh toast', async () => {
-  const { setNeedRefreshMock } = setup({
+  const { userEvent, setNeedRefreshMock } = setup({
     offlineReady: false,
     needRefresh: true,
   });
@@ -75,7 +74,7 @@ test('closes need refresh toast', async () => {
 });
 
 test('updates service worker', async () => {
-  const { updateServiceWorkerMock } = setup({ offlineReady: false, needRefresh: true });
+  const { userEvent, updateServiceWorkerMock } = setup({ offlineReady: false, needRefresh: true });
 
   await userEvent.click(screen.getByRole('button', { name: 'Update' }));
 
@@ -94,7 +93,9 @@ function setup({ offlineReady, needRefresh }: { offlineReady: boolean; needRefre
     updateServiceWorker: updateServiceWorkerMock,
   }));
 
-  renderWithProviders(<ServiceWorkerToast />, { wrapper: ServiceWorkerProvider });
+  const view = renderWithProviders(<ServiceWorkerToast />, {
+    renderOptions: { wrapper: ServiceWorkerProvider },
+  });
 
-  return { setOfflineReadyMock, setNeedRefreshMock, updateServiceWorkerMock };
+  return { ...view, setOfflineReadyMock, setNeedRefreshMock, updateServiceWorkerMock };
 }

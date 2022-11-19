@@ -4,7 +4,9 @@ import { ConfigProvider, GlobalConfig, useConfig } from './config-context';
 import { PartialDeep } from 'type-fest';
 
 test('renders when provider exists', () => {
-  expect(() => renderHook(() => useConfig(), { wrapper: ConfigProvider })).not.toThrow();
+  expect(() =>
+    renderHook(() => useConfig(), { renderOptions: { wrapper: ConfigProvider } })
+  ).not.toThrow();
 });
 
 test('throws error if provider is missing', () => {
@@ -27,7 +29,7 @@ test('merges provided config with default config', () => {
   );
 
   const { result } = renderHook(() => useConfig(), {
-    wrapper: Wrapper,
+    renderOptions: { wrapper: Wrapper },
   });
 
   expect(result.current.i18nConfig.supportedLanguages).toEqual([]);
