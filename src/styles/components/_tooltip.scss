@@ -54,11 +54,21 @@ $-animation-slide-distance: 4px;
 }
 
 .tooltip {
+  @include utils.theme('light') {
+    --tooltip-color-text: var(--theme-color-text-light);
+    --tooltip-color-background: var(--theme-color-dark);
+  }
+
+  @include utils.theme('dark') {
+    --tooltip-color-text: var(--theme-color-text-dark);
+    --tooltip-color-background: var(--theme-color-light);
+  }
+
   @include utils.control;
   @include utils.control--auto-height;
 
-  background-color: var(--theme-color-background);
-  color: var(--theme-color-text);
+  background-color: var(--tooltip-color-background);
+  color: var(--tooltip-color-text);
   user-select: none;
   z-index: utils.$z-index-tooltip;
 
@@ -84,5 +94,5 @@ $-animation-slide-distance: 4px;
 }
 
 .tooltip__arrow {
-  fill: var(--theme-color-background);
+  fill: var(--tooltip-color-background);
 }
