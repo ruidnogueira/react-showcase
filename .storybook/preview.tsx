@@ -16,6 +16,8 @@ import { ToastProvider } from '@/app/components/toast/toast-context';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 
+// TODO: error pages add padding (check in mobile)
+
 initializeMsw({ onUnhandledRequest: 'bypass' });
 
 export const parameters: Parameters = {

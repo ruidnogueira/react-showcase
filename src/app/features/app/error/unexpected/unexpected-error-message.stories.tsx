@@ -12,7 +12,9 @@ export default {
 export const UnexpectedErrorMessage: ComponentStoryObj<typeof UnexpectedErrorMessageComponent> = {
   render: () => (
     <div style={{ height: '100vh' }}>
-      <UnexpectedErrorMessageComponent />
+      <UnexpectedErrorMessageComponent onReload={() => {}} />
     </div>
   ),
 };
+
+/* TODO: chromatic multiple viewports? */

@@ -44,9 +44,14 @@ createRoot(document.getElementById('root') as Element).render(
               <ThemeProvider>
                 <ToastProvider>
                   <ErrorProvider>
-                    <ApiClientProvider>
-                      <ApiProvider>
-                        <ErrorBoundary fallback={<UnexpectedErrorMessage />}>
+                    <ErrorBoundary
+                      fallbackRender={({ resetErrorBoundary }) => (
+                        <UnexpectedErrorMessage onReload={resetErrorBoundary} />
+                      )}
+                    >
+                      <ApiClientProvider>
+                        <ApiProvider>
+                          {/* TODO: move this to error provider */}
                           <AuthProvider>
                             <Suspense fallback={<div>Loading...</div>}>
                               <App />
@@ -54,9 +59,9 @@ createRoot(document.getElementById('root') as Element).render(
                               {import.meta.env.VITE_E2E !== 'true' && <ServiceWorkerToast />}
                             </Suspense>
                           </AuthProvider>
-                        </ErrorBoundary>
-                      </ApiProvider>
-                    </ApiClientProvider>
+                        </ApiProvider>
+                      </ApiClientProvider>
+                    </ErrorBoundary>
                   </ErrorProvider>
                 </ToastProvider>
               </ThemeProvider>

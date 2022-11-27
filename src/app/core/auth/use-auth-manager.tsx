@@ -116,7 +116,7 @@ function useCheckIfLoggedIn(props: UseCheckIfLoggedInProps) {
       } else if (isApiStatusError([401, 404], response.left)) {
         // No need to do anything router will take care of this
       } else {
-        handleError(response.left, 'primary');
+        handleError(response.left, { isBlocking: true });
       }
     }
 
@@ -173,7 +173,7 @@ function useLogOut(props: UseLogOutProps) {
       if (either.isRight(response)) {
         setUser(null);
       } else {
-        handleError(response.left, 'secondary');
+        handleError(response.left, { isBlocking: false });
       }
     };
 

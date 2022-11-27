@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 export type ToastId = number | string;
+export type ToastType = 'success' | 'failure';
 
 export const ToastPositions = [
   'top',

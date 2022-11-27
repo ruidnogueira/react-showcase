@@ -19,10 +19,11 @@ test.each(storyTestCases)('%s has no accessibility violations', async (_, Story)
   expect(await axe(baseElement)).toHaveNoViolations();
 });
 
-test('reload page', async () => {
-  const { userEvent } = render(<UnexpectedErrorMessage />);
+test('triggers reload handler', async () => {
+  const handleReloadMock = vi.fn();
+  const { userEvent } = render(<UnexpectedErrorMessage onReload={handleReloadMock} />);
 
   await userEvent.click(screen.getByRole('button', { name: 'Reload' }));
 
-  expect(location.reload).toHaveBeenCalledTimes(1);
+  expect(handleReloadMock).toHaveBeenCalledTimes(1);
 });
