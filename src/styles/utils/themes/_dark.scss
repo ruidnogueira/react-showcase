@@ -22,10 +22,11 @@ $-lightness: (
 }
 
 $-pallete: (
-  'khmer-curry': #ec5756,
   'bleuchatel-blue': #488bff,
   'dr-white': #fafafa,
+  'khmer-curry': #ec5756,
   'lead': #212121,
+  'vitalize': #21a137,
   'wild-dove': #8b8b8b,
 );
 
@@ -34,6 +35,7 @@ $-main-colors: (
   'dark': map.get($-pallete, 'lead'),
   'accent': map.get($-pallete, 'bleuchatel-blue'),
   'primary': map.get($-pallete, 'bleuchatel-blue'),
+  'positive': map.get($-pallete, 'vitalize'),
   'negative': map.get($-pallete, 'khmer-curry'),
 );
 
@@ -41,6 +43,7 @@ $-base-colors: functions.map-collect(
   $-main-colors,
   -derive-colors('accent', map.get($-main-colors, 'accent')),
   -derive-colors('primary', map.get($-main-colors, 'primary')),
+  -derive-colors('positive', map.get($-main-colors, 'positive')),
   -derive-colors('negative', map.get($-main-colors, 'negative')),
   -derive-colors('blue', map.get($-pallete, 'bleuchatel-blue')),
   -derive-colors('red', map.get($-pallete, 'khmer-curry')),
@@ -57,6 +60,8 @@ $-colors: map.merge(
     'focus-ring': map.get($-base-colors, 'accent-500'),
     'primary-hover': map.get($-base-colors, 'primary-500'),
     'primary-active': map.get($-base-colors, 'primary-400'),
+    'positive-hover': map.get($-base-colors, 'positive-500'),
+    'positive-active': map.get($-base-colors, 'positive-400'),
     'negative-hover': map.get($-base-colors, 'negative-500'),
     'negative-active': map.get($-base-colors, 'negative-400'),
   )

@@ -17,12 +17,12 @@ export interface ToastProps {
   isClosable?: boolean;
 
   /**
-   * Time in miliseconds before toast is closed.
+   * Time in miliseconds before toast is closed
    */
   duration?: number | null;
 
   /**
-   * TODO
+   * The type of the toast
    */
   type?: ToastType;
 

@@ -21,9 +21,11 @@ $-lightness: (
   @return color-functions.derive-color-hues($color-name, $color, $-lightness, 600);
 }
 
+// named via https://colornamer.robertcooper.me/
 $-pallete: (
-  'bento-box': #ca363c,
+  'bento-box': #c9363a,
   'blue-ruin': #016fe1,
+  'charmed-green': #008134,
   'dr-white': #fafafa,
   'lead': #212121,
   'welded-iron': #6f6f6f,
@@ -34,6 +36,7 @@ $-main-colors: (
   'dark': map.get($-pallete, 'lead'),
   'accent': map.get($-pallete, 'blue-ruin'),
   'primary': map.get($-pallete, 'blue-ruin'),
+  'positive': map.get($-pallete, 'charmed-green'),
   'negative': map.get($-pallete, 'bento-box'),
 );
 
@@ -41,6 +44,7 @@ $-base-colors: functions.map-collect(
   $-main-colors,
   -derive-colors('accent', map.get($-main-colors, 'accent')),
   -derive-colors('primary', map.get($-main-colors, 'primary')),
+  -derive-colors('positive', map.get($-main-colors, 'positive')),
   -derive-colors('negative', map.get($-main-colors, 'negative')),
   -derive-colors('blue', map.get($-pallete, 'blue-ruin')),
   -derive-colors('red', map.get($-pallete, 'bento-box')),
@@ -57,6 +61,8 @@ $-colors: map.merge(
     'focus-ring': map.get($-base-colors, 'accent-500'),
     'primary-hover': map.get($-base-colors, 'primary-700'),
     'primary-active': map.get($-base-colors, 'primary-800'),
+    'positive-hover': map.get($-base-colors, 'positive-700'),
+    'positive-active': map.get($-base-colors, 'positive-800'),
     'negative-hover': map.get($-base-colors, 'negative-700'),
     'negative-active': map.get($-base-colors, 'negative-800'),
   )

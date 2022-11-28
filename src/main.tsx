@@ -51,7 +51,6 @@ createRoot(document.getElementById('root') as Element).render(
                     >
                       <ApiClientProvider>
                         <ApiProvider>
-                          {/* TODO: move this to error provider */}
                           <AuthProvider>
                             <Suspense fallback={<div>Loading...</div>}>
                               <App />
