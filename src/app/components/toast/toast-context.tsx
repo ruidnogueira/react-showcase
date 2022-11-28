@@ -14,6 +14,7 @@ interface ToastOptions {
   duration?: number | null;
   isClosable?: boolean;
   type?: ToastType;
+  className?: string;
   onClose?: () => void;
 }
 

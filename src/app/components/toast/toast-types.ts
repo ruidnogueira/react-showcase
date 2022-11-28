@@ -19,5 +19,6 @@ export interface ToastConfig {
   position: ToastPosition;
   duration?: number | null;
   isClosable?: boolean;
+  className?: string;
   onClose: () => void;
 }
