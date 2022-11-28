@@ -1,0 +1,15 @@
+@use '../mixins';
+
+@mixin overlay-border {
+  @include mixins.theme('light') {
+    --overlay-color-border: var(--theme-color-gray-100);
+  }
+
+  @include mixins.theme('dark') {
+    --overlay-color-border: var(--theme-color-gray-800);
+  }
+
+  border: 1px solid var(--overlay-color-border);
+  box-shadow: rgb(0 0 0 / 0.05) 0 1px 3px, rgb(0 0 0 / 0.05) 0 10px 15px -5px,
+    rgb(0 0 0 / 0.04) 0 7px 7px -5px;
+}

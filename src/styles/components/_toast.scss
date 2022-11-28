@@ -64,10 +64,9 @@ $toast-exit-timing: linear;
 
 .toast {
   @include utils.control;
+  @include utils.overlay-border;
 
   background-color: var(--theme-color-background);
-  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 0.12), 0 6px 16px 0 rgb(0 0 0 / 0.08),
-    0 9px 28px 8px rgb(0 0 0 / 0.05);
   color: var(--theme-color-text);
   max-width: calc(100vw - #{2 * $toast-horizontal-margin});
   min-width: utils.px-to-rem(300px);
@@ -102,7 +101,6 @@ $toast-exit-timing: linear;
 }
 
 .toast__close-button {
-  color: var(--toast-color-text);
   margin-left: auto;
 }
 
