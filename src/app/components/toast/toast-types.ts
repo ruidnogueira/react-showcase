@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 
 export type ToastId = number | string;
-export type ToastType = 'success' | 'failure';
+
+export const ToastTypes = ['success', 'failure'] as const;
+export type ToastType = typeof ToastTypes[number];
 
 export const ToastPositions = [
   'top',

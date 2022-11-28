@@ -1,9 +1,10 @@
+import { StoryVariants } from '@/stories/variants';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { useRef } from 'react';
 import { Button } from '../button/button';
 import { Toast } from './toast';
 import { ToastProvider, useToast } from './toast-context';
-import { ToastPosition } from './toast-types';
+import { ToastPosition, ToastTypes } from './toast-types';
 
 export default {
   title: 'Components/Toast',
@@ -15,7 +16,15 @@ export default {
 } as ComponentMeta<typeof Toast>;
 
 export const Default: ComponentStoryObj<typeof Toast> = {
-  render: (args) => <Toast {...args} />,
+  render: (args) => (
+    <StoryVariants direction="column">
+      <Toast {...args} />
+
+      {ToastTypes.map((type) => (
+        <Toast key={type} {...args} type={type} />
+      ))}
+    </StoryVariants>
+  ),
 };
 
 export const Closable: ComponentStoryObj<typeof Toast> = {

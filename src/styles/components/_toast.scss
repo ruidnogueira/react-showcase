@@ -98,6 +98,28 @@ $toast-exit-timing: linear;
   &--exit {
     animation: toast-exit var(--toast-exit-duration) $toast-exit-timing forwards;
   }
+
+  &--success,
+  &--failure {
+    @include utils.theme('light') {
+      color: var(--theme-color-text-light);
+    }
+
+    @include utils.theme('dark') {
+      color: var(--theme-color-text-dark);
+    }
+
+    border: none;
+  }
+
+  &--success {
+    // TODO: add green pallette
+    background-color: var(--theme-color-positive);
+  }
+
+  &--failure {
+    background-color: var(--theme-color-negative);
+  }
 }
 
 .toast__close-button {

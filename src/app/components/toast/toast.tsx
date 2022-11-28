@@ -35,6 +35,7 @@ export interface ToastProps {
 interface ToastCardProps {
   className?: string;
   children: ReactNode;
+  type?: ToastType;
   onMouseLeave: () => void;
   onMouseEnter: () => void;
 }
@@ -54,6 +55,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
     <ToastCard
       ref={ref}
       className={className}
+      type={type}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -65,13 +67,13 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 });
 
 const ToastCard = forwardRef<HTMLDivElement, ToastCardProps>((props, ref) => {
-  const { children, className, onMouseEnter, onMouseLeave } = props;
+  const { children, className, type, onMouseEnter, onMouseLeave } = props;
 
   return (
     <div
       ref={ref}
       role="alert"
-      className={clsx('toast', className)}
+      className={clsx('toast', { [`toast--${type}`]: type }, className)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
