@@ -39,7 +39,7 @@
     "fp-ts": "2.13.1",
     "i18next": "22.0.6",
     "i18next-browser-languagedetector": "7.0.1",
-    "i18next-http-backend": "2.0.1",
+    "i18next-http-backend": "2.0.2",
     "modern-normalize": "1.1.0",
     "phosphor-react": "1.4.1",
     "rambda": "7.3.0",
