@@ -1,26 +1,6 @@
 @use 'src/styles/utils';
 
-.toast {
-  @include utils.theme('light') {
-    background-color: var(--theme-color-dark);
-    color: var(--theme-color-text-light);
-  }
-
-  @include utils.theme('dark') {
-    background-color: var(--theme-color-light);
-    color: var(--theme-color-text-dark);
-  }
-}
-
 .updateButton {
-  @include utils.theme('light') {
-    color: var(--theme-color-accent-400);
-  }
-
-  @include utils.theme('dark') {
-    color: var(--theme-color-accent-800);
-  }
-
   height: auto;
   margin-left: var(--theme-spacing-4);
   margin-right: var(--theme-spacing-2);

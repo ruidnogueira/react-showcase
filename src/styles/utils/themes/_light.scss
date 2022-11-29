@@ -55,6 +55,7 @@ $-colors: map.merge(
   $-base-colors,
   (
     'background': map.get($-base-colors, 'light'),
+    'background-secondary': map.get($-base-colors, 'gray-100'),
     'text': map.get($-base-colors, 'dark'),
     'text-light': map.get($-base-colors, 'light'),
     'text-dark': map.get($-base-colors, 'dark'),

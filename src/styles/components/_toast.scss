@@ -63,10 +63,18 @@ $toast-exit-timing: linear;
 }
 
 .toast {
+  @include utils.theme('light') {
+    --toast-color-type-text: var(--theme-color-text-light);
+  }
+
+  @include utils.theme('dark') {
+    --toast-color-type-text: var(--theme-color-text-dark);
+  }
+
   @include utils.control;
   @include utils.overlay-border;
 
-  background-color: var(--theme-color-background);
+  background-color: var(--theme-color-background-secondary);
   color: var(--theme-color-text);
   max-width: calc(100vw - #{2 * $toast-horizontal-margin});
   min-width: utils.px-to-rem(300px);
@@ -101,15 +109,8 @@ $toast-exit-timing: linear;
 
   &--success,
   &--failure {
-    @include utils.theme('light') {
-      color: var(--theme-color-text-light);
-    }
-
-    @include utils.theme('dark') {
-      color: var(--theme-color-text-dark);
-    }
-
     border: none;
+    color: var(--toast-color-type-text);
   }
 
   &--success {

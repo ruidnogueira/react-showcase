@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useToast } from '../../../components/toast/toast-context';
 import { useServiceWorker } from './service-worker-context';
 import { ServiceWorkerMessage, ServiceWorkerMessageType } from './service-worker-message';
-import styles from './service-worker-message.module.scss';
 
 export function ServiceWorkerToast() {
   const toast = useToast();
@@ -20,7 +19,6 @@ export function ServiceWorkerToast() {
       const openToast = messageType === 'offlineReady' ? toast.openTemporary : toast.openIndefinite;
 
       openToast({
-        className: styles.toast,
         position: 'bottom',
 
         message: (
