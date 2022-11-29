@@ -42,7 +42,7 @@
     "i18next-http-backend": "2.0.2",
     "modern-normalize": "1.1.0",
     "phosphor-react": "1.4.1",
-    "rambda": "7.3.0",
+    "rambda": "7.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-error-boundary": "3.1.4",
