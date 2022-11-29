@@ -1,10 +1,12 @@
 import { act, screen } from '@testing-library/react';
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook, UserEventOptions } from '@/test/helpers/render';
 import { ToastProvider, useToast } from './toast-context';
-import userEvent from '@testing-library/user-event';
+import { ConfigProvider } from '@/app/core/config/config-context';
+import { ThemeProvider } from '@/app/core/theme/theme-context';
+import { HelmetProvider } from 'react-helmet-async';
 
 test('renders when provider exists', () => {
-  expect(() => renderHook(() => useToast(), { wrapper: ToastProvider })).not.toThrow();
+  expect(() => setup()).not.toThrow();
 });
 
 test('throws error if provider is missing', () => {
@@ -16,7 +18,7 @@ test('throws error if provider is missing', () => {
 });
 
 test('opens a toast', () => {
-  const { result } = renderHook(() => useToast(), { wrapper: ToastProvider });
+  const { result } = setup();
 
   act(() => {
     result.current.open({ message: 'Example toast' });
@@ -29,7 +31,7 @@ test('opens a toast', () => {
 
 test('closes a toast', () => {
   const onCloseMock = vi.fn();
-  const { result } = renderHook(() => useToast(), { wrapper: ToastProvider });
+  const { result } = setup();
 
   act(() => {
     result.current.open({
@@ -66,7 +68,7 @@ test('closes a toast', () => {
 
 test('closes all toasts', () => {
   const onCloseMock = vi.fn();
-  const { result } = renderHook(() => useToast(), { wrapper: ToastProvider });
+  const { result } = setup();
 
   act(() => {
     result.current.open({
@@ -91,13 +93,13 @@ test('closes all toasts', () => {
     result.current.closeAll();
   });
 
-  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   expect(onCloseMock).toHaveBeenCalledTimes(3);
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test("calls onClose when toast's close button is clicked", async () => {
   const onCloseMock = vi.fn();
-  const { result } = renderHook(() => useToast(), { wrapper: ToastProvider });
+  const { result, userEvent } = setup();
 
   act(() => {
     result.current.open({
@@ -110,12 +112,11 @@ test("calls onClose when toast's close button is clicked", async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
   expect(onCloseMock).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('focuses the toast overlay when a hotkey is pressed', async () => {
-  renderHook(() => useToast(), {
-    wrapper: ({ children }) => <ToastProvider hotkeys={['F1']}>{children}</ToastProvider>,
-  });
+  const { userEvent } = setup({ hotkeys: ['F1'] });
 
   const overlay = screen.getByTestId('toast-overlay');
 
@@ -125,3 +126,79 @@ test('focuses the toast overlay when a hotkey is pressed', async () => {
 
   expect(overlay).toHaveFocus();
 });
+
+test('temporary toast does not have close button and closes when duration expires', () => {
+  vi.useFakeTimers();
+
+  const onCloseMock = vi.fn();
+  const { result } = setup();
+
+  act(() => {
+    result.current.openTemporary({
+      message: 'Example toast',
+      onClose: onCloseMock,
+    });
+  });
+
+  expect(screen.queryByRole('button', { name: 'Close' })).not.toBeInTheDocument();
+
+  act(() => {
+    vi.runAllTimers();
+  });
+
+  expect(onCloseMock).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
+});
+
+test('indefinite toast has close button and does not close when duration expires', async () => {
+  vi.useFakeTimers();
+
+  const onCloseMock = vi.fn();
+  const { result, userEvent } = setup({
+    userEventOptions: {
+      advanceTimers: (delay) => vi.advanceTimersByTime(delay),
+    },
+  });
+
+  act(() => {
+    result.current.openIndefinite({
+      message: 'Example toast',
+      onClose: onCloseMock,
+    });
+  });
+
+  act(() => {
+    vi.runAllTimers();
+  });
+
+  expect(onCloseMock).not.toHaveBeenCalled();
+  expect(screen.getByRole('alert')).toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('button', { name: 'Close' }));
+
+  expect(onCloseMock).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
+});
+
+function setup(options: { hotkeys?: string[]; userEventOptions?: UserEventOptions } = {}) {
+  return renderHook(() => useToast(), {
+    userEventOptions: options.userEventOptions,
+    renderOptions: {
+      wrapper: ({ children }) => (
+        <HelmetProvider>
+          <ConfigProvider>
+            <ThemeProvider>
+              <ToastProvider hotkeys={options.hotkeys}>{children}</ToastProvider>
+            </ThemeProvider>
+          </ConfigProvider>
+        </HelmetProvider>
+      ),
+    },
+  });
+}

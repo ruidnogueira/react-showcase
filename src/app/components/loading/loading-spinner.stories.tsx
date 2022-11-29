@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { LoadingSpinner as LoadingSpinnerComponent } from './loading-spinner';
 
 export default {
-  title: 'Atoms/Loading/LoadingSpinner',
+  title: 'Components/Loading/LoadingSpinner',
   component: LoadingSpinnerComponent,
   argTypes: {},
   args: {},

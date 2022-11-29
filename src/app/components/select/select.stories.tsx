@@ -1,10 +1,10 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/types/styles';
-import { StoryVariants } from 'src/stories/variants';
+import { ControlSizes } from '@/app/types/styles';
+import { StoryVariants } from '@/stories/variants';
 import { Select, SelectItem, SelectProps } from './select';
 
 export default {
-  title: 'Atoms/Select',
+  title: 'Components/Select',
   component: Select,
   subcomponents: { SelectItem },
   argTypes: {},

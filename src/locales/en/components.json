@@ -1,10 +1,15 @@
 {
   "loadingSpinner": "$t(common.states.loading)",
 
+  "languageSelect": "Change the language",
+
   "themeButton": {
     "light": "Switch to dark theme",
     "dark": "Switch to light theme"
   },
 
-  "languageSelect": "Change the language"
+  "serviceWorkerMessage": {
+    "offlineReady": "Ready to work offline",
+    "needRefresh": "A new version is available"
+  }
 }

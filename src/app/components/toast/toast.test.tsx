@@ -1,11 +1,14 @@
 import { composeStories } from '@storybook/testing-react';
 import * as stories from './toast.stories';
-import { getStoryTestCases } from 'src/test/helpers/test';
-import { render, renderStory } from 'src/test/helpers/render';
-import { axe } from 'src/test/helpers/axe';
+import { getStoryTestCases } from '@/test/helpers/test';
+import {
+  renderStoryWithProviders,
+  renderWithProviders,
+  UserEventOptions,
+} from '@/test/helpers/render';
+import { axe } from '@/test/helpers/axe';
 import { Toast } from './toast';
 import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 const { Playground, ...storiesToTest } = composeStories(stories);
 const storyTestCases = getStoryTestCases({ ...storiesToTest });
@@ -20,15 +23,15 @@ afterEach(() => {
 });
 
 test.each(storyTestCases)('renders %s story', (_, Story) => {
-  const { container } = renderStory(<Story />);
+  const { container } = renderStoryWithProviders(<Story />);
 
   expect(container).toBeInTheDocument();
 });
 
-test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
+test.each(storyTestCases)('%s has no accessibility violations', async (_, Story) => {
   vi.useRealTimers();
 
-  const { baseElement } = renderStory(<Story />);
+  const { baseElement } = renderStoryWithProviders(<Story />);
 
   expect(await axe(baseElement)).toHaveNoViolations();
 
@@ -46,13 +49,17 @@ test('does not show close button when not closable', () => {
 });
 
 test('calls onClose when close button is clicked', async () => {
-  const { onCloseMock } = setup({ isClosable: true, duration: 5000 });
+  const { userEvent, onCloseMock } = setup({
+    isClosable: true,
+    duration: 5000,
+    userEventOptions: {
+      advanceTimers: (delay) => vi.advanceTimersByTime(delay),
+    },
+  });
 
   expect(onCloseMock).not.toHaveBeenCalled();
 
-  await userEvent.click(screen.getByRole('button', { name: 'Close' }), {
-    advanceTimers: (delay) => vi.advanceTimersByTime(delay),
-  });
+  await userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
   expect(onCloseMock).toHaveBeenCalledTimes(1);
 });
@@ -70,11 +77,14 @@ test('calls onClose when duration expires', () => {
 });
 
 test('cancels close timer while hovered and restarts timer when unhovered', async () => {
-  const { onCloseMock } = setup({ duration: 5000 });
-
-  await userEvent.hover(screen.getByRole('alert'), {
-    advanceTimers: (delay) => vi.advanceTimersByTime(delay),
+  const { userEvent, onCloseMock } = setup({
+    duration: 5000,
+    userEventOptions: {
+      advanceTimers: (delay) => vi.advanceTimersByTime(delay),
+    },
   });
+
+  await userEvent.hover(screen.getByRole('alert'));
 
   act(() => {
     vi.runAllTimers();
@@ -82,9 +92,7 @@ test('cancels close timer while hovered and restarts timer when unhovered', asyn
 
   expect(onCloseMock).not.toHaveBeenCalled();
 
-  await userEvent.unhover(screen.getByRole('alert'), {
-    advanceTimers: (delay) => vi.advanceTimersByTime(delay),
-  });
+  await userEvent.unhover(screen.getByRole('alert'));
 
   act(() => {
     vi.runAllTimers();
@@ -93,14 +101,17 @@ test('cancels close timer while hovered and restarts timer when unhovered', asyn
   expect(onCloseMock).toHaveBeenCalledTimes(1);
 });
 
-function setup({ isClosable, duration }: { isClosable?: boolean; duration?: number } = {}) {
+function setup(
+  options: { isClosable?: boolean; duration?: number; userEventOptions?: UserEventOptions } = {}
+) {
   const onCloseMock = vi.fn();
 
-  render(
-    <Toast isClosable={isClosable} duration={duration} onClose={onCloseMock}>
+  const view = renderWithProviders(
+    <Toast isClosable={options.isClosable} duration={options.duration} onClose={onCloseMock}>
       Example toast
-    </Toast>
+    </Toast>,
+    { userEventOptions: options.userEventOptions }
   );
 
-  return { onCloseMock };
+  return { ...view, onCloseMock };
 }

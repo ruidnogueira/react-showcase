@@ -2,7 +2,8 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import clsx from 'clsx';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
-import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
+import { usePortalContainer } from '@/app/core/portal-container/portal-container';
+import { useContrastTheme } from '@/app/hooks/use-contrast-theme';
 
 export interface TooltipProps {
   children: ReactElement;
@@ -61,6 +62,7 @@ export function Tooltip(props: TooltipProps) {
     ...contentProps
   } = props;
 
+  const theme = useContrastTheme();
   const portalContainer = usePortalContainer();
 
   return (
@@ -78,6 +80,7 @@ export function Tooltip(props: TooltipProps) {
           className={clsx('tooltip', className)}
           sideOffset={5}
           collisionPadding={8}
+          data-theme={theme}
         >
           {content}
 

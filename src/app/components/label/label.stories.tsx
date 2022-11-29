@@ -1,11 +1,11 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/types/styles';
-import { StoryVariants } from 'src/stories/variants';
+import { ControlSizes } from '@/app/types/styles';
+import { StoryVariants } from '@/stories/variants';
 import { TextInput } from '../text-input/text-input';
 import { Label } from './label';
 
 export default {
-  title: 'Atoms/Label',
+  title: 'Components/Label',
   component: Label,
   argTypes: {
     size: {

@@ -1,8 +1,8 @@
 import { composeStories } from '@storybook/testing-react';
 import { screen } from '@testing-library/react';
-import { axe } from 'src/test/helpers/axe';
-import { render, renderStory } from 'src/test/helpers/render';
-import { getStoryTestCases } from 'src/test/helpers/test';
+import { axe } from '@/test/helpers/axe';
+import { render, renderStory } from '@/test/helpers/render';
+import { getStoryTestCases } from '@/test/helpers/test';
 import { TextInput } from '../text-input/text-input';
 import { Field } from './field';
 import * as stories from './field.stories';
@@ -15,7 +15,7 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
   expect(container).toBeInTheDocument();
 });
 
-test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
+test.each(storyTestCases)('%s has no accessibility violations', async (_, Story) => {
   const { baseElement } = renderStory(<Story />);
   expect(await axe(baseElement)).toHaveNoViolations();
 });

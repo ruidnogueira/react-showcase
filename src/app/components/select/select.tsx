@@ -3,8 +3,8 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import clsx from 'clsx';
 import { CaretDown, CaretUp, Check } from 'phosphor-react';
 import { forwardRef, HTMLAttributes, ReactNode, useId } from 'react';
-import { usePortalContainer } from 'src/app/contexts/portal-container/portal-container';
-import { ControlSize } from 'src/app/types/styles';
+import { usePortalContainer } from '@/app/core/portal-container/portal-container';
+import { ControlSize } from '@/app/types/styles';
 
 export interface SelectProps extends Omit<SelectPrimitive.SelectTriggerProps, 'placeholder'> {
   children: ReactNode;

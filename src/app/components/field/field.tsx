@@ -1,9 +1,9 @@
 import { Slot } from '@radix-ui/react-slot';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import clsx from 'clsx';
 import { ReactElement, ReactNode, useId, useState } from 'react';
-import { ControlSize } from 'src/app/types/styles';
+import { ControlSize } from '@/app/types/styles';
 import { Label } from '../label/label';
+import { VisuallyHidden } from '../visually-hidden/visually-hidden';
 import styles from './field.module.scss';
 
 export interface FieldProps {

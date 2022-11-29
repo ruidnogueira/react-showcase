@@ -1,6 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { HTMLAttributes, ReactNode } from 'react';
+import { VisuallyHidden } from '../visually-hidden/visually-hidden';
 
 export interface AccessibleIconProps extends HTMLAttributes<HTMLElement> {
   /**

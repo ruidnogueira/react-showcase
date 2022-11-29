@@ -1,11 +1,11 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/types/styles';
-import { StoryVariants } from 'src/stories/variants';
+import { ControlSizes } from '@/app/types/styles';
+import { StoryVariants } from '@/stories/variants';
 import { LoadingOverlay } from '../loading/loading-overlay';
 import { Button, ButtonColorVariants, ButtonStyleVariants } from './button';
 
 export default {
-  title: 'Atoms/Button/Button',
+  title: 'Components/Button/Button',
   component: Button,
   argTypes: {
     color: {

@@ -17,6 +17,7 @@ build
 storybook-static
 dependency-stats.html
 e2e/results
+graphs/results
 
 # Editor directories and files
 .vscode/*

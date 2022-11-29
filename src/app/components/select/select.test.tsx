@@ -1,11 +1,10 @@
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { render, renderStory } from 'src/test/helpers/render';
+import { render, renderStory } from '@/test/helpers/render';
 import { Select, SelectItem } from './select';
 import * as stories from './select.stories';
 import { composeStories } from '@storybook/testing-react';
-import { getStoryTestCases } from 'src/test/helpers/test';
-import { axe } from 'src/test/helpers/axe';
+import { getStoryTestCases } from '@/test/helpers/test';
+import { axe } from '@/test/helpers/axe';
 
 const composedStories = composeStories(stories);
 const storyTestCases = getStoryTestCases(composedStories);
@@ -15,13 +14,13 @@ test.each(storyTestCases)('renders %s story', (_, Story) => {
   expect(container).toBeInTheDocument();
 });
 
-test.each(storyTestCases)('%s has no accesibility violations', async (_, Story) => {
+test.each(storyTestCases)('%s has no accessibility violations', async (_, Story) => {
   const { baseElement } = renderStory(<Story />);
   expect(await axe(baseElement)).toHaveNoViolations();
 });
 
 test('selects an option', async () => {
-  render(
+  const { userEvent } = render(
     <Select>
       <SelectItem value="red">Red</SelectItem>
       <SelectItem value="green">Green</SelectItem>
@@ -36,7 +35,7 @@ test('selects an option', async () => {
 });
 
 test('cannot select a disabled option', async () => {
-  render(
+  const { userEvent } = render(
     <Select>
       <SelectItem value="red" disabled={true}>
         Red
@@ -55,7 +54,7 @@ test('cannot select a disabled option', async () => {
 });
 
 test('is disabled', async () => {
-  render(
+  const { userEvent } = render(
     <Select disabled={true}>
       <SelectItem value="red">Red</SelectItem>
       <SelectItem value="green">Green</SelectItem>

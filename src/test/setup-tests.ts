@@ -1,21 +1,30 @@
 import '@testing-library/jest-dom';
 import '../mocks/i18n';
 import './mocks/dom-rect';
-import './mocks/get-computed-style';
 import './mocks/html-element';
 import './mocks/location';
 import './mocks/match-media';
+import './mocks/pointer';
 import './mocks/resize-observer';
 import { toHaveNoViolations } from 'jest-axe';
-import { server } from 'src/mocks/server/server';
+import { mockServer } from '@/mocks/server/server';
 import { config } from 'react-transition-group';
+import { drop } from '@mswjs/data';
+import { mockDatabase } from '@/mocks/server/database/database';
+import { createMocks as createIdleTimerMocks } from 'react-idle-timer';
+import { MessageChannel } from 'worker_threads';
+import { deleteAllCookies } from './helpers/cookie';
 
 expect.extend(toHaveNoViolations);
 
 config.disabled = true;
 
+vi.stubGlobal('MessageChannel', MessageChannel);
+
 beforeAll(() => {
-  server.listen();
+  mockServer.listen();
+
+  createIdleTimerMocks();
 });
 
 afterEach(() => {
@@ -24,9 +33,12 @@ afterEach(() => {
   localStorage.clear();
   sessionStorage.clear();
 
-  server.resetHandlers();
+  deleteAllCookies();
+
+  mockServer.resetHandlers();
+  drop(mockDatabase);
 });
 
 afterAll(() => {
-  server.close();
+  mockServer.close();
 });

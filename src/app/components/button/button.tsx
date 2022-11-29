@@ -1,8 +1,8 @@
 import { ButtonHTMLAttributes, forwardRef, MouseEvent } from 'react';
-import { ControlSize } from 'src/app/types/styles';
+import { ControlSize } from '@/app/types/styles';
 import { Slot } from '@radix-ui/react-slot';
-import { StrictUnion } from 'src/app/types/union';
 import clsx from 'clsx';
+import { MergeExclusive } from 'type-fest';
 
 export const ButtonColorVariants = ['primary', 'secondary', 'negative'] as const;
 export type ButtonColorVariant = typeof ButtonColorVariants[number];
@@ -50,7 +50,7 @@ interface SlottedButtonProps extends BaseButtonProps {
   asChild: boolean;
 }
 
-export type ButtonProps = StrictUnion<UnslottedButtonProps | SlottedButtonProps>;
+export type ButtonProps = MergeExclusive<UnslottedButtonProps, SlottedButtonProps>;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const {

@@ -1,11 +1,11 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { ControlSizes } from 'src/app/types/styles';
-import { StoryVariants } from 'src/stories/variants';
+import { ControlSizes } from '@/app/types/styles';
+import { StoryVariants } from '@/stories/variants';
 import { TextInput } from '../text-input/text-input';
 import { Field } from './field';
 
 export default {
-  title: 'Molecules/Field',
+  title: 'Components/Field',
   component: Field,
   argTypes: {
     size: {

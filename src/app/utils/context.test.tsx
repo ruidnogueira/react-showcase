@@ -1,4 +1,4 @@
-import { renderHook } from 'src/test/helpers/render';
+import { renderHook } from '@/test/helpers/render';
 import { createContext } from './context';
 
 test('renders when provider exists', () => {
@@ -10,7 +10,9 @@ test('renders when provider exists', () => {
   });
 
   const { result } = renderHook(() => useTest(), {
-    wrapper: ({ children }) => <TestProvider value={value}>{children}</TestProvider>,
+    renderOptions: {
+      wrapper: ({ children }) => <TestProvider value={value}>{children}</TestProvider>,
+    },
   });
 
   expect(result.current).toBe(value);

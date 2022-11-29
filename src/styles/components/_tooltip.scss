@@ -54,14 +54,11 @@ $-animation-slide-distance: 4px;
 }
 
 .tooltip {
-  --tooltip-color-background: var(--theme-color-text);
-  --tooltip-color-text: var(--theme-color-background);
-
   @include utils.control;
   @include utils.control--auto-height;
 
-  background-color: var(--tooltip-color-background);
-  color: var(--tooltip-color-text);
+  background-color: var(--theme-color-background);
+  color: var(--theme-color-text);
   user-select: none;
   z-index: utils.$z-index-tooltip;
 
@@ -87,5 +84,5 @@ $-animation-slide-distance: 4px;
 }
 
 .tooltip__arrow {
-  fill: var(--tooltip-color-background);
+  fill: var(--theme-color-background);
 }

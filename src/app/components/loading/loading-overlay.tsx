@@ -24,7 +24,7 @@ export function LoadingOverlay(props: LoadingOverlayProps) {
       {isLoading ? (
         <>
           <LoadingSpinner {...spinnerProps} className={clsx('loading--keep-content', className)} />
-          <span className="loading-content-wrapper">{children}</span>
+          <div className="loading-content-wrapper">{children}</div>
         </>
       ) : (
         children

@@ -3,7 +3,8 @@
 
   "actions": {
     "close": "Close",
-    "reload": "Reload"
+    "reload": "Reload",
+    "update": "Update"
   },
 
   "states": {

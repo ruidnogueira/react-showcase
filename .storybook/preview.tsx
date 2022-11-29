@@ -4,13 +4,15 @@ import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import isChromatic from 'chromatic';
-import { ConfigProvider } from '../src/app/contexts/config/config-context';
-import { Theme, ThemeContext } from '../src/app/contexts/theme/theme-context';
+import { ConfigProvider } from '@/app/core/config/config-context';
+import { Theme, ThemeContext } from '@/app/core/theme/theme-context';
 import { useTranslation } from 'react-i18next';
-import 'src/styles/styles.scss';
-import 'src/mocks/i18n';
-import { TooltipProvider } from 'src/app/components/tooltip/tooltip';
-import { PortalContainerProvider } from 'src/app/contexts/portal-container/portal-container';
+import '@/styles/styles.scss';
+import '@/mocks/i18n';
+import { TooltipProvider } from '@/app/components/tooltip/tooltip';
+import { PortalContainerProvider } from '@/app/core/portal-container/portal-container';
+import { ErrorProvider } from '@/app/core/error/error-context';
+import { ToastProvider } from '@/app/components/toast/toast-context';
 
 // TODO: make chromatic take dark theme snapshots once it supports param snapshots https://github.com/chromaui/chromatic-cli/issues/543
 
@@ -20,7 +22,7 @@ export const parameters: Parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   options: {
     storySort: {
-      order: ['Atoms', 'Molecules', 'Organisms', 'Pages'],
+      order: ['Components', 'Features'],
     },
   },
   viewport: {
@@ -70,25 +72,10 @@ const reactDecorators: DecoratorFn[] = [
   (Story) => (
     <HelmetProvider>
       <ConfigProvider>
-        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
-          <Story />
-        </TooltipProvider>
+        <Story />
       </ConfigProvider>
     </HelmetProvider>
   ),
-
-  (Story, { globals }) => {
-    const { i18n } = useTranslation(undefined, { useSuspense: true });
-    const language = globals.language;
-
-    useEffect(() => {
-      if (i18n.languages[0] !== language) {
-        i18n.changeLanguage(language);
-      }
-    }, [language]);
-
-    return <Story />;
-  },
 
   (Story, { globals }) => {
     const [theme, setTheme] = useState<Theme>(globals.theme);
@@ -114,12 +101,26 @@ const reactDecorators: DecoratorFn[] = [
     );
   },
 
+  (Story, { globals }) => {
+    const { i18n } = useTranslation(undefined, { useSuspense: true });
+    const language = globals.language;
+
+    useEffect(() => {
+      if (i18n.languages[0] !== language) {
+        i18n.changeLanguage(language);
+      }
+    }, [language]);
+
+    return <Story />;
+  },
+
   /**
    * For some reason stories with portals are not clearing portals corretly, when you switch to docs tab,
    * if they are appended to the body
    * So we create a container inside a decorator that will always be recreated
    */
   (Story) => {
+    // TODO: remove this decorator when possible
     const [container, setContainer] = useState<HTMLElement | null>(null);
 
     return (
@@ -129,6 +130,16 @@ const reactDecorators: DecoratorFn[] = [
       </PortalContainerProvider>
     );
   },
+
+  (Story) => (
+    <ToastProvider>
+      <ErrorProvider>
+        <TooltipProvider delayDuration={isChromatic() ? 0 : undefined}>
+          <Story />
+        </TooltipProvider>
+      </ErrorProvider>
+    </ToastProvider>
+  ),
 ];
 
 export const decorators: Array<DecoratorFunction | DecoratorFn> = [
