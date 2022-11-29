@@ -61,7 +61,7 @@
     "workbox-window": "6.5.4"
   },
   "devDependencies": {
-    "@babel/core": "7.20.2",
+    "@babel/core": "7.20.5",
     "@commitlint/cli": "17.2.0",
     "@commitlint/config-conventional": "17.2.0",
     "@ls-lint/ls-lint": "1.11.2",
