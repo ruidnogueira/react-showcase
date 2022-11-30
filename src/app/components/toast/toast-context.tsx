@@ -3,26 +3,17 @@ import { useIsomorphicLayoutEffect } from '@/app/hooks/use-isomorphic-layout-eff
 import { createContext } from '@/app/utils/context';
 import { uniqueId } from '@/app/utils/id';
 import { ToastOverlay } from './toast-overlay';
-import { ToastConfig, ToastId, ToastPosition, ToastType } from './toast-types';
+import { ToastConfig, ToastId, ToastPosition } from './toast-types';
 import { useConfig } from '@/app/core/config/config-context';
-import { Except } from 'type-fest';
+import { Except, SetOptional } from 'type-fest';
 
-interface ToastOptions {
-  message: ReactNode;
-  id?: ToastId;
-  position?: ToastPosition;
-  duration?: number | null;
-  isClosable?: boolean;
-  type?: ToastType;
-  className?: string;
-  onClose?: () => void;
-}
-
+type ToastOptions = SetOptional<ToastConfig, 'position' | 'onClose' | 'id'>;
 type TimedToastOptions = Except<ToastOptions, 'duration' | 'isClosable'>;
 type TypedToastOptions = Except<TimedToastOptions, 'type'>;
 
 export interface UseToastResponse {
   open: (options: ToastOptions) => void;
+
   /**
    * Opens a toast that closes after a set amount of time.
    */
@@ -32,7 +23,13 @@ export interface UseToastResponse {
    */
   openIndefinite: (options: TimedToastOptions) => void;
 
+  /**
+   * Opens a toast that shows a success message
+   */
   openSuccess: (options: TypedToastOptions) => void;
+  /**
+   * Opens a toast that shows a failure message
+   */
   openFailure: (options: TypedToastOptions) => void;
 
   close: (id: ToastId) => void;

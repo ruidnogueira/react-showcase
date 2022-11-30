@@ -1,5 +1,6 @@
 import { StoryVariants } from '@/stories/variants';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
+import { Confetti } from 'phosphor-react';
 import { useRef } from 'react';
 import { Button } from '../button/button';
 import { Toast } from './toast';
@@ -11,18 +12,28 @@ export default {
   component: Toast,
   argTypes: {},
   args: {
-    children: 'Example toast',
+    children: 'Example message',
   },
 } as ComponentMeta<typeof Toast>;
 
 export const Default: ComponentStoryObj<typeof Toast> = {
   render: (args) => (
-    <StoryVariants direction="column">
-      <Toast {...args} />
+    <StoryVariants>
+      <StoryVariants direction="column">
+        <Toast {...args} />
 
-      {ToastTypes.map((type) => (
-        <Toast key={type} {...args} type={type} />
-      ))}
+        {ToastTypes.map((type) => (
+          <Toast key={type} {...args} type={type} />
+        ))}
+      </StoryVariants>
+
+      <StoryVariants direction="column">
+        <Toast {...args} title="Example title" />
+
+        {ToastTypes.map((type) => (
+          <Toast key={type} {...args} title="Example title" type={type} />
+        ))}
+      </StoryVariants>
     </StoryVariants>
   ),
 };
@@ -31,6 +42,13 @@ export const Closable: ComponentStoryObj<typeof Toast> = {
   ...Default,
   args: {
     isClosable: true,
+  },
+};
+
+export const WithIcon: ComponentStoryObj<typeof Toast> = {
+  ...Default,
+  args: {
+    icon: <Confetti />,
   },
 };
 

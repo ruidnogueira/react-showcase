@@ -3,13 +3,24 @@ import { IconButton, IconButtonIcon } from '../icon-button/icon-button';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { TFunction } from 'i18next';
-import { X as CloseIcon } from 'phosphor-react';
+import { CheckCircle, WarningCircle, X as CloseIcon } from 'phosphor-react';
 import { useTimeout } from '@/app/hooks/use-timeout';
 import { ToastType } from './toast-types';
 
 export interface ToastProps {
   className?: string;
-  children: ReactNode;
+
+  children?: ReactNode;
+
+  /**
+   * The title of the toast
+   */
+  title?: ReactNode;
+
+  /**
+   * A custom icon for the toast
+   */
+  icon?: ReactNode;
 
   /**
    * Whether to show close button or not
@@ -40,8 +51,13 @@ interface ToastCardProps {
   onMouseEnter: () => void;
 }
 
+interface ToastIconProps {
+  type?: ToastType;
+  icon?: ReactNode;
+}
+
 export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
-  const { className, children, isClosable, duration, type, onClose } = props;
+  const { className, children, isClosable, duration, title, type, onClose } = props;
 
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
@@ -59,7 +75,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {children}
+      <ToastIcon type={type} icon={props.icon} />
+
+      {title && <div className="toast__title">{title}</div>}
+
+      {children && <div className="toast__message">{children}</div>}
 
       {isClosable && <CloseButton t={t} onClose={onClose} />}
     </ToastCard>
@@ -81,6 +101,30 @@ const ToastCard = forwardRef<HTMLDivElement, ToastCardProps>((props, ref) => {
     </div>
   );
 });
+
+function ToastIcon(props: ToastIconProps) {
+  const icon = pickToastIcon(props);
+
+  return icon ? <div className="toast__icon">{icon}</div> : null;
+}
+
+function pickToastIcon(props: ToastIconProps) {
+  const { type, icon } = props;
+
+  if (icon) {
+    return icon;
+  }
+
+  if (type === 'success') {
+    return <CheckCircle weight="fill" />;
+  }
+
+  if (type === 'failure') {
+    return <WarningCircle weight="fill" />;
+  }
+
+  return null;
+}
 
 function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {
   return (

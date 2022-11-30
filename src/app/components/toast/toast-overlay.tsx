@@ -11,10 +11,10 @@ export interface ToastOverlayProps {
   hotkeys?: string[];
 }
 
-interface ToastContainerProps extends ToastConfig {
+type ToastContainerProps = ToastConfig & {
   enterDuration: number;
   exitDuration: number;
-}
+};
 
 const groupToasts = groupBy<ToastConfig, { [key in ToastPosition]: ToastConfig[] }>(
   (toast) => toast.position

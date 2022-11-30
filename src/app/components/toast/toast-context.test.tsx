@@ -186,6 +186,32 @@ test('indefinite toast has close button and does not close when duration expires
   vi.useRealTimers();
 });
 
+test('success toast is temporary', () => {
+  const { result } = setup();
+
+  act(() => {
+    result.current.openSuccess({
+      message: 'Example toast',
+      onClose: vi.fn(),
+    });
+  });
+
+  expect(screen.queryByRole('button', { name: 'Close' })).not.toBeInTheDocument();
+});
+
+test('failure toast is indefinite', () => {
+  const { result } = setup();
+
+  act(() => {
+    result.current.openFailure({
+      message: 'Example toast',
+      onClose: vi.fn(),
+    });
+  });
+
+  expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
+});
+
 function setup(options: { hotkeys?: string[]; userEventOptions?: UserEventOptions } = {}) {
   return renderHook(() => useToast(), {
     userEventOptions: options.userEventOptions,

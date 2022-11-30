@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { RequireAtLeastOne } from 'type-fest';
 
 export type ToastId = number | string;
 
@@ -15,12 +16,17 @@ export const ToastPositions = [
 ] as const;
 export type ToastPosition = typeof ToastPositions[number];
 
-export interface ToastConfig {
+interface ToastConfigData {
   id: ToastId;
-  message: ReactNode;
+  message?: ReactNode;
+  title?: ReactNode;
+  icon?: ReactNode;
+  type?: ToastType;
   position: ToastPosition;
   duration?: number | null;
   isClosable?: boolean;
   className?: string;
   onClose: () => void;
 }
+
+export type ToastConfig = RequireAtLeastOne<ToastConfigData, 'title' | 'message'>;
