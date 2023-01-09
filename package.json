@@ -91,7 +91,7 @@
     "@vitejs/plugin-react": "2.2.0",
     "@vitest/coverage-istanbul": "0.25.3",
     "autoprefixer": "10.4.13",
-    "babel-loader": "9.1.0",
+    "babel-loader": "9.1.2",
     "chance": "1.1.9",
     "chromatic": "6.11.4",
     "cross-env": "7.0.3",
