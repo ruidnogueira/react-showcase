@@ -65,7 +65,7 @@
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@ls-lint/ls-lint": "1.11.2",
-    "@mswjs/data": "0.11.1",
+    "@mswjs/data": "0.11.2",
     "@playwright/test": "1.28.1",
     "@storybook/addon-a11y": "6.5.14",
     "@storybook/addon-actions": "6.5.14",
