@@ -62,8 +62,8 @@
   },
   "devDependencies": {
     "@babel/core": "7.20.12",
-    "@commitlint/cli": "17.3.0",
-    "@commitlint/config-conventional": "17.3.0",
+    "@commitlint/cli": "17.8.1",
+    "@commitlint/config-conventional": "17.8.1",
     "@ls-lint/ls-lint": "1.11.2",
     "@mswjs/data": "0.11.2",
     "@playwright/test": "1.28.1",
